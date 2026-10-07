@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genius Hacker Jamal - TempMail</title>
     <style>
-        /* Hacker Theme CSS */
         body {
             margin: 0;
             padding: 0;
@@ -90,14 +89,12 @@
 </head>
 <body>
 
-    <!-- Matrix Background Animation -->
     <canvas id="matrix"></canvas>
 
     <div class="container">
         <h1>[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
         <p style="text-align:center;">> SECURE TEMP-MAIL INITIATED_</p>
 
-        <!-- Account Panel -->
         <div class="panel">
             <h3>> ACCESS_CREDENTIALS</h3>
             <button onclick="generateMail()">[ GENERATE_NEW_EMAIL ]</button>
@@ -109,17 +106,14 @@
             </div>
         </div>
 
-        <!-- Inbox Panel -->
         <div class="panel">
             <h3>> INBOX_DATA</h3>
             <button onclick="fetchMessages()">[ REFRESH_INBOX ]</button>
             <ul id="inbox">
-                <!-- Emails will load here -->
                 <p>No messages yet. Click refresh to check.</p>
             </ul>
         </div>
 
-        <!-- Read Message Panel -->
         <div id="messageView" class="panel">
             <h3>> DECRYPTED_MESSAGE</h3>
             <button onclick="closeMessage()">[ CLOSE ]</button>
@@ -132,7 +126,6 @@
     </div>
 
     <script>
-        // Matrix Animation Script
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -157,7 +150,6 @@
         }
         setInterval(draw, 33);
 
-        // API Connection Script
         let currentToken = "";
 
         async function generateMail() {
@@ -170,9 +162,10 @@
                     document.getElementById('emailDisplay').innerText = data.email;
                     document.getElementById('passDisplay').innerText = data.password;
                     currentToken = data.token;
-                    alert("System: New Email Activated!");
+                    // Popup hata diya gaya hai taaki disturbance na ho
                 } else {
                     document.getElementById('emailDisplay').innerText = "Error!";
+                    document.getElementById('passDisplay').innerText = "Error!";
                     alert(data.error);
                 }
             } catch (err) {
