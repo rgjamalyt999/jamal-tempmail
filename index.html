@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genius Hacker Jamal - TempMail</title>
+    <title>Jamal Genius Hacker - TempMail</title>
     <style>
         body {
             margin: 0;
@@ -23,9 +23,9 @@
         }
         .container {
             max-width: 800px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 20px;
-            background: rgba(0, 20, 0, 0.8);
+            background: rgba(0, 20, 0, 0.85);
             border: 1px solid #0f0;
             box-shadow: 0 0 15px #0f0;
             border-radius: 5px;
@@ -34,6 +34,7 @@
             text-align: center;
             text-transform: uppercase;
             text-shadow: 0 0 5px #0f0;
+            font-size: 1.5em;
         }
         .panel {
             border: 1px dashed #0f0;
@@ -41,28 +42,41 @@
             margin-bottom: 20px;
         }
         .info-box {
-            font-size: 1.2em;
+            font-size: 1.1em;
             margin: 10px 0;
             padding: 10px;
             background: #001100;
             border-left: 3px solid #0f0;
             word-wrap: break-word;
         }
-        button {
-            background-color: transparent;
+        input, button {
+            width: 100%;
+            background-color: #000;
             color: #0f0;
             border: 1px solid #0f0;
-            padding: 10px 20px;
+            padding: 12px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1em;
+            font-size: 1.1em;
+            margin: 8px 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input::placeholder {
+            color: #050;
+        }
+        button {
             cursor: pointer;
             transition: 0.3s;
-            margin: 5px 0;
+            font-weight: bold;
+            background-color: #002200;
         }
         button:hover {
             background-color: #0f0;
             color: #000;
             box-shadow: 0 0 10px #0f0;
+        }
+        #appDashboard {
+            display: none;
         }
         #inbox {
             list-style: none;
@@ -85,6 +99,13 @@
             border: 1px solid #0f0;
             margin-top: 15px;
         }
+        .top-banner {
+            font-size: 0.85em;
+            border: 1px solid #0f0;
+            padding: 8px;
+            margin-bottom: 15px;
+            background: #001100;
+        }
     </style>
 </head>
 <body>
@@ -92,40 +113,94 @@
     <canvas id="matrix"></canvas>
 
     <div class="container">
-        <h1>[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
-        <p style="text-align:center;">> SECURE TEMP-MAIL INITIATED_</p>
+        <h1>Jamal Genius Hacker</h1>
+        
+        <!-- Top Status Banner -->
+        <div class="top-banner">
+            [ SYS_NODE: RG-CORE-01 ]<br>
+            <span id="liveClock">TIME: LOADING...</span><br>
+            [ IP: 152.59.169.64 ]
+        </div>
 
-        <div class="panel">
-            <h3>> ACCESS_CREDENTIALS</h3>
-            <button onclick="generateMail()">[ GENERATE_NEW_EMAIL ]</button>
-            <div class="info-box">
-                <strong>Email: </strong> <span id="emailDisplay">Waiting...</span>
+        <!-- 1. LOGIN PANEL -->
+        <div id="loginPanel" class="panel">
+            <h3 style="margin-top:0;">> Rg_Terminal_Security.exe</h3>
+            <p style="font-size: 0.9em; color: #0a0;">Admin Remote Auth System</p>
+            <div class="info-box" style="font-size:0.9em;">
+                [+] Securing connection to Admin DB...<br>
+                [+] Ready for User ID & Password Auth...
             </div>
-            <div class="info-box">
-                <strong>Password: </strong> <span id="passDisplay">Waiting...</span>
+            <input type="text" id="userInput" placeholder="ENTER USER ID">
+            <input type="password" id="passInput" placeholder="ENTER PASSWORD">
+            <button onclick="playClick(); handleLogin()">AUTHORIZE & LOGIN</button>
+        </div>
+
+        <!-- 2. MAIN APP DASHBOARD (Hidden until login) -->
+        <div id="appDashboard">
+            <div class="panel">
+                <h3>> ACCESS_CREDENTIALS</h3>
+                <button onclick="playClick(); generateMail()">[ GENERATE_NEW_EMAIL ]</button>
+                <div class="info-box">
+                    <strong>Email: </strong> <span id="emailDisplay">Waiting...</span>
+                </div>
+                <div class="info-box">
+                    <strong>Password: </strong> <span id="passDisplay">Waiting...</span>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>> INBOX_DATA</h3>
+                <button onclick="playClick(); fetchMessages()">[ REFRESH_INBOX ]</button>
+                <ul id="inbox">
+                    <p>No messages yet. Click refresh to check.</p>
+                </ul>
+            </div>
+
+            <div id="messageView" class="panel">
+                <h3>> DECRYPTED_MESSAGE</h3>
+                <button onclick="playClick(); closeMessage()">[ CLOSE ]</button>
+                <div class="info-box">
+                    <strong>From:</strong> <span id="msgFrom"></span><br>
+                    <strong>Subject:</strong> <span id="msgSubject"></span>
+                </div>
+                <div id="msgBody" style="margin-top:15px; white-space: pre-wrap; word-wrap: break-word;"></div>
             </div>
         </div>
 
-        <div class="panel">
-            <h3>> INBOX_DATA</h3>
-            <button onclick="fetchMessages()">[ REFRESH_INBOX ]</button>
-            <ul id="inbox">
-                <p>No messages yet. Click refresh to check.</p>
-            </ul>
-        </div>
-
-        <div id="messageView" class="panel">
-            <h3>> DECRYPTED_MESSAGE</h3>
-            <button onclick="closeMessage()">[ CLOSE ]</button>
-            <div class="info-box">
-                <strong>From:</strong> <span id="msgFrom"></span><br>
-                <strong>Subject:</strong> <span id="msgSubject"></span>
-            </div>
-            <div id="msgBody" style="margin-top:15px; white-space: pre-wrap; word-wrap: break-word;"></div>
+        <!-- Footer Info -->
+        <div class="top-banner" style="margin-top: 20px; margin-bottom: 0;">
+            [ DB_LINK: ACTIVE ] &nbsp;&nbsp; [ LICENSE: 24-HRS AUTO EXPIRE ]<br>
+            [ DEV: JAMALHACKS ]
         </div>
     </div>
 
     <script>
+        // Sound Effect Generator using Web Audio API (No external mp3 needed)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClick() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        // Live Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = `DATE: ${now.toLocaleDateString()} TIME: ${now.toLocaleTimeString()}`;
+        }, 1000);
+
+        // Matrix Animation
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -150,6 +225,19 @@
         }
         setInterval(draw, 33);
 
+        // Login Logic
+        function handleLogin() {
+            const u = document.getElementById('userInput').value.trim();
+            const p = document.getElementById('passInput').value.trim();
+            
+            if(u === "Jamal" && p === "j999") {
+                document.getElementById('loginPanel').style.display = 'none';
+                document.getElementById('appDashboard').style.display = 'block';
+            } else {
+                alert("ACCESS DENIED: Invalid User ID or Password!");
+            }
+        }
+
         let currentToken = "";
 
         async function generateMail() {
@@ -162,7 +250,6 @@
                     document.getElementById('emailDisplay').innerText = data.email;
                     document.getElementById('passDisplay').innerText = data.password;
                     currentToken = data.token;
-                    // Popup hata diya gaya hai taaki disturbance na ho
                 } else {
                     document.getElementById('emailDisplay').innerText = "Error!";
                     document.getElementById('passDisplay').innerText = "Error!";
@@ -186,8 +273,9 @@
                     inboxList.innerHTML = "";
                     data.messages.forEach(msg => {
                         let li = document.createElement('li');
+                        playClick();
                         li.innerHTML = `<strong>${msg.from.address}</strong> - ${msg.subject}`;
-                        li.onclick = () => readMessage(msg.id);
+                        li.onclick = () => { playClick(); readMessage(msg.id); };
                         inboxList.appendChild(li);
                     });
                 } else {
