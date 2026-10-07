@@ -6,7 +6,7 @@
 <title>Genius Hacker Jamal - Secure TempMail</title>
 
 <style>
-  :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); }
+  :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   /* STRICT MOBILE FIT */
@@ -53,37 +53,49 @@
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
-  /* BOLD HEADER */
-  header { text-align: center; padding: 6px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
-  header h1 { font-size: 1.6rem; font-weight: 900; color: var(--theme-color); text-shadow: 0 0 15px var(--theme-shadow); letter-spacing: 2px; }
-  header p { font-size: 0.9rem; font-weight: 900; opacity: 0.9; margin-top: 4px;}
+  /* BRIGHTER BOLD HEADER */
+  header { text-align: center; padding: 4px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
+  header h1 { font-size: 1.4rem; font-weight: 900; color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; letter-spacing: 1px; }
+  header p { font-size: 0.8rem; font-weight: 900; color: #0f0; text-shadow: 0 0 5px #0f0; margin-top: 2px;}
   
-  /* SINGLE CONTROL ROW (Count, Gen, DL, Notif) */
-  .master-controls { display: flex; gap: 6px; align-items: center; justify-content: space-between; margin-top: 8px; flex-shrink: 0; }
-  .ctrl-btn { flex: 1; background: #001a00; color: #0f0; border: 1px solid #0f0; padding: 10px 4px; text-align: center; font-family: 'Courier New'; font-weight: 900; font-size: 0.9rem; cursor: pointer; border-radius: 3px; box-shadow: 0 0 5px rgba(0,255,0,0.3); transition: 0.2s; white-space: nowrap; }
+  /* SINGLE CONTROL ROW (Compact & Stacked Icons) */
+  .master-controls { display: flex; gap: 4px; align-items: stretch; margin-top: 6px; flex-shrink: 0; height: 38px; }
+  
+  .ctrl-btn { display: flex; justify-content: center; align-items: center; background: #001a00; color: #0f0; border: 1px solid #0f0; text-align: center; font-family: 'Courier New'; font-weight: 900; cursor: pointer; border-radius: 3px; box-shadow: 0 0 5px rgba(0,255,0,0.3); transition: 0.2s; white-space: nowrap; user-select: none; }
   .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
-  .btn-gen { flex: 2; background: #0f0; color: #000; font-size: 1rem; }
+  
+  /* Buttons Sizing */
+  #btnCountLabel { flex: 0.8; font-size: 0.8rem; }
+  .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 0.95rem; text-shadow: none; }
   .btn-gen:hover { background: #000; color: #0f0; border: 1px solid #0f0; }
-  .btn-icon { flex: 0.5; font-size: 1.2rem; padding: 8px 0; }
+  
+  /* Stacked Right Icons */
+  .icon-stack { display: flex; flex-direction: column; gap: 2px; flex: 0.4; }
+  .icon-stack .ctrl-btn { flex: 1; font-size: 0.75rem; padding: 0; position: relative; }
+
+  /* CYAN ACTIVE STATE SETTINGS */
+  .active-cyan { background: var(--cyan-color) !important; color: #000 !important; border-color: var(--cyan-color) !important; box-shadow: 0 0 15px var(--cyan-color) !important; text-shadow: none !important; }
   
   /* Notification Badge */
-  .badge { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; vertical-align: top; margin-left: -5px; box-shadow: 0 0 5px red; position: relative; top: -5px;}
+  .badge { position: absolute; top: -3px; right: -3px; background: red; color: white; border-radius: 50%; padding: 1px 4px; font-size: 0.55rem; font-weight: bold; box-shadow: 0 0 5px red; }
   .bell-shake { animation: shake 0.5s ease-in-out infinite; color: #fff; text-shadow: 0 0 10px #fff; }
   @keyframes shake { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(-15deg);} 75% {transform: rotate(15deg);} }
 
   /* Panels */
-  .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 6px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 8px; }
+  .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
   /* Table Container */
   .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
-  th, td { padding: 5px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
-  th { background: #002200; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; z-index: 1; text-transform: uppercase; border-bottom: 2px solid #0f0; }
+  th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+  th { background: #002200; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; z-index: 1; text-transform: uppercase; border-bottom: 2px solid #0f0; text-shadow: 0 0 5px #0f0; }
+  td { color: #0f0; } /* Brighter table text */
   tr:nth-child(even) { background: rgba(0, 20, 0, 0.4); }
   tr:hover { background: rgba(0,255,0,0.2); cursor: pointer; }
 
-  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.75rem; flex-shrink: 0; }
-  .pagination button { padding: 4px 10px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: 900; font-size: 0.75rem; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.75rem; flex-shrink: 0; }
+  .pagination button { padding: 4px 10px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: 900; font-size: 0.75rem; transition: 0.2s; }
+  .pagination button:hover:not(:disabled) { background: #0f0; color: #000; }
   .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
   /* View Toggles */
@@ -91,30 +103,29 @@
   #inboxView { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 
   /* Inbox List */
-  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 6px; }
-  #inboxList li { background: #001a00; margin-bottom: 2px; padding: 8px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.8rem; font-weight: bold; word-break: break-all; }
+  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; }
+  #inboxList li { background: #001a00; margin-bottom: 2px; padding: 6px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.75rem; font-weight: bold; word-break: break-all; color: #0f0; }
   #inboxList li:hover { background: rgba(0,255,0,0.2); }
   
-  #messageView { display: none; background: #000; padding: 8px; border: 1px solid #0f0; margin-top: 6px; flex-shrink: 0; }
-  .info-box { font-size: 0.75rem; font-weight: bold; color: #0f0; }
+  #messageView { display: none; background: #000; padding: 6px; border: 1px solid #0f0; margin-top: 4px; flex-shrink: 0; }
+  .info-box { font-size: 0.75rem; font-weight: bold; color: #0f0; text-shadow: 0 0 3px #0f0; }
 
   #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: 900; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 15px #0f0; font-size: 0.85rem; letter-spacing: 0.5px; }
 
-  /* Premium Glass Effect Modals */
+  /* Premium Glass Effect Modals (Count & Download) */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
-  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 20px; display: flex; flex-direction: column; gap: 12px; max-height: 80vh; }
+  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 80vh; }
   
   /* Scrollable area for 1-100 count */
   .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; }
-  /* Custom scrollbar for modal */
-  .modal-scrollable::-webkit-scrollbar { width: 6px; }
-  .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 3px; }
-  .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 3px; }
+  .modal-scrollable::-webkit-scrollbar { width: 4px; }
+  .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
+  .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 2px; }
 
-  .modal-title { font-size: 1.1rem; font-weight: 900; color: #0f0; text-align: center; margin-bottom: 10px; text-shadow: 0 0 10px #0f0; border-bottom: 2px dashed #0f0; padding-bottom: 10px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px; flex-shrink: 0; }
-  .modal-option { background: #001100; border: 1px solid #0f0; color: #0f0; padding: 12px; text-align: center; font-size: 1rem; font-weight: 900; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; flex-shrink: 0; }
+  .modal-title { font-size: 1rem; font-weight: 900; color: #0f0; text-align: center; margin-bottom: 5px; text-shadow: 0 0 10px #0f0; border-bottom: 2px dashed #0f0; padding-bottom: 8px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px; flex-shrink: 0; }
+  .modal-option { background: #001100; border: 1px solid #0f0; color: #0f0; padding: 10px; text-align: center; font-size: 0.9rem; font-weight: 900; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; flex-shrink: 0; }
   .modal-option:hover { background: #0f0; color: #000; box-shadow: 0 0 20px #0f0; }
-  .modal-close { margin-top: 10px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 10px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
+  .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
 </style>
 </head>
@@ -202,17 +213,21 @@
         <p>> SECURE VAULT PROTOCOL ACTIVE_</p>
       </header>
 
-      <!-- MASTER SINGLE CONTROL ROW -->
+      <!-- MASTER SINGLE CONTROL ROW (Cyan Toggle Enabled) -->
       <div class="master-controls">
-        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ COUNT ▾ ]</div>
-        <div class="ctrl-btn btn-gen" onclick="generateBulkMail()">[ GENERATE ]</div>
-        <div class="ctrl-btn btn-icon" onclick="openModal('downloadModal')" title="Export Options">📥</div>
-        <div class="ctrl-btn btn-icon" onclick="toggleView()" id="btnNotif" title="Inbox">🔔<span class="badge" id="msgBadge">0</span></div>
+        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ C: 25 ▾ ]</div>
+        <div class="ctrl-btn btn-gen" onclick="generateBulkMail()" id="btnGenerate">[ GENERATE ]</div>
+        
+        <!-- Stacked Icons for DL and Notif -->
+        <div class="icon-stack">
+          <div class="ctrl-btn" onclick="openModal('downloadModal')" id="btnDownload" title="Export Options">📥</div>
+          <div class="ctrl-btn" onclick="toggleView()" id="btnNotif" title="Inbox">🔔<span class="badge" id="msgBadge">0</span></div>
+        </div>
       </div>
 
       <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView" class="panel-expand">
-        <strong style="font-size:0.8rem; margin-bottom: 2px; color: #0f0;">> VAULT DATABASE (CLICK TO COPY):</strong>
+        <strong style="font-size:0.8rem; margin-bottom: 2px; color: #0f0; text-shadow: 0 0 5px #0f0;">> VAULT DATABASE (CLICK TO COPY):</strong>
         <div class="table-container">
           <table>
             <thead>
@@ -230,7 +245,7 @@
         
         <div class="pagination">
           <button onclick="changePage(-1)" id="prevBtn" disabled>◄ PREV</button>
-          <span id="pageIndicator" style="font-size:0.8rem; font-weight:bold;">Page 1 of 1</span>
+          <span id="pageIndicator" style="font-size:0.8rem; font-weight:bold; color:#0f0;">Page 1 of 1</span>
           <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
         </div>
       </div>
@@ -238,15 +253,15 @@
       <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView" class="panel-expand">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
-          <strong style="font-size:0.8rem; color:#0f0;">> INBOX MESSAGES:</strong>
-          <button class="ctrl-btn" style="padding:4px 8px; font-size:0.7rem;" onclick="fetchMessages()">[ REFRESH ]</button>
+          <strong style="font-size:0.8rem; color:#0f0; text-shadow: 0 0 5px #0f0;">> INBOX MESSAGES:</strong>
+          <button class="ctrl-btn" style="padding:4px 8px; font-size:0.7rem;" onclick="fetchMessages(false, true)" id="btnRefreshInbox">[ REFRESH ]</button>
         </div>
         <ul id="inboxList">
           <p style="color:#0a0; font-size:0.75rem; padding: 10px; text-align:center;">No messages loaded.</p>
         </ul>
         
         <div id="messageView">
-          <h3 style="font-size:0.8rem; margin-bottom: 4px; border-bottom:1px solid #0f0; padding-bottom:2px;">> READ MESSAGE</h3>
+          <h3 style="font-size:0.8rem; margin-bottom: 4px; border-bottom:1px solid #0f0; padding-bottom:2px; color:#0f0;">> READ MESSAGE</h3>
           <div class="info-box">
             <strong>FROM:</strong> <span id="msgFrom"></span><br>
             <strong>SUB:</strong> <span id="msgSubject"></span>
@@ -301,6 +316,7 @@ function startTerminalTyping() {
   typeChar();
 }
 
+// Generate 1 to 100 in Modal
 function generateCountOptions() {
     const container = document.getElementById('countOptionsContainer');
     container.innerHTML = "";
@@ -350,9 +366,19 @@ function copyText(text) {
   showToast("Copied: " + text);
 }
 
-// Modals
-function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+// Modal handling with CYAN active color effect
+function openModal(id) { 
+    document.getElementById(id).style.display = 'flex'; 
+    if(id === 'countModal') document.getElementById('btnCountLabel').classList.add('active-cyan');
+    if(id === 'downloadModal') document.getElementById('btnDownload').classList.add('active-cyan');
+}
+
+function closeModal(id) { 
+    document.getElementById(id).style.display = 'none'; 
+    if(id === 'countModal') document.getElementById('btnCountLabel').classList.remove('active-cyan');
+    if(id === 'downloadModal') document.getElementById('btnDownload').classList.remove('active-cyan');
+}
+
 function selectCount(val) {
   selectedCount = val;
   document.getElementById('btnCountLabel').innerText = `[ C: ${val} ▾ ]`;
@@ -397,13 +423,19 @@ setInterval(() => {
 
 const canvas = document.getElementById('plexusBg');
 const ctx = canvas.getContext('2d');
-const particles = []; 
-for (let i = 0; i < 45; i++) { 
-    particles.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
+let particles = [];
+
+function initPlexus() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particles = [];
+    for (let i = 0; i < 45; i++) { 
+        particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
+    }
 }
+initPlexus();
 
 function drawPlexus() {
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
   ctx.clearRect(0, 0, canvas.width, canvas.height); 
   ctx.fillStyle = 'rgba(0, 255, 0, 0.7)'; 
   for (let i = 0; i < particles.length; i++) {
@@ -423,6 +455,8 @@ function drawPlexus() {
   requestAnimationFrame(drawPlexus);
 } 
 drawPlexus();
+
+window.addEventListener('resize', initPlexus);
 
 function verifyLogin() {
   const uid = document.getElementById('userIdInput').value.trim();
@@ -451,32 +485,38 @@ function lockScreen() {
   sessionStorage.removeItem("rg_is_active");
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
-  startTerminalTyping(); 
+  startTerminalTyping();
 }
 
 function toggleView() {
   isInboxView = !isInboxView;
+  const btnNotif = document.getElementById('btnNotif');
   if(isInboxView) {
     document.getElementById('generatorView').style.display = 'none';
     document.getElementById('inboxView').style.display = 'flex';
-    document.getElementById('btnNotif').style.background = '#0f0';
-    document.getElementById('btnNotif').style.color = '#000';
-    document.getElementById('btnNotif').classList.remove('bell-shake');
+    btnNotif.classList.add('active-cyan');
+    btnNotif.classList.remove('bell-shake');
     fetchMessages();
   } else {
     document.getElementById('generatorView').style.display = 'flex';
     document.getElementById('inboxView').style.display = 'none';
-    document.getElementById('btnNotif').style.background = '#001a00';
-    document.getElementById('btnNotif').style.color = '#0f0';
+    btnNotif.classList.remove('active-cyan');
   }
 }
 
 async function generateBulkMail() {
     let count = selectedCount;
-    document.getElementById('bulkTableBody').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0f0; padding:15px;">Generating ${count} mails. Please wait...</td></tr>`;
+    const btnGen = document.getElementById('btnGenerate');
+    
+    // Add Cyan Working State
+    btnGen.classList.add('active-cyan');
+    btnGen.innerText = "[ PROCESSING... ]";
+    
+    document.getElementById('bulkTableBody').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0ff; padding:15px;">Generating ${count} mails. Please wait...</td></tr>`;
     speakMsg("Generating mails.");
 
     allAccounts = [];
+    
     try {
         for(let i = 0; i < count; i++) {
             const response = await fetch('/api/create', { method: 'POST' });
@@ -497,6 +537,10 @@ async function generateBulkMail() {
         }
     } catch (err) {
         alert("API connection failed.");
+    } finally {
+        // Revert Cyan Working State back to Green
+        btnGen.classList.remove('active-cyan');
+        btnGen.innerText = "[ GENERATE ]";
     }
 }
 
@@ -586,10 +630,17 @@ function shareVaultText() {
     closeModal('downloadModal');
 }
 
-async function fetchMessages(silent = false) {
+async function fetchMessages(silent = false, isManualBtnClick = false) {
+    const refreshBtn = document.getElementById('btnRefreshInbox');
+    if(isManualBtnClick && refreshBtn) {
+        refreshBtn.classList.add('active-cyan');
+        refreshBtn.innerText = "[ CHECKING... ]";
+    }
+
     if(allAccounts.length > 0) currentToken = allAccounts[0].token;
     if(!currentToken) {
         if(!silent) showToast("Generate email first!");
+        if(isManualBtnClick) { refreshBtn.classList.remove('active-cyan'); refreshBtn.innerText = "[ REFRESH ]"; }
         return;
     }
     
@@ -622,6 +673,11 @@ async function fetchMessages(silent = false) {
         }
     } catch (err) {
         if(!silent) inboxList.innerHTML = "<p style='color:red; padding:10px; text-align:center;'>Error fetching data.</p>";
+    } finally {
+        if(isManualBtnClick && refreshBtn) {
+            refreshBtn.classList.remove('active-cyan');
+            refreshBtn.innerText = "[ REFRESH INBOX ]";
+        }
     }
 }
 
