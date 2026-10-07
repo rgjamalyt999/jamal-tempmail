@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Jamal Genius Hacker - Secure Terminal</title>
+<title>Genius Hacker Jamal - Secure TempMail</title>
 
 <style>
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.4); }
@@ -20,13 +20,13 @@
   .win-controls span { margin-left: 8px; cursor: pointer; font-weight: 900; padding: 0 6px; background: rgba(0,0,0,0.2); border-radius: 2px; }
   .win-body { padding: 25px 20px; }
 
-  #lockScreen { position: fixed; inset: 0; background: transparent; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 15px; overflow-y: auto; }
+  #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 15px; overflow-y: auto; }
   
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 15px; background: rgba(0, 15, 0, 0.7); border: 1px solid #0f0; font-size: 0.85rem; font-weight: bold; border-radius: 4px; box-shadow: 0 0 15px rgba(0,255,0,0.2); }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 15px 0; }
 
   .fullscreen-lock-card { max-width: 500px; width: 100%; background: rgba(0, 8, 0, 0.92); border: 2px solid #0f0; box-shadow: 0 0 50px rgba(0, 255, 0, 0.5); border-radius: 6px; overflow: hidden; }
-  .fullscreen-lock-card h2 { font-size: 2.2rem; color: #0f0; text-shadow: 0 0 18px rgba(0,255,0,1); margin-bottom: 8px; text-align: center; }
+  .fullscreen-lock-card h2 { font-size: 2rem; color: #0f0; text-shadow: 0 0 18px rgba(0,255,0,1); margin-bottom: 8px; text-align: center; }
   .fullscreen-lock-card p { color: #0f0; font-size: 0.95rem; margin-bottom: 20px; text-align: center; opacity: 0.9; }
   
   .fullscreen-terminal-stream { background: rgba(0, 3, 0, 0.95); border: 1px solid #0f0; padding: 12px; font-size: 0.85rem; height: 100px; overflow: hidden; text-align: left; margin-bottom: 15px; color: #0f0; border-radius: 4px; line-height: 1.4; }
@@ -60,7 +60,7 @@
 <!-- LOGIN SCREEN -->
 <div id="lockScreen">
   <div class="login-hud-top">
-    <div>[ SYS_NODE: RG-CORE-01 ]</div>
+    <div>[ SYS_NODE: JAMAL-CORE-01 ]</div>
     <div id="liveClock">DATE: --/--/---- TIME: --:--:--</div>
     <div id="deviceIP">[ IP: FETCHING... ]</div>
   </div>
@@ -68,22 +68,22 @@
   <div class="login-hud-center">
     <div class="win-window fullscreen-lock-card" style="margin:0;">
       <div class="win-titlebar" style="background:#0f0; color:#000;">
-        <span>Rg_Terminal_Security.exe</span>
+        <span>Jamal_TempMail_Security.exe</span>
         <div class="win-controls"><span>_</span><span>□</span><span>×</span></div>
       </div>
       <div class="win-body">
-        <h2>Rg Data Info</h2>
-        <p>Admin Remote Auth System</p>
+        <h2>Genius Hacker Jamal</h2>
+        <p>Secure TempMail Admin Gateway</p>
         
         <div class="fullscreen-terminal-stream" id="terminalStream">
-          [+] Securing connection to Admin DB...<br>
-          [+] Ready for User ID & Password Auth...<br>
-          [+] Terminal secured for Jamal.
+          [+] Securing connection to TempMail DB...<br>
+          [+] Ready for Admin ID & Password Auth...<br>
+          [+] Terminal secured for Boss Jamal.
         </div>
 
         <div class="input-group">
-          <input id="userIdInput" type="text" placeholder="ENTER USER ID (Jamal)" autocomplete="off" />
-          <input id="passwordInput" type="password" placeholder="ENTER PASSWORD (j999)" onkeydown="if(event.key==='Enter')verifyLogin()" />
+          <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="off" autocapitalize="off" spellcheck="false" />
+          <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="new-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
           <button onclick="verifyLogin()">AUTHORIZE & LOGIN</button>
         </div>
 
@@ -106,7 +106,7 @@
       <span>Jamal_TempMail_Terminal.exe</span>
       <div class="win-controls">
         <span onclick="lockScreen()" title="Lock">_</span>
-        <span onclick="location.reload()" title="Logout">×</span>
+        <span onclick="sessionStorage.clear(); location.reload();" title="Logout">×</span>
       </div>
     </div>
     <div class="win-body">
@@ -148,7 +148,12 @@
 </div>
 
 <script>
-// Audio & Sound Effect System
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem("rg_is_active") === "true") {
+    unlock();
+  }
+});
+
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
 let audioCtx = null;
 
@@ -169,20 +174,28 @@ function playBeep() {
 document.addEventListener('keydown', playBeep);
 document.addEventListener('click', playBeep);
 
-// IP Fetching
+function speakMsg(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); 
+    const speech = new SpeechSynthesisUtterance(text); 
+    speech.rate = 0.95; 
+    speech.pitch = 1.0;
+    speech.lang = 'en-US'; 
+    window.speechSynthesis.speak(speech);
+  }
+}
+
 fetch('https://api.ipify.org?format=json')
   .then(res => res.json())
   .then(data => {
     document.getElementById('deviceIP').innerText = `[ IP: ${data.ip} ]`;
   }).catch(e => {});
 
-// Clock
 setInterval(() => {
   const now = new Date(); 
   document.getElementById('liveClock').innerText = `DATE: ${now.toLocaleDateString()} TIME: ${now.toLocaleTimeString()}`;
 }, 1000);
 
-// Plexus Background Animation
 const canvas = document.getElementById('plexusBg');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -216,7 +229,6 @@ window.addEventListener('resize', () => {
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 });
 
-// Login Verification Logic
 function verifyLogin() {
   const uid = document.getElementById('userIdInput').value.trim();
   const pwd = document.getElementById('passwordInput').value.trim();
@@ -224,21 +236,28 @@ function verifyLogin() {
 
   if (uid === "Jamal" && pwd === "j999") {
     err.textContent = "";
-    document.getElementById('lockScreen').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
+    sessionStorage.setItem("rg_is_active", "true");
+    speakMsg("Access Granted. Welcome back boss Jamal.");
+    unlock();
   } else {
     err.textContent = "❌ ACCESS DENIED: Invalid User ID or Password!";
+    speakMsg("Access Denied.");
   }
 }
 
+function unlock() {
+  document.getElementById('lockScreen').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+}
+
 function lockScreen() {
+  sessionStorage.removeItem("rg_is_active");
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
   document.getElementById('userIdInput').value = "";
   document.getElementById('passwordInput').value = "";
 }
 
-// TempMail API Functions
 let currentToken = "";
 
 async function generateMail() {
