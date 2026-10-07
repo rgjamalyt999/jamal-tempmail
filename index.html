@@ -49,12 +49,13 @@
   .info-box:hover { background: #002200; }
   
   .controls-row { display: flex; gap: 4px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
-  .count-selector { flex: 1; display: flex; align-items: center; background: #000; border: 1px solid #0f0; border-radius: 4px; overflow: hidden; cursor: pointer; }
-  .count-selector div { flex: 1; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; color: #0f0; }
-  .count-selector:hover { background: #002200; }
+  .count-selector { flex: 1; display: flex; align-items: center; background: #000; border: 1px solid #0f0; border-radius: 4px; overflow: hidden; cursor: pointer; transition: 0.2s; }
+  .count-selector div { flex: 1; text-align: center; padding: 8px; font-weight: bold; font-size: 0.9rem; color: #0f0; }
+  .count-selector:hover { background: #0f0; color: #000; }
+  .count-selector:hover div { color: #000; }
 
   .action-buttons-row { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
-  .action-buttons-row button { flex: 1; padding: 4px; font-size: 0.65rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row button { flex: 1; padding: 6px; font-size: 0.65rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
   .table-container { flex: 1; min-height: 250px; max-height: 55vh; overflow-y: auto; margin-top: 4px; border: 1px solid #030; }
@@ -81,6 +82,15 @@
   #messageView { display: none; background: #000; padding: 6px; border: 1px solid #0f0; margin-top: 4px; }
 
   #toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 10px #0f0; font-size: 0.8rem; }
+
+  /* Premium Glass Effect Modal for Selection */
+  #modalOverlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.85); backdrop-filter: blur(10px); z-index: 100000; display: none; justify-content: center; align-items: center; }
+  .modal-content { background: rgba(0, 20, 0, 0.7); border: 2px solid #0f0; box-shadow: 0 0 30px rgba(0, 255, 0, 0.4), inset 0 0 15px rgba(0,255,0,0.2); border-radius: 8px; width: 90%; max-width: 300px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .modal-title { font-size: 1.1rem; font-weight: bold; color: #0f0; text-align: center; margin-bottom: 10px; text-shadow: 0 0 5px #0f0; border-bottom: 1px dashed #0f0; padding-bottom: 8px; }
+  .modal-option { background: rgba(0,0,0,0.6); border: 1px solid #0f0; color: #0f0; padding: 12px; text-align: center; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; }
+  .modal-option:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
+  .modal-close { margin-top: 10px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: bold; border-radius: 4px; font-family: 'Courier New'; }
+  .modal-close:hover { background: #ff3333; color: #000; }
 </style>
 </head>
 <body>
@@ -88,6 +98,20 @@
 <div id="toast">Copied to clipboard!</div>
 
 <canvas id="plexusBg"></canvas>
+
+<!-- Custom Selection Modal -->
+<div id="modalOverlay">
+  <div class="modal-content">
+    <div class="modal-title">SELECT GENERATION COUNT</div>
+    <div class="modal-option" onclick="selectCount(1)">1 MAIL</div>
+    <div class="modal-option" onclick="selectCount(5)">5 MAILS</div>
+    <div class="modal-option" onclick="selectCount(10)">10 MAILS</div>
+    <div class="modal-option" onclick="selectCount(25)">25 MAILS</div>
+    <div class="modal-option" onclick="selectCount(50)">50 MAILS</div>
+    <div class="modal-option" onclick="selectCount(100)">100 MAILS (MAX)</div>
+    <button class="modal-close" onclick="closeModal()">CANCEL</button>
+  </div>
+</div>
 
 <!-- LOGIN SCREEN -->
 <div id="lockScreen">
@@ -157,19 +181,13 @@
         <div class="panel">
           <h3 style="margin-bottom:2px; font-size: 0.8rem;">> BULK_CREDENTIALS_GENERATOR</h3>
           <div class="controls-row">
-            <!-- Custom Button for Count Selection -->
-            <div class="count-selector" onclick="setBulkCount()">
+            <div class="count-selector" onclick="openModal()">
               <div id="rangeValDisplay">COUNT: 25 ▾</div>
             </div>
-            <button class="btn" style="flex:1.5; padding:6px; font-size:0.8rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
+            <button class="btn" style="flex:1.5; padding:8px; font-size:0.85rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
           </div>
 
-          <div class="info-box" onclick="copyText(document.getElementById('emailDisplay').innerText)" title="Click to Copy">
-            <span><strong>Email: </strong><span id="emailDisplay">Waiting...</span></span> <span>📋</span>
-          </div>
-          <div class="info-box" onclick="copyText(document.getElementById('passDisplay').innerText)" title="Click to Copy">
-            <span><strong>Pass: </strong><span id="passDisplay">Waiting...</span></span> <span>📋</span>
-          </div>
+          <!-- Redundant single display removed for cleaner layout -->
 
           <div class="action-buttons-row">
             <button onclick="downloadVaultTXT()">📥 DOWNLOAD TXT</button>
@@ -244,13 +262,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (sessionStorage.getItem("rg_is_active") === "true") {
     unlock();
-    if(localStorage.getItem("saved_email")) {
-      document.getElementById('emailDisplay').innerText = localStorage.getItem("saved_email");
-      document.getElementById('passDisplay').innerText = localStorage.getItem("saved_pass");
-      currentToken = localStorage.getItem("saved_token");
-    }
     if(localStorage.getItem("saved_batch")) {
       allAccounts = JSON.parse(localStorage.getItem("saved_batch"));
+      if(allAccounts.length > 0){
+        currentToken = allAccounts[0].token;
+      }
       renderTable();
     }
   }
@@ -264,20 +280,24 @@ function showToast(msg) {
 }
 
 function copyText(text) {
-  if(!text || text === "Waiting..." || text.includes("Generating")) return;
+  if(!text || text.includes("No batch")) return;
   navigator.clipboard.writeText(text);
   showToast("Copied: " + text);
 }
 
-function setBulkCount() {
-    let result = prompt("Enter number of mails to generate (1 to 100):", selectedCount);
-    if(result !== null) {
-        let val = parseInt(result);
-        if(isNaN(val) || val < 1) val = 1;
-        if(val > 100) val = 100;
-        selectedCount = val;
-        document.getElementById('rangeValDisplay').innerText = `COUNT: ${val} ▾`;
-    }
+// Custom Modal Functions for Count Selection
+function openModal() {
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+}
+
+function selectCount(val) {
+  selectedCount = val;
+  document.getElementById('rangeValDisplay').innerText = `COUNT: ${val} ▾`;
+  closeModal();
 }
 
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
@@ -421,8 +441,7 @@ function switchView(view) {
 async function generateBulkMail() {
     let count = selectedCount;
     
-    document.getElementById('emailDisplay').innerText = `Generating ${count} mails...`;
-    document.getElementById('passDisplay').innerText = "Processing...";
+    document.getElementById('bulkTableBody').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0f0;">Generating ${count} mails. Please wait...</td></tr>`;
     
     speakMsg("Please wait, mails are being generated.");
 
@@ -442,13 +461,7 @@ async function generateBulkMail() {
         }
 
         if(allAccounts.length > 0) {
-            document.getElementById('emailDisplay').innerText = allAccounts[0].email;
-            document.getElementById('passDisplay').innerText = allAccounts[0].password;
             currentToken = allAccounts[0].token;
-
-            localStorage.setItem("saved_email", allAccounts[0].email);
-            localStorage.setItem("saved_pass", allAccounts[0].password);
-            localStorage.setItem("saved_token", allAccounts[0].token);
             localStorage.setItem("saved_batch", JSON.stringify(allAccounts));
 
             currentPage = 1;
@@ -541,9 +554,14 @@ function shareVaultText() {
 }
 
 async function fetchMessages() {
+    // Determine which token to use for fetching messages. 
+    // Always fallback to the very first token in the list if available.
+    if(allAccounts.length > 0) {
+        currentToken = allAccounts[0].token;
+    }
+    
     if(!currentToken) {
-        currentToken = localStorage.getItem("saved_token");
-        if(!currentToken) return alert("System Error: Generate email first!");
+        return alert("System Error: Generate email first!");
     }
     
     const inboxList = document.getElementById('inboxList');
