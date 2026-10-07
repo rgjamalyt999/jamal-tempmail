@@ -13,8 +13,8 @@
   
   canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-  #lightningContainer { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); z-index: 99999; display: none; text-align: center; pointer-events: none; }
-  .lightning-icon { font-size: 3.5rem; text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #0ff; animation: boltShake 0.3s ease-in-out infinite alternate; }
+  #lightningContainer { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; display: none; text-align: center; pointer-events: none; }
+  .lightning-icon { font-size: 3rem; text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #0ff; animation: boltShake 0.3s ease-in-out infinite alternate; }
   @keyframes boltShake {
     0% { transform: scale(1) rotate(-5deg); opacity: 1; }
     100% { transform: scale(1.2) rotate(5deg); opacity: 0.8; }
@@ -22,73 +22,74 @@
 
   .container { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; }
 
-  .win-window { background: rgba(0, 15, 0, 0.96); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 25px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; margin: 2px 0; }
-  .win-titlebar { background: var(--theme-color); color: #000; padding: 6px 10px; font-weight: bold; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
-  .win-controls span { margin-left: 8px; cursor: pointer; font-weight: 900; padding: 0 6px; background: rgba(0,0,0,0.2); border-radius: 2px; }
-  .win-body { padding: 10px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .win-window { background: rgba(0, 15, 0, 0.96); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 20px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; margin: 2px 0; }
+  .win-titlebar { background: var(--theme-color); color: #000; padding: 5px 8px; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+  .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
+  .win-body { padding: 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
 
-  #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 10px; overflow-y: auto; }
+  #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; }
   
-  .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 12px; background: rgba(0, 15, 0, 0.7); border: 1px solid #0f0; font-size: 0.8rem; font-weight: bold; border-radius: 4px; }
-  .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 10px 0; }
+  /* Compact single-line HUD styling to prevent cutting */
+  .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 4px; padding: 6px 10px; background: rgba(0, 15, 0, 0.85); border: 1px solid #0f0; font-size: 0.72rem; font-weight: bold; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
-  .fullscreen-lock-card { max-width: 480px; width: 100%; background: rgba(0, 8, 0, 0.95); border: 2px solid #0f0; box-shadow: 0 0 40px rgba(0, 255, 0, 0.5); border-radius: 6px; overflow: hidden; }
-  .fullscreen-lock-card h2 { font-size: 1.8rem; color: #0f0; text-shadow: 0 0 15px rgba(0,255,0,1); margin-bottom: 6px; text-align: center; }
-  .fullscreen-lock-card p { color: #0f0; font-size: 0.9rem; margin-bottom: 15px; text-align: center; opacity: 0.9; }
+  .fullscreen-lock-card { max-width: 480px; width: 100%; background: rgba(0, 8, 0, 0.95); border: 2px solid #0f0; box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); border-radius: 6px; overflow: hidden; }
+  .fullscreen-lock-card h2 { font-size: 1.6rem; color: #0f0; text-shadow: 0 0 12px rgba(0,255,0,1); margin-bottom: 4px; text-align: center; }
+  .fullscreen-lock-card p { color: #0f0; font-size: 0.85rem; margin-bottom: 12px; text-align: center; opacity: 0.9; }
   
-  .fullscreen-terminal-stream { background: rgba(0, 3, 0, 0.95); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; height: 90px; overflow: hidden; text-align: left; margin-bottom: 12px; color: #0f0; border-radius: 4px; line-height: 1.3; }
+  .fullscreen-terminal-stream { background: rgba(0, 3, 0, 0.95); border: 1px solid #0f0; padding: 8px; font-size: 0.75rem; height: 80px; overflow: hidden; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.2; }
   
   .input-group input { width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.95); border: 1px solid #0f0; color: #0f0; font-size: 0.95rem; outline: none; margin-bottom: 8px; text-align: center; font-family: 'Courier New', Courier, monospace; border-radius: 4px; }
   
-  .fullscreen-lock-card button, .btn { width: 100%; padding: 10px; background: #0f0; color: #000; font-weight: 900; border: none; font-size: 1rem; cursor: pointer; font-family: 'Courier New', Courier, monospace; border-radius: 4px; transition: all 0.3s ease; box-shadow: 0 0 12px rgba(0,255,0,0.4); }
+  .fullscreen-lock-card button, .btn { width: 100%; padding: 10px; background: #0f0; color: #000; font-weight: 900; border: none; font-size: 1rem; cursor: pointer; font-family: 'Courier New', Courier, monospace; border-radius: 4px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(0,255,0,0.4); }
   .fullscreen-lock-card button:hover, .btn:hover { background: #000; color: #0f0; border: 1px solid #0f0; box-shadow: 0 0 20px rgba(0,255,0,1); }
   
-  #lockError { color: #ff3333; font-size: 0.85rem; margin-top: 6px; text-align: center; font-weight: bold; min-height: 16px; }
+  #lockError { color: #ff3333; font-size: 0.8rem; margin-top: 5px; text-align: center; font-weight: bold; min-height: 15px; }
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; }
 
-  header { text-align: center; padding: 2px 0 6px; border-bottom: 1px dashed var(--theme-color); }
-  header h1 { font-size: 1.2rem; color: var(--theme-color); text-shadow: 0 0 8px var(--theme-shadow); }
+  header { text-align: center; padding: 2px 0 4px; border-bottom: 1px dashed var(--theme-color); }
+  header h1 { font-size: 1.1rem; color: var(--theme-color); text-shadow: 0 0 6px var(--theme-shadow); }
+  header p { font-size: 0.75rem; }
   
-  .panel { border: 1px dashed #0f0; padding: 8px; background: rgba(0,10,0,0.5); border-radius: 4px; }
-  .info-box { font-size: 0.85rem; margin: 4px 0; padding: 6px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; cursor: pointer; }
+  .panel { border: 1px dashed #0f0; padding: 6px; background: rgba(0,10,0,0.5); border-radius: 4px; }
+  .info-box { font-size: 0.8rem; margin: 3px 0; padding: 5px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; cursor: pointer; }
   .info-box:hover { background: #002200; }
   
-  /* Scrolling Range Slider for Count */
-  .controls-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
-  .range-container { flex: 1; display: flex; align-items: center; gap: 8px; background: #000; border: 1px solid #0f0; padding: 6px 10px; border-radius: 4px; }
+  .controls-row { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
+  .range-container { flex: 1; display: flex; align-items: center; gap: 6px; background: #000; border: 1px solid #0f0; padding: 4px 8px; border-radius: 4px; }
   .range-container input[type="range"] { flex: 1; accent-color: #0f0; cursor: pointer; }
-  .range-container span { font-weight: bold; min-width: 30px; text-align: center; }
+  .range-container span { font-weight: bold; min-width: 25px; text-align: center; font-size: 0.85rem; }
 
-  .action-buttons-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .action-buttons-row button { flex: 1; padding: 6px; font-size: 0.75rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row { display: flex; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
+  .action-buttons-row button { flex: 1; padding: 5px; font-size: 0.7rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
-  .table-container { flex: 1; min-height: 280px; max-height: 55vh; overflow-y: auto; margin-top: 6px; border: 1px solid #030; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
-  th, td { padding: 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
-  th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.9rem; }
+  /* Table optimized for 25 items with clean compact rows */
+  .table-container { flex: 1; min-height: 240px; max-height: 50vh; overflow-y: auto; margin-top: 4px; border: 1px solid #030; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: left; }
+  th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
+  th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; }
   tr:hover { background: rgba(0,255,0,0.1); cursor: pointer; }
 
-  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.85rem; }
-  .pagination button { padding: 5px 10px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.8rem; }
+  .pagination button { padding: 4px 8px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; font-size: 0.75rem; }
   .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .nav-tabs { display: flex; gap: 6px; margin-bottom: 8px; }
-  .nav-tabs button { flex: 1; padding: 7px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.8rem; }
+  .nav-tabs { display: flex; gap: 5px; margin-bottom: 6px; }
+  .nav-tabs button { flex: 1; padding: 6px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.75rem; }
   .nav-tabs button.active { background: #0f0; color: #000; }
 
-  #generatorView { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  #inboxView { display: none; flex-direction: column; gap: 8px; flex: 1; }
+  #generatorView { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  #inboxView { display: none; flex-direction: column; gap: 6px; flex: 1; }
 
   #inboxList { list-style: none; padding: 0; }
-  #inboxList li { background: #001a00; margin-bottom: 5px; padding: 8px; border: 1px solid #030; cursor: pointer; font-size: 0.85rem; }
+  #inboxList li { background: #001a00; margin-bottom: 4px; padding: 6px; border: 1px solid #030; cursor: pointer; font-size: 0.8rem; }
   #inboxList li:hover { border-color: #0f0; }
   
-  #messageView { display: none; background: #000; padding: 10px; border: 1px solid #0f0; margin-top: 6px; }
+  #messageView { display: none; background: #000; padding: 8px; border: 1px solid #0f0; margin-top: 5px; }
 
-  /* Toast notification */
-  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 8px 16px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 15px #0f0; font-size: 0.85rem; }
+  #toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 10px #0f0; font-size: 0.8rem; }
 </style>
 </head>
 <body>
@@ -104,9 +105,9 @@
 <!-- LOGIN SCREEN -->
 <div id="lockScreen">
   <div class="login-hud-top">
-    <div>[ SYS_NODE: JAMAL-CORE-01 ]</div>
-    <div id="liveClock">DATE: --/--/---- TIME: --:--:--</div>
-    <div id="deviceIP">[ IP: FETCHING... ]</div>
+    <div>[ SYS: JAMAL ]</div>
+    <div id="liveClock">--:--:--</div>
+    <div>[ IP: SECURED ]</div>
   </div>
 
   <div class="login-hud-center">
@@ -137,9 +138,9 @@
   </div>
 
   <div class="login-hud-bottom">
-    <div>[ DB_LINK: ACTIVE ]</div>
-    <div>[ LICENSE: 24-HRS AUTO EXPIRE ]</div>
-    <div>[ DEV: GENIUS HACKER JAMAL ]</div>
+    <div>[ DB: ACTIVE ]</div>
+    <div>[ 24H EXPIRE ]</div>
+    <div>[ JAMALHACKS ]</div>
   </div>
 </div>
 
@@ -167,21 +168,20 @@
       <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView">
         <div class="panel">
-          <h3 style="margin-bottom:6px;">> BULK_CREDENTIALS_GENERATOR</h3>
+          <h3 style="margin-bottom:4px; font-size: 0.85rem;">> BULK_CREDENTIALS_GENERATOR</h3>
           <div class="controls-row">
-            <!-- Scrolling Range Slider for count selection -->
             <div class="range-container">
               <input type="range" id="bulkCountRange" min="1" max="100" value="25" oninput="document.getElementById('rangeVal').innerText=this.value" />
               <span id="rangeVal">25</span>
             </div>
-            <button class="btn" style="flex:1.5;" onclick="generateBulkMail()">[ GENERATE ]</button>
+            <button class="btn" style="flex:1.2; padding:8px; font-size:0.9rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
           </div>
 
           <div class="info-box" onclick="copyText(document.getElementById('emailDisplay').innerText)" title="Click to Copy">
-            <strong>Active Email: </strong> <span id="emailDisplay">Waiting...</span> 📋
+            <strong>Email: </strong> <span id="emailDisplay">Waiting...</span> 📋
           </div>
           <div class="info-box" onclick="copyText(document.getElementById('passDisplay').innerText)" title="Click to Copy">
-            <strong>Active Password: </strong> <span id="passDisplay">Waiting...</span> 📋
+            <strong>Pass: </strong> <span id="passDisplay">Waiting...</span> 📋
           </div>
 
           <div class="action-buttons-row">
@@ -192,13 +192,13 @@
         </div>
 
         <div class="panel" style="flex:1; display:flex; flex-direction:column;">
-          <strong style="font-size:0.85rem;">> GENERATED VAULT (25 PER PAGE - CLICK TO COPY):</strong>
+          <strong style="font-size:0.8rem;">> GENERATED VAULT (25 PER PAGE - CLICK TO COPY):</strong>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
-                  <th style="width: 10%;">#</th>
-                  <th style="width: 55%;">Email Address</th>
+                  <th style="width: 8%;">#</th>
+                  <th style="width: 57%;">Email Address</th>
                   <th style="width: 35%;">Password</th>
                 </tr>
               </thead>
@@ -209,7 +209,7 @@
           </div>
           <div class="pagination">
             <button onclick="changePage(-1)" id="prevBtn" disabled>◄ PREV</button>
-            <span id="pageIndicator" style="font-size:0.85rem; font-weight:bold;">Page 1 of 1</span>
+            <span id="pageIndicator" style="font-size:0.8rem; font-weight:bold;">Page 1 of 1</span>
             <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
           </div>
         </div>
@@ -218,21 +218,21 @@
       <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView">
         <div class="panel" style="flex:1;">
-          <h3 style="margin-bottom:6px;">> INBOX_DATA_VAULT</h3>
-          <button class="btn" onclick="fetchMessages()">[ REFRESH INBOX ]</button>
-          <ul id="inboxList" style="margin-top:8px;">
-            <p style="color:#0a0; font-size:0.85rem;">No messages loaded. Click refresh.</p>
+          <h3 style="margin-bottom:6px; font-size:0.85rem;">> INBOX_DATA_VAULT</h3>
+          <button class="btn" style="padding:8px;" onclick="fetchMessages()">[ REFRESH INBOX ]</button>
+          <ul id="inboxList" style="margin-top:6px;">
+            <p style="color:#0a0; font-size:0.8rem;">No messages loaded. Click refresh.</p>
           </ul>
         </div>
 
         <div id="messageView" class="panel">
-          <h3>> DECRYPTED_MESSAGE</h3>
-          <button class="btn" style="margin:6px 0; padding:5px;" onclick="closeMessage()">[ CLOSE ]</button>
+          <h3 style="font-size:0.85rem;">> DECRYPTED_MESSAGE</h3>
+          <button class="btn" style="margin:5px 0; padding:5px;" onclick="closeMessage()">[ CLOSE ]</button>
           <div class="info-box">
             <strong>From:</strong> <span id="msgFrom"></span><br>
             <strong>Subject:</strong> <span id="msgSubject"></span>
           </div>
-          <div id="msgBody" style="margin-top:6px; white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.85rem;"></div>
+          <div id="msgBody" style="margin-top:5px; white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.8rem;"></div>
         </div>
       </div>
 
@@ -269,7 +269,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Toast notification helper
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.innerText = msg;
@@ -363,7 +362,7 @@ fetch('https://api.ipify.org?format=json')
 
 setInterval(() => {
   const now = new Date(); 
-  document.getElementById('liveClock').innerText = `DATE: ${now.toLocaleDateString()} TIME: ${now.toLocaleTimeString()}`;
+  document.getElementById('liveClock').innerText = `${now.toLocaleTimeString()}`;
 }, 1000);
 
 const canvas = document.getElementById('plexusBg');
@@ -598,7 +597,7 @@ async function fetchMessages() {
                 inboxList.appendChild(li);
             });
         } else {
-            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.85rem;'>Inbox empty. Awaiting transmissions...</p>";
+            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.8rem;'>Inbox empty. Awaiting transmissions...</p>";
         }
     } catch (err) {
         inboxList.innerHTML = "<p style='color:red;'>Error fetching data.</p>";
