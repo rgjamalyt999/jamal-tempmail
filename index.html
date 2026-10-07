@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genius Hacker Jamal - TempMail</title>
+    <style>
+        /* Hacker Theme CSS */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #0f0;
+            box-shadow: 0 0 15px #0f0;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .panel {
+            border: 1px dashed #0f0;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box {
+            font-size: 1.2em;
+            margin: 10px 0;
+            padding: 10px;
+            background: #001100;
+            border-left: 3px solid #0f0;
+            word-wrap: break-word;
+        }
+        button {
+            background-color: transparent;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 10px #0f0;
+        }
+        #inbox {
+            list-style: none;
+            padding: 0;
+        }
+        #inbox li {
+            background: #001a00;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #030;
+            cursor: pointer;
+        }
+        #inbox li:hover {
+            border-color: #0f0;
+        }
+        #messageView {
+            display: none;
+            background: #000;
+            padding: 15px;
+            border: 1px solid #0f0;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Matrix Background Animation -->
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <h1>[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
+        <p style="text-align:center;">> SECURE TEMP-MAIL INITIATED_</p>
+
+        <!-- Account Panel -->
+        <div class="panel">
+            <h3>> ACCESS_CREDENTIALS</h3>
+            <button onclick="generateMail()">[ GENERATE_NEW_EMAIL ]</button>
+            <div class="info-box">
+                <strong>Email: </strong> <span id="emailDisplay">Waiting...</span>
+            </div>
+            <div class="info-box">
+                <strong>Password: </strong> <span id="passDisplay">Waiting...</span>
+            </div>
+        </div>
+
+        <!-- Inbox Panel -->
+        <div class="panel">
+            <h3>> INBOX_DATA</h3>
+            <button onclick="fetchMessages()">[ REFRESH_INBOX ]</button>
+            <ul id="inbox">
+                <!-- Emails will load here -->
+                <p>No messages yet. Click refresh to check.</p>
+            </ul>
+        </div>
+
+        <!-- Read Message Panel -->
+        <div id="messageView" class="panel">
+            <h3>> DECRYPTED_MESSAGE</h3>
+            <button onclick="closeMessage()">[ CLOSE ]</button>
+            <div class="info-box">
+                <strong>From:</strong> <span id="msgFrom"></span><br>
+                <strong>Subject:</strong> <span id="msgSubject"></span>
+            </div>
+            <div id="msgBody" style="margin-top:15px; white-space: pre-wrap; word-wrap: break-word;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Animation Script
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 33);
+
+        // API Connection Script
+        let currentToken = "";
+
+        async function generateMail() {
+            document.getElementById('emailDisplay').innerText = "Generating...";
+            document.getElementById('passDisplay').innerText = "Generating...";
+            try {
+                const response = await fetch('/api/create', { method: 'POST' });
+                const data = await response.json();
+                if(data.status) {
+                    document.getElementById('emailDisplay').innerText = data.email;
+                    document.getElementById('passDisplay').innerText = data.password;
+                    currentToken = data.token;
+                    alert("System: New Email Activated!");
+                } else {
+                    document.getElementById('emailDisplay').innerText = "Error!";
+                    alert(data.error);
+                }
+            } catch (err) {
+                alert("API connection failed.");
+            }
+        }
+
+        async function fetchMessages() {
+            if(!currentToken) return alert("System Error: Generate email first!");
+            const inboxList = document.getElementById('inbox');
+            inboxList.innerHTML = "Checking server...";
+            
+            try {
+                const response = await fetch('/api/messages?token=' + currentToken);
+                const data = await response.json();
+                
+                if(data.status && data.count > 0) {
+                    inboxList.innerHTML = "";
+                    data.messages.forEach(msg => {
+                        let li = document.createElement('li');
+                        li.innerHTML = `<strong>${msg.from.address}</strong> - ${msg.subject}`;
+                        li.onclick = () => readMessage(msg.id);
+                        inboxList.appendChild(li);
+                    });
+                } else {
+                    inboxList.innerHTML = "<p>Inbox empty. Awaiting transmissions...</p>";
+                }
+            } catch (err) {
+                inboxList.innerHTML = "<p>Error fetching data.</p>";
+            }
+        }
+
+        async function readMessage(id) {
+            document.getElementById('messageView').style.display = 'block';
+            document.getElementById('msgBody').innerText = "Decrypting...";
+            
+            try {
+                const response = await fetch(`/api/message?id=${id}&token=${currentToken}`);
+                const data = await response.json();
+                
+                if(data.status) {
+                    document.getElementById('msgFrom').innerText = data.from.address;
+                    document.getElementById('msgSubject').innerText = data.subject;
+                    document.getElementById('msgBody').innerText = data.text || "No text body.";
+                }
+            } catch (err) {
+                document.getElementById('msgBody').innerText = "Decryption failed.";
+            }
+        }
+
+        function closeMessage() {
+            document.getElementById('messageView').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
