@@ -112,7 +112,7 @@
 
   #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: 900; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 15px #0f0; font-size: 0.85rem; letter-spacing: 0.5px; }
 
-  /* Premium Glass Effect Modals (Count & Download) */
+  /* Premium Glass Effect Modals */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 80vh; }
   
@@ -134,7 +134,7 @@
 <div id="toast">Copied to clipboard!</div>
 <canvas id="plexusBg"></canvas>
 
-<!-- Count Selection Modal (Scrollable 1 to 100) -->
+<!-- Count Selection Modal -->
 <div id="countModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">SELECT GENERATION COUNT</div>
@@ -213,7 +213,7 @@
         <p>> SECURE VAULT PROTOCOL ACTIVE_</p>
       </header>
 
-      <!-- MASTER SINGLE CONTROL ROW (Cyan Toggle Enabled) -->
+      <!-- MASTER SINGLE CONTROL ROW -->
       <div class="master-controls">
         <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ C: 25 ▾ ]</div>
         <div class="ctrl-btn btn-gen" onclick="generateBulkMail()" id="btnGenerate">[ GENERATE ]</div>
@@ -284,7 +284,9 @@ let selectedCount = 25;
 let isInboxView = false;
 let messageCount = 0;
 
-// Typing effect for login screen
+// Update this with your actual Vercel Domain
+const API_BASE_URL = "https://jamal-tempmail.vercel.app";
+
 function startTerminalTyping() {
   const stream = document.getElementById('terminalStream');
   if(!stream) return;
@@ -316,7 +318,6 @@ function startTerminalTyping() {
   typeChar();
 }
 
-// Generate 1 to 100 in Modal
 function generateCountOptions() {
     const container = document.getElementById('countOptionsContainer');
     container.innerHTML = "";
@@ -348,7 +349,7 @@ window.addEventListener('DOMContentLoaded', () => {
         currentToken = allAccounts[0].token;
       }
       renderTable();
-      fetchMessages(true); // silent fetch on load
+      fetchMessages(true);
     }
   }
 });
@@ -366,7 +367,6 @@ function copyText(text) {
   showToast("Copied: " + text);
 }
 
-// Modal handling with CYAN active color effect
 function openModal(id) { 
     document.getElementById(id).style.display = 'flex'; 
     if(id === 'countModal') document.getElementById('btnCountLabel').classList.add('active-cyan');
@@ -508,7 +508,6 @@ async function generateBulkMail() {
     let count = selectedCount;
     const btnGen = document.getElementById('btnGenerate');
     
-    // Add Cyan Working State
     btnGen.classList.add('active-cyan');
     btnGen.innerText = "[ PROCESSING... ]";
     
@@ -519,7 +518,7 @@ async function generateBulkMail() {
     
     try {
         for(let i = 0; i < count; i++) {
-            const response = await fetch('/api/create', { method: 'POST' });
+            const response = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
             const data = await response.json();
             if(data.status) {
                 allAccounts.push({ email: data.email, password: data.password, token: data.token });
@@ -538,7 +537,6 @@ async function generateBulkMail() {
     } catch (err) {
         alert("API connection failed.");
     } finally {
-        // Revert Cyan Working State back to Green
         btnGen.classList.remove('active-cyan');
         btnGen.innerText = "[ GENERATE ]";
     }
@@ -648,7 +646,7 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
     if(!silent) inboxList.innerHTML = "<p style='color:#0a0; padding:10px; text-align:center;'>Checking server...</p>";
     
     try {
-        const response = await fetch('/api/messages?token=' + currentToken);
+        const response = await fetch(`${API_BASE_URL}/api/messages?token=${currentToken}`);
         const data = await response.json();
         
         if(data.status) {
@@ -685,7 +683,7 @@ async function readMessage(id) {
     document.getElementById('messageView').style.display = 'block';
     document.getElementById('msgBody').innerText = "Decrypting...";
     try {
-        const response = await fetch(`/api/message?id=${id}&token=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/message?id=${id}&token=${currentToken}`);
         const data = await response.json();
         if(data.status) {
             document.getElementById('msgFrom').innerText = data.from.address;
@@ -701,7 +699,6 @@ function closeMessage() {
     document.getElementById('messageView').style.display = 'none';
 }
 
-// Auto-check for messages every 15 seconds
 setInterval(() => fetchMessages(true), 15000);
 </script>
 </body>
