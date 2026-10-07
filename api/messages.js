@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       status: true,
       count: messages.length,
       messages,
-      developer: "Genius Hacker Aditya"
+      developer: "Genius Hacker Jamal"
     });
   } catch (e) {
     return res.status(500).json({ status: false, error: e.message });
