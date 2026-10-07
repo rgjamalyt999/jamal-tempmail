@@ -12,6 +12,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: false, error: "POST only" });
   }
 
+  // Anti-Bot Headers (Taki mail.tm server block na kare)
+  const commonHeaders = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://mail.tm/"
+  };
+
   try {
     const body = req.body || {};
     let domain = body.domain;
@@ -20,8 +29,8 @@ export default async function handler(req, res) {
 
     // Domain fetch agar nahi diya
     if (!domain) {
-      const domRes = await fetch("https://api.mail.tm/domains");
-      if (!domRes.ok) throw new Error("Failed to fetch domains");
+      const domRes = await fetch("https://api.mail.tm/domains", { headers: commonHeaders });
+      if (!domRes.ok) throw new Error("Failed to fetch domains - Vercel blocked by mail.tm");
       const domData = await domRes.json();
       const domains = domData["hydra:member"] || [];
       if (!domains.length) throw new Error("No domains available");
@@ -43,10 +52,7 @@ export default async function handler(req, res) {
     // Account create
     const r = await fetch("https://api.mail.tm/accounts", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
+      headers: commonHeaders,
       body: JSON.stringify({ address, password })
     });
 
@@ -65,7 +71,7 @@ export default async function handler(req, res) {
     let token = null;
     const tokenRes = await fetch("https://api.mail.tm/token", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: commonHeaders,
       body: JSON.stringify({ address, password })
     });
 
