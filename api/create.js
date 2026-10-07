@@ -1,5 +1,5 @@
 // POST /api/create
-// Robust Temp-Mail API with Fallback
+// Robust Temp-Mail API with Unique Password Generation
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,7 +20,8 @@ export default async function handler(req, res) {
 
   try {
     let email = "";
-    let password = "JamalPass@123";
+    // Unique random password har account ke liye
+    let password = "Jamal" + Math.random().toString(36).substring(2, 10) + "@123";
     let token = "mock_token_" + Math.random().toString(36).substring(2);
     let id = "id_" + Math.random().toString(36).substring(2);
 
