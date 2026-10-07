@@ -1,6 +1,5 @@
 // POST /api/create
-// Body (optional): {"domain": "example.com", "password": "xyz", "username": "abc"}
-// Temp email banao
+// Temp email generator with fallback domain
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,44 +11,33 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: false, error: "POST only" });
   }
 
-  // Anti-Bot Headers (Taki mail.tm server block na kare)
   const commonHeaders = {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://mail.tm/"
   };
 
   try {
-    const body = req.body || {};
-    let domain = body.domain;
-    let password = body.password;
-    let username = body.username;
+    let domain = "mailto.plus"; // Fallback working domain agar API block ho
 
-    // Domain fetch agar nahi diya
-    if (!domain) {
+    try {
       const domRes = await fetch("https://api.mail.tm/domains", { headers: commonHeaders });
-      if (!domRes.ok) throw new Error("Failed to fetch domains - Vercel blocked by mail.tm");
-      const domData = await domRes.json();
-      const domains = domData["hydra:member"] || [];
-      if (!domains.length) throw new Error("No domains available");
-      domain = domains[0].domain;
+      if (domRes.ok) {
+        const domData = await domRes.json();
+        const domains = domData["hydra:member"] || [];
+        if (domains.length > 0) {
+          domain = domains[0].domain;
+        }
+      }
+    } catch (err) {
+      // Agar domains fetch fail ho toh default domain use hoga
     }
 
-    // Random username agar nahi diya
-    if (!username) {
-      username = Math.random().toString(36).substring(2, 12);
-    }
-
-    // Random password agar nahi diya
-    if (!password) {
-      password = Math.random().toString(36).substring(2, 14);
-    }
-
+    const username = Math.random().toString(36).substring(2, 12);
+    const password = Math.random().toString(36).substring(2, 14);
     const address = `${username}@${domain}`;
 
-    // Account create
     const r = await fetch("https://api.mail.tm/accounts", {
       method: "POST",
       headers: commonHeaders,
@@ -60,25 +48,25 @@ export default async function handler(req, res) {
       const errText = await r.text();
       return res.status(r.status).json({
         status: false,
-        error: "Failed to create account",
+        error: "Failed to create account on mail.tm",
         detail: errText.slice(0, 300)
       });
     }
 
     const data = await r.json();
 
-    // Auto token
     let token = null;
-    const tokenRes = await fetch("https://api.mail.tm/token", {
-      method: "POST",
-      headers: commonHeaders,
-      body: JSON.stringify({ address, password })
-    });
-
-    if (tokenRes.ok) {
-      const tokenData = await tokenRes.json();
-      token = tokenData.token;
-    }
+    try {
+      const tokenRes = await fetch("https://api.mail.tm/token", {
+        method: "POST",
+        headers: commonHeaders,
+        body: JSON.stringify({ address, password })
+      });
+      if (tokenRes.ok) {
+        const tokenData = await tokenRes.json();
+        token = tokenData.token;
+      }
+    } catch (e) {}
 
     return res.status(201).json({
       status: true,
