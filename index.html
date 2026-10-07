@@ -13,9 +13,9 @@
   
   canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-  .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
+  .container { max-width: 950px; margin: 0 auto; position: relative; z-index: 2; }
 
-  .win-window { background: rgba(0, 15, 0, 0.85); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 25px var(--theme-shadow); border-radius: 6px; width: 100%; overflow: hidden; margin-top: 20px; }
+  .win-window { background: rgba(0, 15, 0, 0.88); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 25px var(--theme-shadow); border-radius: 6px; width: 100%; overflow: hidden; margin-top: 20px; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 6px 10px; font-weight: bold; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
   .win-controls span { margin-left: 8px; cursor: pointer; font-weight: 900; padding: 0 6px; background: rgba(0,0,0,0.2); border-radius: 2px; }
   .win-body { padding: 25px 20px; }
@@ -31,7 +31,7 @@
   
   .fullscreen-terminal-stream { background: rgba(0, 3, 0, 0.95); border: 1px solid #0f0; padding: 12px; font-size: 0.85rem; height: 100px; overflow: hidden; text-align: left; margin-bottom: 15px; color: #0f0; border-radius: 4px; line-height: 1.4; }
   
-  .input-group input { width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.95); border: 1px solid #0f0; color: #0f0; font-size: 1rem; outline: none; margin-bottom: 10px; text-align: center; font-family: 'Courier New', Courier, monospace; border-radius: 4px; }
+  .input-group input, .input-group select { width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.95); border: 1px solid #0f0; color: #0f0; font-size: 1rem; outline: none; margin-bottom: 10px; text-align: center; font-family: 'Courier New', Courier, monospace; border-radius: 4px; }
   
   .fullscreen-lock-card button, .btn { width: 100%; padding: 12px; background: #0f0; color: #000; font-weight: 900; border: none; font-size: 1.1rem; cursor: pointer; font-family: 'Courier New', Courier, monospace; border-radius: 4px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0,255,0,0.4); }
   .fullscreen-lock-card button:hover, .btn:hover { background: #000; color: #0f0; border: 1px solid #0f0; box-shadow: 0 0 25px rgba(0,255,0,1); }
@@ -44,8 +44,25 @@
   header h1 { font-size: 1.6rem; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-shadow); }
   
   .panel { border: 1px dashed #0f0; padding: 15px; margin-bottom: 15px; background: rgba(0,10,0,0.5); }
-  .info-box { font-size: 1rem; margin: 8px 0; padding: 10px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
+  .info-box { font-size: 0.95rem; margin: 8px 0; padding: 10px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
   
+  .controls-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .controls-row select { background: #000; color: #0f0; border: 1px solid #0f0; padding: 10px; font-family: 'Courier New'; font-size: 1rem; outline: none; border-radius: 4px; flex: 1; }
+
+  .action-buttons-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .action-buttons-row button { flex: 1; padding: 8px; font-size: 0.85rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row button:hover { background: #0f0; color: #000; }
+
+  .table-container { max-height: 250px; overflow-y: auto; margin-top: 10px; border: 1px solid #030; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+  th, td { padding: 8px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
+  th { background: #001a00; color: #0f0; position: sticky; top: 0; }
+  tr:hover { background: rgba(0,255,0,0.05); cursor: pointer; }
+
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 0.9rem; }
+  .pagination button { padding: 6px 12px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; }
+  .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
   #inbox { list-style: none; padding: 0; max-height: 200px; overflow-y: auto; }
   #inbox li { background: #001a00; margin-bottom: 8px; padding: 10px; border: 1px solid #030; cursor: pointer; font-size: 0.9rem; }
   #inbox li:hover { border-color: #0f0; }
@@ -82,8 +99,8 @@
         </div>
 
         <div class="input-group">
-          <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="new-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
+          <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="username" />
+          <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
           <button onclick="verifyLogin()">AUTHORIZE & LOGIN</button>
         </div>
 
@@ -112,17 +129,58 @@
     <div class="win-body">
       <header>
         <h1>[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
-        <p>> SECURE TEMP-MAIL INITIATED_</p>
+        <p>> BULK SECURE TEMP-MAIL GENERATOR_</p>
       </header>
 
       <div class="panel">
-        <h3 style="margin-bottom:10px;">> ACCESS_CREDENTIALS</h3>
-        <button class="btn" onclick="generateMail()">[ GENERATE_NEW_EMAIL ]</button>
+        <h3 style="margin-bottom:10px;">> BULK_CREDENTIALS_GENERATOR</h3>
+        <div class="controls-row">
+          <select id="bulkCount">
+            <option value="1">Generate 1 Email</option>
+            <option value="5">Generate 5 Emails</option>
+            <option value="10">Generate 10 Emails</option>
+            <option value="25">Generate 25 Emails</option>
+            <option value="50">Generate 50 Emails</option>
+            <option value="100">Generate 100 Emails (Max)</option>
+          </select>
+          <button class="btn" style="flex:2;" onclick="generateBulkMail()">[ GENERATE MAILS ]</button>
+        </div>
+
         <div class="info-box">
-          <strong>Email: </strong> <span id="emailDisplay">Waiting...</span>
+          <strong>Active Email: </strong> <span id="emailDisplay">Waiting...</span>
         </div>
         <div class="info-box">
-          <strong>Password: </strong> <span id="passDisplay">Waiting...</span>
+          <strong>Active Password: </strong> <span id="passDisplay">Waiting...</span>
+        </div>
+
+        <!-- Action Buttons for Download, Print & Share -->
+        <div class="action-buttons-row">
+          <button onclick="downloadVaultTXT()">📥 DOWNLOAD TXT</button>
+          <button onclick="printVaultPDF()">🖨️ PRINT / PDF</button>
+          <button onclick="shareVaultText()">📤 SHARE VAULT</button>
+        </div>
+
+        <div style="margin-top: 15px;">
+          <strong style="font-size:0.9rem;">> GENERATED VAULT (PAGINATED):</strong>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Email Address</th>
+                  <th>Password</th>
+                </tr>
+              </thead>
+              <tbody id="bulkTableBody">
+                <tr><td colspan="3" style="text-align:center; color:#0a0;">No batch generated yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <button onclick="changePage(-1)" id="prevBtn" disabled>◄ PREV</button>
+            <span id="pageIndicator">Page 1 of 1</span>
+            <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
+          </div>
         </div>
       </div>
 
@@ -148,9 +206,30 @@
 </div>
 
 <script>
+let allAccounts = [];
+let currentPage = 1;
+const rowsPerPage = 10;
+let currentToken = "";
+
 window.addEventListener('DOMContentLoaded', () => {
+  if(localStorage.getItem("saved_uid")) {
+    document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
+  }
+  if(localStorage.getItem("saved_pwd")) {
+    document.getElementById('passwordInput').value = localStorage.getItem("saved_pwd");
+  }
+
   if (sessionStorage.getItem("rg_is_active") === "true") {
     unlock();
+    if(localStorage.getItem("saved_email")) {
+      document.getElementById('emailDisplay').innerText = localStorage.getItem("saved_email");
+      document.getElementById('passDisplay').innerText = localStorage.getItem("saved_pass");
+      currentToken = localStorage.getItem("saved_token");
+    }
+    if(localStorage.getItem("saved_batch")) {
+      allAccounts = JSON.parse(localStorage.getItem("saved_batch"));
+      renderTable();
+    }
   }
 });
 
@@ -236,8 +315,13 @@ function verifyLogin() {
 
   if (uid === "Jamal" && pwd === "j999") {
     err.textContent = "";
+    localStorage.setItem("saved_uid", uid);
+    localStorage.setItem("saved_pwd", pwd);
     sessionStorage.setItem("rg_is_active", "true");
-    speakMsg("Access Granted. Welcome back boss Jamal.");
+
+    const now = new Date();
+    const dateTimeStr = `${now.toLocaleDateString()} at ${now.toLocaleTimeString()}`;
+    speakMsg(`Access Granted. Welcome boss Jamal. Terminal active on ${dateTimeStr}.`);
     unlock();
   } else {
     err.textContent = "❌ ACCESS DENIED: Invalid User ID or Password!";
@@ -254,34 +338,146 @@ function lockScreen() {
   sessionStorage.removeItem("rg_is_active");
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
-  document.getElementById('userIdInput').value = "";
-  document.getElementById('passwordInput').value = "";
 }
 
-let currentToken = "";
-
-async function generateMail() {
-    document.getElementById('emailDisplay').innerText = "Generating...";
-    document.getElementById('passDisplay').innerText = "Generating...";
+async function generateBulkMail() {
+    const count = parseInt(document.getElementById('bulkCount').value);
+    document.getElementById('emailDisplay').innerText = `Generating ${count} mails...`;
+    document.getElementById('passDisplay').innerText = "Processing...";
+    
+    allAccounts = [];
+    
     try {
-        const response = await fetch('/api/create', { method: 'POST' });
-        const data = await response.json();
-        if(data.status) {
-            document.getElementById('emailDisplay').innerText = data.email;
-            document.getElementById('passDisplay').innerText = data.password;
-            currentToken = data.token;
+        for(let i = 0; i < count; i++) {
+            const response = await fetch('/api/create', { method: 'POST' });
+            const data = await response.json();
+            if(data.status) {
+                allAccounts.push({
+                    email: data.email,
+                    password: data.password,
+                    token: data.token
+                });
+            }
+        }
+
+        if(allAccounts.length > 0) {
+            document.getElementById('emailDisplay').innerText = allAccounts[0].email;
+            document.getElementById('passDisplay').innerText = allAccounts[0].password;
+            currentToken = allAccounts[0].token;
+
+            localStorage.setItem("saved_email", allAccounts[0].email);
+            localStorage.setItem("saved_pass", allAccounts[0].password);
+            localStorage.setItem("saved_token", allAccounts[0].token);
+            localStorage.setItem("saved_batch", JSON.stringify(allAccounts));
+
+            currentPage = 1;
+            renderTable();
         } else {
-            document.getElementById('emailDisplay').innerText = "Error!";
-            document.getElementById('passDisplay').innerText = "Error!";
-            alert(data.error);
+            alert("Failed to generate batch.");
         }
     } catch (err) {
-        alert("API connection failed.");
+        alert("API connection failed during batch generation.");
+    }
+}
+
+function renderTable() {
+    const tbody = document.getElementById('bulkTableBody');
+    tbody.innerHTML = "";
+    
+    if(allAccounts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0a0;">No batch generated yet.</td></tr>`;
+        return;
+    }
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedItems = allAccounts.slice(start, end);
+
+    paginatedItems.forEach((acc, index) => {
+        const actualIndex = start + index + 1;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${actualIndex}</td><td>${acc.email}</td><td>${acc.password}</td>`;
+        tr.onclick = () => selectAccount(acc);
+        tbody.appendChild(tr);
+    });
+
+    const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
+    document.getElementById('pageIndicator').innerText = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prevBtn').disabled = currentPage === 1;
+    document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
+}
+
+function changePage(direction) {
+    const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
+    currentPage += direction;
+    if(currentPage < 1) currentPage = 1;
+    if(currentPage > totalPages) currentPage = totalPages;
+    renderTable();
+}
+
+function selectAccount(acc) {
+    document.getElementById('emailDisplay').innerText = acc.email;
+    document.getElementById('passDisplay').innerText = acc.password;
+    currentToken = acc.token;
+    localStorage.setItem("saved_email", acc.email);
+    localStorage.setItem("saved_pass", acc.password);
+    localStorage.setItem("saved_token", acc.token);
+    alert("Switched active inbox to: " + acc.email);
+}
+
+// Export / Download TXT
+function downloadVaultTXT() {
+    if(allAccounts.length === 0) return alert("No accounts generated to download!");
+    let text = "=== GENIUS HACKER JAMAL - TEMPMAIL VAULT ===\n\n";
+    allAccounts.forEach((acc, idx) => {
+        text += `[${idx+1}] Email: ${acc.email} | Password: ${acc.password}\n`;
+    });
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Jamal_TempMail_Vault.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Print / PDF View
+function printVaultPDF() {
+    if(allAccounts.length === 0) return alert("No accounts generated to print!");
+    let printWindow = window.open('', '_blank');
+    let html = `<html><head><title>Jamal TempMail Vault</title><style>body{font-family:monospace;padding:20px;}h2{color:green;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{border:1px solid #000;padding:8px;text-align:left;}</style></head><body>`;
+    html += `<h2>GENIUS HACKER JAMAL - SECURE VAULT</h2><p>Generated Accounts List:</p>`;
+    html += `<table><tr><th>#</th><th>Email</th><th>Password</th></tr>`;
+    allAccounts.forEach((acc, idx) => {
+        html += `<tr><td>${idx+1}</td><td>${acc.email}</td><td>${acc.password}</td></tr>`;
+    });
+    html += `</table></body></html>`;
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.print();
+}
+
+// Share Vault
+function shareVaultText() {
+    if(allAccounts.length === 0) return alert("No accounts generated to share!");
+    let text = "=== JAMAL TEMPMAIL VAULT ===\n";
+    allAccounts.forEach((acc, idx) => {
+        text += `${idx+1}. ${acc.email} : ${acc.password}\n`;
+    });
+    if (navigator.share) {
+        navigator.share({ title: 'TempMail Vault', text: text }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text);
+        alert("Vault text copied to clipboard for sharing!");
     }
 }
 
 async function fetchMessages() {
-    if(!currentToken) return alert("System Error: Generate email first!");
+    if(!currentToken) {
+        currentToken = localStorage.getItem("saved_token");
+        if(!currentToken) return alert("System Error: Generate email first!");
+    }
+    
     const inboxList = document.getElementById('inbox');
     inboxList.innerHTML = "Checking server...";
     
@@ -291,6 +487,7 @@ async function fetchMessages() {
         
         if(data.status && data.count > 0) {
             inboxList.innerHTML = "";
+            data.messages.read = false;
             data.messages.forEach(msg => {
                 let li = document.createElement('li');
                 li.innerHTML = `<strong>${msg.from.address}</strong> - ${msg.subject}`;
