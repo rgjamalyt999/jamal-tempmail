@@ -1,0 +1,16 @@
+{
+  "name": "mailtm-api",
+  "version": "1.0.0",
+  "description": "Mail.tm Temp Email API — Developed by Genius Hacker Aditya",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "keywords": ["temp-mail", "mailtm", "api", "vercel", "tempmail"],
+  "author": "Genius Hacker Aditya",
+  "license": "MIT"
+}
