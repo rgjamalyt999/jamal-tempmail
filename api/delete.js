@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         status: true,
         message: "Account deleted",
-        developer: "Genius Hacker Aditya"
+        developer: "Genius Hacker Jamal"
       });
     }
 
