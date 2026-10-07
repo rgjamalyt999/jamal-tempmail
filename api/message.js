@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       attachments: m.attachments,
       size: m.size,
       createdAt: m.createdAt,
-      developer: "Genius Hacker Aditya"
+      developer: "Genius Hacker Jamal"
     });
   } catch (e) {
     return res.status(500).json({ status: false, error: e.message });
