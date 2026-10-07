@@ -9,28 +9,28 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.4); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  body { font-family: 'Courier New', Courier, monospace; background: #000500; color: var(--theme-color); min-height: 100vh; padding: 10px; display: flex; flex-direction: column; overflow-x: hidden; }
+  body { font-family: 'Courier New', Courier, monospace; background: #000500; color: var(--theme-color); min-height: 100vh; padding: 10px; display: flex; flex-direction: column; overflow-y: auto; }
   
   canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-  /* Realistic White & Yellow Lightning Flash Overlay */
+  /* Heavy White & Yellow Lightning Flash Overlay */
   #electricOverlay { position: fixed; inset: 0; background: transparent; z-index: 99999; display: none; pointer-events: none; mix-blend-mode: screen; }
   @keyframes lightningBolt { 
     0% { opacity: 0; background: rgba(255,255,255,0); }
-    20% { opacity: 1; background: rgba(255, 255, 220, 0.95); box-shadow: inset 0 0 100px #ff0, inset 0 0 200px #fff; }
-    40% { opacity: 0.3; background: rgba(255, 255, 0, 0.4); }
-    60% { opacity: 1; background: rgba(255, 255, 255, 1); }
-    80% { opacity: 0.2; background: rgba(255, 255, 150, 0.5); }
+    15% { opacity: 1; background: rgba(255, 255, 240, 1); box-shadow: inset 0 0 150px #ff0, inset 0 0 300px #fff; }
+    30% { opacity: 0.2; background: rgba(255, 255, 0, 0.5); }
+    50% { opacity: 1; background: rgba(255, 255, 255, 1); box-shadow: inset 0 0 200px #fff; }
+    80% { opacity: 0.4; background: rgba(255, 255, 180, 0.8); }
     100% { opacity: 0; background: transparent; }
   }
-  .lightning-active { animation: lightningBolt 0.35s ease-in-out 3; }
+  .lightning-active { display: block !important; animation: lightningBolt 0.4s ease-in-out 3; }
 
   .container { width: 100%; max-width: 950px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; }
 
-  .win-window { background: rgba(0, 15, 0, 0.92); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 25px var(--theme-shadow); border-radius: 6px; width: 100%; flex: 1; display: flex; flex-direction: column; margin-top: 5px; margin-bottom: 5px; }
+  .win-window { background: rgba(0, 15, 0, 0.94); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 25px var(--theme-shadow); border-radius: 6px; width: 100%; flex: 1; display: flex; flex-direction: column; margin-top: 5px; margin-bottom: 5px; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 6px 10px; font-weight: bold; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
   .win-controls span { margin-left: 8px; cursor: pointer; font-weight: 900; padding: 0 6px; background: rgba(0,0,0,0.2); border-radius: 2px; }
-  .win-body { padding: 15px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .win-body { padding: 15px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
   #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 15px; overflow-y: auto; }
   
@@ -52,39 +52,40 @@
   
   #mainContent { display: none; flex: 1; flex-direction: column; }
 
-  header { text-align: center; padding: 5px 0 10px; border-bottom: 1px dashed var(--theme-color); }
-  header h1 { font-size: 1.4rem; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-shadow); }
+  header { text-align: center; padding: 4px 0 8px; border-bottom: 1px dashed var(--theme-color); }
+  header h1 { font-size: 1.3rem; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-shadow); }
   
-  .panel { border: 1px dashed #0f0; padding: 12px; background: rgba(0,10,0,0.5); border-radius: 4px; }
-  .info-box { font-size: 0.9rem; margin: 6px 0; padding: 8px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
+  .panel { border: 1px dashed #0f0; padding: 10px; background: rgba(0,10,0,0.5); border-radius: 4px; }
+  .info-box { font-size: 0.85rem; margin: 4px 0; padding: 6px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
   
-  .controls-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-  .controls-row input[type="number"] { background: #000; color: #0f0; border: 1px solid #0f0; padding: 10px; font-family: 'Courier New'; font-size: 1rem; outline: none; border-radius: 4px; flex: 1; text-align: center; }
+  .controls-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .controls-row input[type="number"] { background: #000; color: #0f0; border: 1px solid #0f0; padding: 8px; font-family: 'Courier New'; font-size: 0.95rem; outline: none; border-radius: 4px; flex: 1; text-align: center; }
 
-  .action-buttons-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-  .action-buttons-row button { flex: 1; padding: 8px; font-size: 0.8rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .action-buttons-row button { flex: 1; padding: 7px; font-size: 0.75rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
-  .table-container { max-height: 250px; overflow-y: auto; margin-top: 8px; border: 1px solid #030; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
-  th, td { padding: 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
+  .table-container { max-height: 180px; overflow-y: auto; margin-top: 6px; border: 1px solid #030; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left; }
+  th, td { padding: 5px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
   th { background: #001a00; color: #0f0; position: sticky; top: 0; }
   tr:hover { background: rgba(0,255,0,0.05); cursor: pointer; }
 
-  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.85rem; }
-  .pagination button { padding: 5px 10px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem; }
+  .pagination button { padding: 4px 8px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; }
   .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  #inbox { list-style: none; padding: 0; max-height: 180px; overflow-y: auto; }
-  #inbox li { background: #001a00; margin-bottom: 6px; padding: 8px; border: 1px solid #030; cursor: pointer; font-size: 0.85rem; }
+  /* Inbox list box with pagination/scrolling */
+  #inbox { list-style: none; padding: 0; margin-top: 6px; }
+  #inbox li { background: #001a00; margin-bottom: 5px; padding: 8px; border: 1px solid #030; cursor: pointer; font-size: 0.85rem; }
   #inbox li:hover { border-color: #0f0; }
   
-  #messageView { display: none; background: #000; padding: 12px; border: 1px solid #0f0; margin-top: 10px; }
+  #messageView { display: none; background: #000; padding: 10px; border: 1px solid #0f0; margin-top: 8px; }
 </style>
 </head>
 <body>
 
-<!-- Electric Lightning Flash Overlay (White & Yellow Mix) -->
+<!-- Heavy White & Yellow Lightning Flash Overlay -->
 <div id="electricOverlay"></div>
 
 <canvas id="plexusBg"></canvas>
@@ -147,8 +148,9 @@
         <p>> BULK SECURE TEMP-MAIL GENERATOR_</p>
       </header>
 
+      <!-- Mail Generator Section -->
       <div class="panel">
-        <h3 style="margin-bottom:8px;">> BULK_CREDENTIALS_GENERATOR</h3>
+        <h3 style="margin-bottom:6px;">> BULK_CREDENTIALS_GENERATOR</h3>
         <div class="controls-row">
           <input type="number" id="bulkCount" min="1" max="100" value="5" placeholder="Enter count (1-100)" />
           <button class="btn" style="flex:2;" onclick="generateBulkMail()">[ GENERATE MAILS ]</button>
@@ -161,14 +163,15 @@
           <strong>Active Password: </strong> <span id="passDisplay">Waiting...</span>
         </div>
 
+        <!-- Bottom Vault Actions -->
         <div class="action-buttons-row">
           <button onclick="downloadVaultTXT()">📥 DOWNLOAD TXT</button>
           <button onclick="printVaultPDF()">🖨️ PRINT / PDF</button>
           <button onclick="shareVaultText()">📤 SHARE VAULT</button>
         </div>
 
-        <div style="margin-top: 10px;">
-          <strong style="font-size:0.85rem;">> GENERATED VAULT (PAGINATED):</strong>
+        <div style="margin-top: 8px;">
+          <strong style="font-size:0.8rem;">> GENERATED VAULT (PAGINATED):</strong>
           <div class="table-container">
             <table>
               <thead>
@@ -185,28 +188,34 @@
           </div>
           <div class="pagination">
             <button onclick="changePage(-1)" id="prevBtn" disabled>◄ PREV</button>
-            <span id="pageIndicator">Page 1 of 1</span>
+            <span id="pageIndicator" style="font-size:0.8rem;">Page 1 of 1</span>
             <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
           </div>
         </div>
       </div>
 
-      <div class="panel" style="flex:1;">
-        <h3 style="margin-bottom:8px;">> INBOX_DATA</h3>
+      <!-- Inbox Data Section (Expands dynamically when messages arrive) -->
+      <div class="panel" id="inboxPanel">
+        <h3 style="margin-bottom:6px;">> INBOX_DATA</h3>
         <button class="btn" onclick="fetchMessages()">[ REFRESH_INBOX ]</button>
-        <ul id="inbox" style="margin-top:8px;">
-          <p style="color:#0a0; font-size:0.85rem;">No messages yet. Click refresh to check.</p>
+        <ul id="inbox">
+          <p style="color:#0a0; font-size:0.8rem; margin-top:5px;">No messages yet. Click refresh to check.</p>
         </ul>
+        <div class="pagination" id="inboxPagination" style="display:none;">
+          <button onclick="changeInboxPage(-1)" id="inboxPrevBtn" disabled>◄ PREV</button>
+          <span id="inboxPageIndicator" style="font-size:0.8rem;">Page 1 of 1</span>
+          <button onclick="changeInboxPage(1)" id="inboxNextBtn" disabled>NEXT ►</button>
+        </div>
       </div>
 
       <div id="messageView" class="panel">
         <h3>> DECRYPTED_MESSAGE</h3>
-        <button class="btn" style="margin:8px 0; padding:6px;" onclick="closeMessage()">[ CLOSE ]</button>
+        <button class="btn" style="margin:6px 0; padding:5px;" onclick="closeMessage()">[ CLOSE ]</button>
         <div class="info-box">
           <strong>From:</strong> <span id="msgFrom"></span><br>
           <strong>Subject:</strong> <span id="msgSubject"></span>
         </div>
-        <div id="msgBody" style="margin-top:8px; white-space: pre-wrap; word-wrap: break-word; color:#0f0;"></div>
+        <div id="msgBody" style="margin-top:6px; white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.85rem;"></div>
       </div>
     </div>
   </div>
@@ -217,6 +226,10 @@ let allAccounts = [];
 let currentPage = 1;
 const rowsPerPage = 10;
 let currentToken = "";
+
+let allMessages = [];
+let inboxCurrentPage = 1;
+const inboxRowsPerPage = 10;
 let lastMessageCount = 0;
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -258,23 +271,22 @@ function playBeep() {
     } catch(e) {}
 }
 
-// Heavy Thunder / Electric Flash Sound (White & Yellow lightning feel)
+// Heavy Thunder / Lightning Sound (White & Yellow realistic strike)
 function playThunderLightningSound() {
     if (!audioCtx) audioCtx = new AudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
     try {
         const now = audioCtx.currentTime;
-        // High frequency electric zap
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(100, now);
-        osc.frequency.linearRampToValueAtTime(900, now + 0.15);
-        osc.frequency.linearRampToValueAtTime(150, now + 0.4);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-        osc.start(now); osc.stop(now + 0.4);
+        osc.frequency.setValueAtTime(80, now);
+        osc.frequency.linearRampToValueAtTime(1000, now + 0.1);
+        osc.frequency.linearRampToValueAtTime(120, now + 0.45);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc.start(now); osc.stop(now + 0.45);
     } catch(e) {}
 }
 
@@ -400,11 +412,11 @@ async function generateBulkMail() {
     document.getElementById('emailDisplay').innerText = `Generating ${count} mails...`;
     document.getElementById('passDisplay').innerText = "Processing...";
     
-    // Trigger White & Yellow Lightning Flash Effect & Thunder Sound
+    // Trigger Real White & Yellow Lightning Flash
     const overlay = document.getElementById('electricOverlay');
     overlay.classList.add('lightning-active');
     playThunderLightningSound();
-    setTimeout(() => overlay.classList.remove('lightning-active'), 1200);
+    setTimeout(() => overlay.classList.remove('lightning-active'), 1400);
 
     speakMsg("Please wait, mails are being generated.");
 
@@ -534,6 +546,7 @@ function shareVaultText() {
     }
 }
 
+// Fetch Messages with top sorting and inbox pagination
 async function fetchMessages() {
     if(!currentToken) {
         currentToken = localStorage.getItem("saved_token");
@@ -553,20 +566,58 @@ async function fetchMessages() {
             }
             lastMessageCount = data.count;
 
-            inboxList.innerHTML = "";
-            const sortedMessages = data.messages.reverse();
-            sortedMessages.forEach(msg => {
-                let li = document.createElement('li');
-                li.innerHTML = `<strong>${msg.from.address}</strong> - ${msg.subject}`;
-                li.onclick = () => readMessage(msg.id);
-                inboxList.appendChild(li);
-            });
+            // Newest messages first
+            allMessages = data.messages.reverse();
+            inboxCurrentPage = 1;
+            renderInbox();
         } else {
-            inboxList.innerHTML = "<p style='color:#0a0;'>Inbox empty. Awaiting transmissions...</p>";
+            allMessages = [];
+            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.8rem; margin-top:5px;'>No messages yet. Click refresh to check.</p>";
+            document.getElementById('inboxPagination').style.display = 'none';
         }
     } catch (err) {
         inboxList.innerHTML = "<p style='color:red;'>Error fetching data.</p>";
     }
+}
+
+function renderInbox() {
+    const inboxList = document.getElementById('inbox');
+    inboxList.innerHTML = "";
+    
+    if(allMessages.length === 0) {
+        inboxList.innerHTML = "<p style='color:#0a0; font-size:0.8rem; margin-top:5px;'>No messages yet.</p>";
+        document.getElementById('inboxPagination').style.display = 'none';
+        return;
+    }
+
+    const start = (inboxCurrentPage - 1) * inboxRowsPerPage;
+    const end = start + inboxRowsPerPage;
+    const paginatedMsgs = allMessages.slice(start, end);
+
+    paginatedMsgs.forEach(msg => {
+        let li = document.createElement('li');
+        li.innerHTML = `<strong>${msg.from.address}</strong> - ${msg.subject}`;
+        li.onclick = () => readMessage(msg.id);
+        inboxList.appendChild(li);
+    });
+
+    const totalPages = Math.ceil(allMessages.length / inboxRowsPerPage);
+    if(totalPages > 1) {
+        document.getElementById('inboxPagination').style.display = 'flex';
+        document.getElementById('inboxPageIndicator').innerText = `Page ${inboxCurrentPage} of ${totalPages}`;
+        document.getElementById('inboxPrevBtn').disabled = inboxCurrentPage === 1;
+        document.getElementById('inboxNextBtn').disabled = inboxCurrentPage === totalPages;
+    } else {
+        document.getElementById('inboxPagination').style.display = 'none';
+    }
+}
+
+function changeInboxPage(direction) {
+    const totalPages = Math.ceil(allMessages.length / inboxRowsPerPage);
+    inboxCurrentPage += direction;
+    if(inboxCurrentPage < 1) inboxCurrentPage = 1;
+    if(inboxCurrentPage > totalPages) inboxCurrentPage = totalPages;
+    renderInbox();
 }
 
 async function readMessage(id) {
