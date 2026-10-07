@@ -9,18 +9,30 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.4); }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  body { font-family: 'Courier New', Courier, monospace; background: #000500; color: var(--theme-color); height: 100vh; width: 100vw; padding: 5px; display: flex; flex-direction: column; overflow: hidden; }
+  /* STRICT MOBILE FIT: Prevents bottom border from hiding */
+  body { 
+    font-family: 'Courier New', Courier, monospace; 
+    background: #000500; 
+    color: var(--theme-color); 
+    position: fixed; 
+    top: 0; bottom: 0; left: 0; right: 0; 
+    padding: 6px; 
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden; 
+  }
   
-  canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+  canvas#plexusBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
   .container { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
-  .win-window { background: rgba(0, 15, 0, 0.96); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 20px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; margin: 2px 0; overflow: hidden; }
-  .win-titlebar { background: var(--theme-color); color: #000; padding: 5px 8px; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  /* Window frame that will perfectly fit all 4 sides */
+  .win-window { background: rgba(0, 15, 0, 0.96); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .win-titlebar { background: var(--theme-color); color: #000; padding: 4px 8px; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
   .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
-  .win-body { padding: 6px; flex: 1; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+  .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
 
-  #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; }
   
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 4px; padding: 6px 10px; background: rgba(0, 15, 0, 0.85); border: 1px solid #0f0; font-size: 0.72rem; font-weight: bold; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
@@ -46,51 +58,51 @@
   header h1 { font-size: 1.1rem; color: var(--theme-color); text-shadow: 0 0 6px var(--theme-shadow); }
   header p { font-size: 0.65rem; }
   
-  .panel { border: 1px dashed #0f0; padding: 4px 6px; background: rgba(0,10,0,0.5); border-radius: 4px; flex-shrink: 0; display: flex; flex-direction: column; }
+  .panel { border: 1px dashed #0f0; padding: 6px; background: rgba(0,10,0,0.5); border-radius: 4px; flex-shrink: 0; display: flex; flex-direction: column; }
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
-  .controls-row { display: flex; gap: 4px; align-items: center; margin-bottom: 2px; flex-wrap: wrap; }
+  .controls-row { display: flex; gap: 4px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
   .count-selector { flex: 1; display: flex; align-items: center; background: #000; border: 1px solid #0f0; border-radius: 4px; overflow: hidden; cursor: pointer; transition: 0.2s; }
   .count-selector div { flex: 1; text-align: center; padding: 6px; font-weight: bold; font-size: 0.8rem; color: #0f0; }
   .count-selector:hover { background: #0f0; color: #000; }
   .count-selector:hover div { color: #000; }
 
   .action-buttons-row { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; flex-shrink: 0; }
-  .action-buttons-row button { flex: 1; padding: 5px; font-size: 0.65rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row button { flex: 1; padding: 6px; font-size: 0.65rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
-  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 2px; border: 1px solid #030; }
+  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #030; }
   table { width: 100%; border-collapse: collapse; font-size: 0.65rem; text-align: left; }
-  th, td { padding: 3px 4px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+  th, td { padding: 4px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
   th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.65rem; z-index: 1; }
   tr:hover { background: rgba(0,255,0,0.1); cursor: pointer; }
 
-  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.7rem; flex-shrink: 0; }
-  .pagination button { padding: 3px 6px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; font-size: 0.65rem; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.7rem; flex-shrink: 0; }
+  .pagination button { padding: 4px 8px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; font-size: 0.65rem; }
   .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .nav-tabs { display: flex; gap: 4px; margin-bottom: 4px; flex-shrink: 0; }
-  .nav-tabs button { flex: 1; padding: 5px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.75rem; }
+  .nav-tabs button { flex: 1; padding: 6px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.75rem; }
   .nav-tabs button.active { background: #0f0; color: #000; }
 
-  #generatorView { display: flex; flex-direction: column; gap: 4px; flex: 1; overflow: hidden; }
-  #inboxView { display: none; flex-direction: column; gap: 4px; flex: 1; overflow: hidden; }
+  #generatorView { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow: hidden; }
+  #inboxView { display: none; flex-direction: column; gap: 6px; flex: 1; overflow: hidden; }
 
-  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; }
-  #inboxList li { background: #001a00; margin-bottom: 4px; padding: 6px; border: 1px solid #030; cursor: pointer; font-size: 0.75rem; word-break: break-all; }
-  #inboxList li:hover { border-color: #0f0; }
+  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #030; }
+  #inboxList li { background: #001a00; margin-bottom: 2px; padding: 6px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.75rem; word-break: break-all; }
+  #inboxList li:hover { background: rgba(0,255,0,0.1); }
   
-  #messageView { display: none; background: #000; padding: 6px; border: 1px solid #0f0; margin-top: 4px; flex-shrink: 0; }
+  #messageView { display: none; background: #000; padding: 8px; border: 1px solid #0f0; margin-top: 4px; flex-shrink: 0; }
 
-  #toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 10px #0f0; font-size: 0.8rem; }
+  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 10px #0f0; font-size: 0.8rem; }
 
-  /* Premium Glass Effect Modal Updated to Match Image */
+  /* Premium Glass Effect Modal */
   #modalOverlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
-  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 30px #0f0; border-radius: 8px; width: 90%; max-width: 320px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-  .modal-title { font-size: 1.1rem; font-weight: bold; color: #0f0; text-align: center; margin-bottom: 15px; text-shadow: 0 0 5px #0f0; border-bottom: 1px dashed #0f0; padding-bottom: 10px; font-family: 'Courier New', Courier, monospace; }
-  .modal-option { background: transparent; border: 1px solid #0f0; color: #0f0; padding: 12px; text-align: center; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; }
+  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 30px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .modal-title { font-size: 1rem; font-weight: bold; color: #0f0; text-align: center; margin-bottom: 10px; text-shadow: 0 0 5px #0f0; border-bottom: 1px dashed #0f0; padding-bottom: 8px; font-family: 'Courier New', Courier, monospace; }
+  .modal-option { background: transparent; border: 1px solid #0f0; color: #0f0; padding: 10px; text-align: center; font-size: 0.9rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; }
   .modal-option:hover { background: #0f0; color: #000; box-shadow: 0 0 10px #0f0; }
-  .modal-close { margin-top: 15px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 10px; text-align: center; cursor: pointer; font-weight: bold; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; }
+  .modal-close { margin-top: 10px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 10px; text-align: center; cursor: pointer; font-weight: bold; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; }
   .modal-close:hover { background: #ff3333; color: #000; }
 </style>
 </head>
@@ -177,12 +189,19 @@
       <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView">
         <div class="panel">
-          <h3 style="margin-bottom:2px; font-size: 0.8rem;">> BULK_CREDENTIALS_GENERATOR</h3>
+          <h3 style="margin-bottom:4px; font-size: 0.8rem;">> BULK_CREDENTIALS_GENERATOR</h3>
           <div class="controls-row">
             <div class="count-selector" onclick="openModal()">
               <div id="rangeValDisplay">COUNT: 25 ▾</div>
             </div>
-            <button class="btn" style="flex:1.5; padding:6px; font-size:0.8rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
+            <button class="btn" style="flex:1.5; padding:6px; font-size:0.85rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
+          </div>
+
+          <!-- ACTION BUTTONS MOVED UP HERE -->
+          <div class="action-buttons-row">
+            <button onclick="downloadVaultTXT()">📥 DOWNLOAD TXT</button>
+            <button onclick="printVaultPDF()">🖨️ PRINT / PDF</button>
+            <button onclick="shareVaultText()">📤 SHARE VAULT</button>
           </div>
         </div>
 
@@ -192,8 +211,8 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 8%;">#</th>
-                  <th style="width: 57%;">Email Address</th>
+                  <th style="width: 10%;">#</th>
+                  <th style="width: 55%;">Email Address</th>
                   <th style="width: 35%;">Password</th>
                 </tr>
               </thead>
@@ -208,34 +227,27 @@
             <span id="pageIndicator" style="font-size:0.75rem; font-weight:bold;">Page 1 of 1</span>
             <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
           </div>
-
-          <!-- Action Buttons Moved Below Vault -->
-          <div class="action-buttons-row">
-            <button onclick="downloadVaultTXT()">📥 DOWNLOAD TXT</button>
-            <button onclick="printVaultPDF()">🖨️ PRINT / PDF</button>
-            <button onclick="shareVaultText()">📤 SHARE VAULT</button>
-          </div>
         </div>
       </div>
 
       <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView">
         <div class="panel panel-expand">
-          <h3 style="margin-bottom:4px; font-size:0.85rem; flex-shrink: 0;">> INBOX_DATA_VAULT</h3>
+          <h3 style="margin-bottom:4px; font-size:0.8rem; flex-shrink: 0;">> INBOX_DATA_VAULT</h3>
           <button class="btn" style="padding:6px; font-size:0.8rem; flex-shrink: 0; margin-bottom: 4px;" onclick="fetchMessages()">[ REFRESH INBOX ]</button>
           <ul id="inboxList">
-            <p style="color:#0a0; font-size:0.75rem;">No messages loaded. Click refresh.</p>
+            <p style="color:#0a0; font-size:0.75rem; padding: 6px;">No messages loaded. Click refresh.</p>
           </ul>
         </div>
 
         <div id="messageView" class="panel">
-          <h3 style="font-size:0.85rem; margin-bottom: 2px;">> DECRYPTED_MESSAGE</h3>
+          <h3 style="font-size:0.8rem; margin-bottom: 2px;">> DECRYPTED_MESSAGE</h3>
           <div style="font-size:0.75rem; margin-bottom:4px; color:#0f0;">
             <strong>From:</strong> <span id="msgFrom"></span><br>
             <strong>Sub:</strong> <span id="msgSubject"></span>
           </div>
           <div id="msgBody" style="white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.75rem; border-top: 1px dashed #0f0; padding-top: 4px; max-height: 80px; overflow-y: auto;"></div>
-          <button class="btn" style="margin-top:4px; padding:4px; font-size:0.75rem;" onclick="closeMessage()">[ CLOSE ]</button>
+          <button class="btn" style="margin-top:4px; padding:6px; font-size:0.75rem;" onclick="closeMessage()">[ CLOSE ]</button>
         </div>
       </div>
 
@@ -270,12 +282,12 @@ function startTerminalTyping() {
       if(charIdx < lines[lineIdx].length) {
         stream.lastChild.innerHTML += lines[lineIdx].charAt(charIdx);
         charIdx++;
-        setTimeout(typeChar, 25);
+        setTimeout(typeChar, 20);
       } else {
         stream.innerHTML += "</div>";
         lineIdx++;
         charIdx = 0;
-        setTimeout(typeChar, 300);
+        setTimeout(typeChar, 250);
       }
     }
   }
@@ -317,7 +329,6 @@ function copyText(text) {
   showToast("Copied: " + text);
 }
 
-// Custom Modal Functions
 function openModal() { document.getElementById('modalOverlay').style.display = 'flex'; }
 function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
 function selectCount(val) {
@@ -364,11 +375,17 @@ setInterval(() => {
 
 const canvas = document.getElementById('plexusBg');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-const particles = []; 
-for (let i = 0; i < 45; i++) { 
-    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
+let particles = [];
+
+function initPlexus() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particles = [];
+    for (let i = 0; i < 45; i++) { 
+        particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
+    }
 }
+initPlexus();
 
 function drawPlexus() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); 
@@ -391,9 +408,7 @@ function drawPlexus() {
 } 
 drawPlexus();
 
-window.addEventListener('resize', () => { 
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-});
+window.addEventListener('resize', initPlexus);
 
 function verifyLogin() {
   const uid = document.getElementById('userIdInput').value.trim();
@@ -554,7 +569,7 @@ async function fetchMessages() {
     if(!currentToken) { return alert("System Error: Generate email first!"); }
     
     const inboxList = document.getElementById('inboxList');
-    inboxList.innerHTML = "Checking server...";
+    inboxList.innerHTML = "<p style='color:#0a0; padding:6px; font-size:0.75rem;'>Checking server...</p>";
     
     try {
         const response = await fetch('/api/messages?token=' + currentToken);
@@ -570,10 +585,10 @@ async function fetchMessages() {
                 inboxList.appendChild(li);
             });
         } else {
-            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.75rem;'>Inbox empty. Awaiting transmissions...</p>";
+            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.75rem; padding: 6px;'>Inbox empty. Awaiting transmissions...</p>";
         }
     } catch (err) {
-        inboxList.innerHTML = "<p style='color:red;'>Error fetching data.</p>";
+        inboxList.innerHTML = "<p style='color:red; padding: 6px;'>Error fetching data.</p>";
     }
 }
 
