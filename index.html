@@ -54,25 +54,25 @@
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
   /* BOLD HEADER */
-  header { text-align: center; padding: 4px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
-  header h1 { font-size: 1.3rem; font-weight: 900; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-shadow); letter-spacing: 1px; }
-  header p { font-size: 0.75rem; font-weight: bold; opacity: 0.9; }
+  header { text-align: center; padding: 6px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
+  header h1 { font-size: 1.6rem; font-weight: 900; color: var(--theme-color); text-shadow: 0 0 15px var(--theme-shadow); letter-spacing: 2px; }
+  header p { font-size: 0.9rem; font-weight: 900; opacity: 0.9; margin-top: 4px;}
   
   /* SINGLE CONTROL ROW (Count, Gen, DL, Notif) */
-  .master-controls { display: flex; gap: 6px; align-items: center; justify-content: space-between; margin-top: 6px; flex-shrink: 0; }
-  .ctrl-btn { flex: 1; background: #001a00; color: #0f0; border: 1px solid #0f0; padding: 8px 4px; text-align: center; font-family: 'Courier New'; font-weight: 900; font-size: 0.8rem; cursor: pointer; border-radius: 3px; box-shadow: 0 0 5px rgba(0,255,0,0.3); transition: 0.2s; white-space: nowrap; }
+  .master-controls { display: flex; gap: 6px; align-items: center; justify-content: space-between; margin-top: 8px; flex-shrink: 0; }
+  .ctrl-btn { flex: 1; background: #001a00; color: #0f0; border: 1px solid #0f0; padding: 10px 4px; text-align: center; font-family: 'Courier New'; font-weight: 900; font-size: 0.9rem; cursor: pointer; border-radius: 3px; box-shadow: 0 0 5px rgba(0,255,0,0.3); transition: 0.2s; white-space: nowrap; }
   .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
-  .btn-gen { flex: 2; background: #0f0; color: #000; font-size: 0.85rem; }
+  .btn-gen { flex: 2; background: #0f0; color: #000; font-size: 1rem; }
   .btn-gen:hover { background: #000; color: #0f0; border: 1px solid #0f0; }
-  .btn-icon { flex: 0.5; font-size: 1rem; padding: 6px 0; }
+  .btn-icon { flex: 0.5; font-size: 1.2rem; padding: 8px 0; }
   
   /* Notification Badge */
-  .badge { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; vertical-align: top; margin-left: 2px; box-shadow: 0 0 5px red; }
+  .badge { background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; vertical-align: top; margin-left: -5px; box-shadow: 0 0 5px red; position: relative; top: -5px;}
   .bell-shake { animation: shake 0.5s ease-in-out infinite; color: #fff; text-shadow: 0 0 10px #fff; }
   @keyframes shake { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(-15deg);} 75% {transform: rotate(15deg);} }
 
   /* Panels */
-  .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 6px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
+  .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 6px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 8px; }
 
   /* Table Container */
   .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; }
@@ -100,13 +100,21 @@
 
   #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: 900; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 15px #0f0; font-size: 0.85rem; letter-spacing: 0.5px; }
 
-  /* Premium Glass Effect Modals (Count & Download) */
+  /* Premium Glass Effect Modals */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
-  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-  .modal-title { font-size: 1.1rem; font-weight: 900; color: #0f0; text-align: center; margin-bottom: 10px; text-shadow: 0 0 10px #0f0; border-bottom: 2px dashed #0f0; padding-bottom: 10px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px; }
-  .modal-option { background: #001100; border: 1px solid #0f0; color: #0f0; padding: 12px; text-align: center; font-size: 1rem; font-weight: 900; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; }
+  .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 20px; display: flex; flex-direction: column; gap: 12px; max-height: 80vh; }
+  
+  /* Scrollable area for 1-100 count */
+  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; }
+  /* Custom scrollbar for modal */
+  .modal-scrollable::-webkit-scrollbar { width: 6px; }
+  .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 3px; }
+  .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 3px; }
+
+  .modal-title { font-size: 1.1rem; font-weight: 900; color: #0f0; text-align: center; margin-bottom: 10px; text-shadow: 0 0 10px #0f0; border-bottom: 2px dashed #0f0; padding-bottom: 10px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px; flex-shrink: 0; }
+  .modal-option { background: #001100; border: 1px solid #0f0; color: #0f0; padding: 12px; text-align: center; font-size: 1rem; font-weight: 900; border-radius: 4px; cursor: pointer; transition: 0.2s; font-family: 'Courier New', Courier, monospace; flex-shrink: 0; }
   .modal-option:hover { background: #0f0; color: #000; box-shadow: 0 0 20px #0f0; }
-  .modal-close { margin-top: 10px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 10px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; }
+  .modal-close { margin-top: 10px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 10px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
 </style>
 </head>
@@ -115,16 +123,13 @@
 <div id="toast">Copied to clipboard!</div>
 <canvas id="plexusBg"></canvas>
 
-<!-- Count Selection Modal -->
+<!-- Count Selection Modal (Scrollable 1 to 100) -->
 <div id="countModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">SELECT GENERATION COUNT</div>
-    <div class="modal-option" onclick="selectCount(1)">1 MAIL</div>
-    <div class="modal-option" onclick="selectCount(5)">5 MAILS</div>
-    <div class="modal-option" onclick="selectCount(10)">10 MAILS</div>
-    <div class="modal-option" onclick="selectCount(25)">25 MAILS</div>
-    <div class="modal-option" onclick="selectCount(50)">50 MAILS</div>
-    <div class="modal-option" onclick="selectCount(100)">100 MAILS (MAX)</div>
+    <div class="modal-scrollable" id="countOptionsContainer">
+        <!-- Generated by JS -->
+    </div>
     <button class="modal-close" onclick="closeModal('countModal')">CANCEL</button>
   </div>
 </div>
@@ -136,6 +141,7 @@
     <div class="modal-option" onclick="downloadVaultTXT()">📄 DOWNLOAD TXT</div>
     <div class="modal-option" onclick="printVaultPDF()">🖨️ PRINT / PDF</div>
     <div class="modal-option" onclick="shareTelegram()">✈️ TELEGRAM</div>
+    <div class="modal-option" onclick="shareMail()">✉️ MAIL</div>
     <div class="modal-option" onclick="shareVaultText()">📤 SHARE VIA OTHER</div>
     <button class="modal-close" onclick="closeModal('downloadModal')">CANCEL</button>
   </div>
@@ -198,7 +204,7 @@
 
       <!-- MASTER SINGLE CONTROL ROW -->
       <div class="master-controls">
-        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ C: 25 ▾ ]</div>
+        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ COUNT ▾ ]</div>
         <div class="ctrl-btn btn-gen" onclick="generateBulkMail()">[ GENERATE ]</div>
         <div class="ctrl-btn btn-icon" onclick="openModal('downloadModal')" title="Export Options">📥</div>
         <div class="ctrl-btn btn-icon" onclick="toggleView()" id="btnNotif" title="Inbox">🔔<span class="badge" id="msgBadge">0</span></div>
@@ -295,8 +301,21 @@ function startTerminalTyping() {
   typeChar();
 }
 
+function generateCountOptions() {
+    const container = document.getElementById('countOptionsContainer');
+    container.innerHTML = "";
+    for(let i = 1; i <= 100; i++) {
+        let div = document.createElement('div');
+        div.className = 'modal-option';
+        div.innerText = `${i} MAIL${i>1?'S':''}`;
+        div.onclick = () => selectCount(i);
+        container.appendChild(div);
+    }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   startTerminalTyping();
+  generateCountOptions();
   
   if(localStorage.getItem("saved_uid")) {
     document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
@@ -432,7 +451,7 @@ function lockScreen() {
   sessionStorage.removeItem("rg_is_active");
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
-  startTerminalTyping();
+  startTerminalTyping(); 
 }
 
 function toggleView() {
@@ -534,7 +553,7 @@ function downloadVaultTXT() {
 function printVaultPDF() {
     if(allAccounts.length===0) return showToast("No accounts!");
     let printWindow = window.open('', '_blank');
-    let html = `<html><head><title>Jamal TempMail Vault</title><style>body{font-family:monospace;padding:20px;}h2{color:green;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{border:1px solid #000;padding:8px;text-align:left;}</style></head><body>`;
+    let html = `<html><head><title>Jamal TempMail Vault</title><style>body{font-family:monospace;padding:20px;background:#000;color:#0f0;}h2{color:#0f0;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{border:1px solid #0f0;padding:8px;text-align:left;}</style></head><body>`;
     html += `<h2>GENIUS HACKER JAMAL - SECURE VAULT</h2><table><tr><th>#</th><th>Email</th><th>Password</th></tr>`;
     allAccounts.forEach((acc, idx) => { html += `<tr><td>${idx+1}</td><td>${acc.email}</td><td>${acc.password}</td></tr>`; });
     html += `</table></body></html>`;
@@ -546,6 +565,13 @@ function shareTelegram() {
     if(allAccounts.length===0) return showToast("No accounts!");
     const text = encodeURIComponent(getVaultText());
     window.open(`https://t.me/share/url?url=&text=${text}`, '_blank');
+    closeModal('downloadModal');
+}
+
+function shareMail() {
+    if(allAccounts.length===0) return showToast("No accounts!");
+    const text = encodeURIComponent(getVaultText());
+    window.open(`mailto:?subject=Genius Hacker Jamal - TempMail Vault&body=${text}`, '_blank');
     closeModal('downloadModal');
 }
 
