@@ -13,7 +13,7 @@
   
   canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-  /* 3D Lightning Bolt Overlay at Top */
+  /* 3D Lightning Bolt Effect Icon at Top */
   #lightningContainer { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); z-index: 99999; display: none; text-align: center; pointer-events: none; }
   .lightning-icon { font-size: 3.5rem; text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #0ff; animation: boltShake 0.3s ease-in-out infinite alternate; }
   @keyframes boltShake {
@@ -52,29 +52,32 @@
   header h1 { font-size: 1.3rem; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-shadow); }
   
   .panel { border: 1px dashed #0f0; padding: 10px; background: rgba(0,10,0,0.5); border-radius: 4px; }
-  .info-box { font-size: 0.85rem; margin: 4px 0; padding: 6px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
+  .info-box { font-size: 0.9rem; margin: 6px 0; padding: 8px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; }
   
   .controls-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
-  .controls-row input[type="number"] { background: #000; color: #0f0; border: 1px solid #0f0; padding: 8px; font-family: 'Courier New'; font-size: 0.95rem; outline: none; border-radius: 4px; flex: 1; text-align: center; }
+  .controls-row input[type="number"] { background: #000; color: #0f0; border: 1px solid #0f0; padding: 8px; font-family: 'Courier New'; font-size: 1rem; outline: none; border-radius: 4px; flex: 1; text-align: center; }
 
   .action-buttons-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
   .action-buttons-row button { flex: 1; padding: 7px; font-size: 0.75rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
-  /* Full vertical stretch table container */
-  .table-container { flex: 1; min-height: 300px; max-height: 60vh; overflow-y: auto; margin-top: 6px; border: 1px solid #030; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
-  th, td { padding: 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
-  th { background: #001a00; color: #0f0; position: sticky; top: 0; }
+  /* Table container set to fit exactly 25 items with readable bigger fonts */
+  .table-container { flex: 1; min-height: 400px; max-height: 65vh; overflow-y: auto; margin-top: 8px; border: 1px solid #030; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
+  th, td { padding: 8px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
+  th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.95rem; }
   tr:hover { background: rgba(0,255,0,0.05); cursor: pointer; }
 
-  /* Views Toggle System */
-  #generatorView { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  #inboxView { display: none; flex-direction: column; gap: 10px; flex: 1; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.9rem; }
+  .pagination button { padding: 6px 12px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .nav-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
   .nav-tabs button { flex: 1; padding: 8px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; }
   .nav-tabs button.active { background: #0f0; color: #000; }
+
+  #generatorView { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  #inboxView { display: none; flex-direction: column; gap: 10px; flex: 1; }
 
   #inboxList { list-style: none; padding: 0; }
   #inboxList li { background: #001a00; margin-bottom: 6px; padding: 10px; border: 1px solid #030; cursor: pointer; font-size: 0.85rem; }
@@ -85,7 +88,6 @@
 </head>
 <body>
 
-<!-- 3D Lightning Bolt Effect Icon at Top -->
 <div id="lightningContainer">
   <div class="lightning-icon">⚡</div>
 </div>
@@ -150,13 +152,12 @@
         <p>> BULK SECURE TEMP-MAIL GENERATOR_</p>
       </header>
 
-      <!-- Navigation Tabs for Switching Pages -->
       <div class="nav-tabs">
         <button id="tabGen" class="active" onclick="switchView('generator')">[ ⚙️ GENERATOR & VAULT ]</button>
         <button id="tabInbox" onclick="switchView('inbox')">[ 📥 INBOX MESSAGES ]</button>
       </div>
 
-      <!-- VIEW 1: GENERATOR & VAULT (Stretches to bottom) -->
+      <!-- VIEW 1: GENERATOR & VAULT (25 Items Per Page) -->
       <div id="generatorView">
         <div class="panel">
           <h3 style="margin-bottom:6px;">> BULK_CREDENTIALS_GENERATOR</h3>
@@ -180,20 +181,25 @@
         </div>
 
         <div class="panel" style="flex:1; display:flex; flex-direction:column;">
-          <strong style="font-size:0.85rem;">> GENERATED VAULT (FULL BOTTOM VIEW):</strong>
+          <strong style="font-size:0.9rem;">> GENERATED VAULT (25 PER PAGE):</strong>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Email Address</th>
-                  <th>Password</th>
+                  <th style="width: 10%;">#</th>
+                  <th style="width: 55%;">Email Address</th>
+                  <th style="width: 35%;">Password</th>
                 </tr>
               </thead>
               <tbody id="bulkTableBody">
                 <tr><td colspan="3" style="text-align:center; color:#0a0;">No batch generated yet. Click generate.</td></tr>
               </tbody>
             </table>
+          </div>
+          <div class="pagination">
+            <button onclick="changePage(-1)" id="prevBtn" disabled>◄ PREV</button>
+            <span id="pageIndicator" style="font-size:0.9rem; font-weight:bold;">Page 1 of 1</span>
+            <button onclick="changePage(1)" id="nextBtn" disabled>NEXT ►</button>
           </div>
         </div>
       </div>
@@ -225,9 +231,10 @@
 
 <script>
 let allAccounts = [];
+let currentPage = 1;
+const rowsPerPage = 25; // Strictly 25 mails per page with bigger fonts
 let currentToken = "";
 let allMessages = [];
-let lastMessageCount = 0;
 
 window.addEventListener('DOMContentLoaded', () => {
   if(localStorage.getItem("saved_uid")) {
@@ -268,7 +275,6 @@ function playBeep() {
     } catch(e) {}
 }
 
-// 3D Lightning Thunder Sound Effect
 function playLightningThunderSound() {
     if (!audioCtx) audioCtx = new AudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -287,7 +293,6 @@ function playLightningThunderSound() {
     } catch(e) {}
 }
 
-// iPhone Notification Chime
 function playiPhoneNotification() {
     if (!audioCtx) audioCtx = new AudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -401,7 +406,6 @@ function lockScreen() {
   document.getElementById('lockScreen').style.display = 'flex';
 }
 
-// Switch between Generator and Dedicated Inbox Page
 function switchView(view) {
   if(view === 'generator') {
     document.getElementById('generatorView').style.display = 'flex';
@@ -416,7 +420,6 @@ function switchView(view) {
   }
 }
 
-// Bulk Generator with 3D Lightning Icon & Thunder Sound
 async function generateBulkMail() {
     let count = parseInt(document.getElementById('bulkCount').value);
     if(isNaN(count) || count < 1) count = 1;
@@ -425,7 +428,6 @@ async function generateBulkMail() {
     document.getElementById('emailDisplay').innerText = `Generating ${count} mails...`;
     document.getElementById('passDisplay').innerText = "Processing...";
     
-    // Trigger 3D Lightning Icon & Sound
     const lightningEl = document.getElementById('lightningContainer');
     lightningEl.style.display = 'block';
     playLightningThunderSound();
@@ -458,6 +460,7 @@ async function generateBulkMail() {
             localStorage.setItem("saved_token", allAccounts[0].token);
             localStorage.setItem("saved_batch", JSON.stringify(allAccounts));
 
+            currentPage = 1;
             renderTable();
             speakMsg("Generation successful, boss!");
         } else {
@@ -473,16 +476,34 @@ function renderTable() {
     tbody.innerHTML = "";
     
     if(allAccounts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0a0;">No batch generated yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0a0;">No batch generated yet. Click generate.</td></tr>`;
         return;
     }
 
-    allAccounts.forEach((acc, index) => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedItems = allAccounts.slice(start, end);
+
+    paginatedItems.forEach((acc, index) => {
+        const actualIndex = start + index + 1;
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${index + 1}</td><td>${acc.email}</td><td>${acc.password}</td>`;
+        tr.innerHTML = `<td>${actualIndex}</td><td>${acc.email}</td><td>${acc.password}</td>`;
         tr.onclick = () => selectAccount(acc);
         tbody.appendChild(tr);
     });
+
+    const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
+    document.getElementById('pageIndicator').innerText = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prevBtn').disabled = currentPage === 1;
+    document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
+}
+
+function changePage(direction) {
+    const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
+    currentPage += direction;
+    if(currentPage < 1) currentPage = 1;
+    if(currentPage > totalPages) currentPage = totalPages;
+    renderTable();
 }
 
 function selectAccount(acc) {
@@ -539,7 +560,6 @@ function shareVaultText() {
     }
 }
 
-// Fetch Messages for Dedicated Inbox Page
 async function fetchMessages() {
     if(!currentToken) {
         currentToken = localStorage.getItem("saved_token");
@@ -554,11 +574,6 @@ async function fetchMessages() {
         const data = await response.json();
         
         if(data.status && data.count > 0) {
-            if(data.count > lastMessageCount && lastMessageCount !== 0) {
-                playiPhoneNotification();
-            }
-            lastMessageCount = data.count;
-
             allMessages = data.messages.reverse();
             inboxList.innerHTML = "";
             allMessages.forEach(msg => {
