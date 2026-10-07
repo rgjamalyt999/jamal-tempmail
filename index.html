@@ -13,23 +13,15 @@
   
   canvas#plexusBg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-  #lightningContainer { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; display: none; text-align: center; pointer-events: none; }
-  .lightning-icon { font-size: 3rem; text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #0ff; animation: boltShake 0.3s ease-in-out infinite alternate; }
-  @keyframes boltShake {
-    0% { transform: scale(1) rotate(-5deg); opacity: 1; }
-    100% { transform: scale(1.2) rotate(5deg); opacity: 0.8; }
-  }
-
   .container { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; }
 
   .win-window { background: rgba(0, 15, 0, 0.96); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 20px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; margin: 2px 0; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 5px 8px; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
   .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
-  .win-body { padding: 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .win-body { padding: 6px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
 
   #lockScreen { position: fixed; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; }
   
-  /* Compact single-line HUD styling to prevent cutting */
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 4px; padding: 6px 10px; background: rgba(0, 15, 0, 0.85); border: 1px solid #0f0; font-size: 0.72rem; font-weight: bold; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
@@ -50,44 +42,43 @@
 
   header { text-align: center; padding: 2px 0 4px; border-bottom: 1px dashed var(--theme-color); }
   header h1 { font-size: 1.1rem; color: var(--theme-color); text-shadow: 0 0 6px var(--theme-shadow); }
-  header p { font-size: 0.75rem; }
+  header p { font-size: 0.7rem; }
   
   .panel { border: 1px dashed #0f0; padding: 6px; background: rgba(0,10,0,0.5); border-radius: 4px; }
-  .info-box { font-size: 0.8rem; margin: 3px 0; padding: 5px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; cursor: pointer; }
+  .info-box { font-size: 0.75rem; margin: 2px 0; padding: 4px; background: #001100; border-left: 3px solid #0f0; word-break: break-all; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
   .info-box:hover { background: #002200; }
   
-  .controls-row { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
-  .range-container { flex: 1; display: flex; align-items: center; gap: 6px; background: #000; border: 1px solid #0f0; padding: 4px 8px; border-radius: 4px; }
-  .range-container input[type="range"] { flex: 1; accent-color: #0f0; cursor: pointer; }
-  .range-container span { font-weight: bold; min-width: 25px; text-align: center; font-size: 0.85rem; }
+  .controls-row { display: flex; gap: 4px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
+  .count-selector { flex: 1; display: flex; align-items: center; background: #000; border: 1px solid #0f0; border-radius: 4px; overflow: hidden; cursor: pointer; }
+  .count-selector div { flex: 1; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; color: #0f0; }
+  .count-selector:hover { background: #002200; }
 
-  .action-buttons-row { display: flex; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
-  .action-buttons-row button { flex: 1; padding: 5px; font-size: 0.7rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
+  .action-buttons-row { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+  .action-buttons-row button { flex: 1; padding: 4px; font-size: 0.65rem; background: #001a00; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; }
   .action-buttons-row button:hover { background: #0f0; color: #000; }
 
-  /* Table optimized for 25 items with clean compact rows */
-  .table-container { flex: 1; min-height: 240px; max-height: 50vh; overflow-y: auto; margin-top: 4px; border: 1px solid #030; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: left; }
-  th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; }
-  th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; }
+  .table-container { flex: 1; min-height: 250px; max-height: 55vh; overflow-y: auto; margin-top: 4px; border: 1px solid #030; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.7rem; text-align: left; }
+  th, td { padding: 3px 4px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+  th { background: #001a00; color: #0f0; position: sticky; top: 0; font-size: 0.7rem; }
   tr:hover { background: rgba(0,255,0,0.1); cursor: pointer; }
 
-  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.8rem; }
-  .pagination button { padding: 4px 8px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; font-size: 0.75rem; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.75rem; }
+  .pagination button { padding: 3px 6px; background: #002200; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: 'Courier New'; border-radius: 3px; font-weight: bold; font-size: 0.7rem; }
   .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .nav-tabs { display: flex; gap: 5px; margin-bottom: 6px; }
-  .nav-tabs button { flex: 1; padding: 6px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.75rem; }
+  .nav-tabs { display: flex; gap: 4px; margin-bottom: 4px; }
+  .nav-tabs button { flex: 1; padding: 5px; background: #001100; color: #0f0; border: 1px solid #0f0; font-family: 'Courier New'; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 0.75rem; }
   .nav-tabs button.active { background: #0f0; color: #000; }
 
-  #generatorView { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  #inboxView { display: none; flex-direction: column; gap: 6px; flex: 1; }
+  #generatorView { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  #inboxView { display: none; flex-direction: column; gap: 4px; flex: 1; }
 
   #inboxList { list-style: none; padding: 0; }
-  #inboxList li { background: #001a00; margin-bottom: 4px; padding: 6px; border: 1px solid #030; cursor: pointer; font-size: 0.8rem; }
+  #inboxList li { background: #001a00; margin-bottom: 4px; padding: 6px; border: 1px solid #030; cursor: pointer; font-size: 0.75rem; word-break: break-all; }
   #inboxList li:hover { border-color: #0f0; }
   
-  #messageView { display: none; background: #000; padding: 8px; border: 1px solid #0f0; margin-top: 5px; }
+  #messageView { display: none; background: #000; padding: 6px; border: 1px solid #0f0; margin-top: 4px; }
 
   #toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: bold; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 10px #0f0; font-size: 0.8rem; }
 </style>
@@ -95,10 +86,6 @@
 <body>
 
 <div id="toast">Copied to clipboard!</div>
-
-<div id="lightningContainer">
-  <div class="lightning-icon">⚡</div>
-</div>
 
 <canvas id="plexusBg"></canvas>
 
@@ -168,20 +155,20 @@
       <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView">
         <div class="panel">
-          <h3 style="margin-bottom:4px; font-size: 0.85rem;">> BULK_CREDENTIALS_GENERATOR</h3>
+          <h3 style="margin-bottom:2px; font-size: 0.8rem;">> BULK_CREDENTIALS_GENERATOR</h3>
           <div class="controls-row">
-            <div class="range-container">
-              <input type="range" id="bulkCountRange" min="1" max="100" value="25" oninput="document.getElementById('rangeVal').innerText=this.value" />
-              <span id="rangeVal">25</span>
+            <!-- Custom Button for Count Selection -->
+            <div class="count-selector" onclick="setBulkCount()">
+              <div id="rangeValDisplay">COUNT: 25 ▾</div>
             </div>
-            <button class="btn" style="flex:1.2; padding:8px; font-size:0.9rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
+            <button class="btn" style="flex:1.5; padding:6px; font-size:0.8rem;" onclick="generateBulkMail()">[ GENERATE ]</button>
           </div>
 
           <div class="info-box" onclick="copyText(document.getElementById('emailDisplay').innerText)" title="Click to Copy">
-            <strong>Email: </strong> <span id="emailDisplay">Waiting...</span> 📋
+            <span><strong>Email: </strong><span id="emailDisplay">Waiting...</span></span> <span>📋</span>
           </div>
           <div class="info-box" onclick="copyText(document.getElementById('passDisplay').innerText)" title="Click to Copy">
-            <strong>Pass: </strong> <span id="passDisplay">Waiting...</span> 📋
+            <span><strong>Pass: </strong><span id="passDisplay">Waiting...</span></span> <span>📋</span>
           </div>
 
           <div class="action-buttons-row">
@@ -192,7 +179,7 @@
         </div>
 
         <div class="panel" style="flex:1; display:flex; flex-direction:column;">
-          <strong style="font-size:0.8rem;">> GENERATED VAULT (25 PER PAGE - CLICK TO COPY):</strong>
+          <strong style="font-size:0.75rem;">> GENERATED VAULT (25 PER PAGE - CLICK TO COPY):</strong>
           <div class="table-container">
             <table>
               <thead>
@@ -218,21 +205,21 @@
       <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView">
         <div class="panel" style="flex:1;">
-          <h3 style="margin-bottom:6px; font-size:0.85rem;">> INBOX_DATA_VAULT</h3>
-          <button class="btn" style="padding:8px;" onclick="fetchMessages()">[ REFRESH INBOX ]</button>
+          <h3 style="margin-bottom:4px; font-size:0.8rem;">> INBOX_DATA_VAULT</h3>
+          <button class="btn" style="padding:6px; font-size:0.8rem;" onclick="fetchMessages()">[ REFRESH INBOX ]</button>
           <ul id="inboxList" style="margin-top:6px;">
-            <p style="color:#0a0; font-size:0.8rem;">No messages loaded. Click refresh.</p>
+            <p style="color:#0a0; font-size:0.75rem;">No messages loaded. Click refresh.</p>
           </ul>
         </div>
 
         <div id="messageView" class="panel">
-          <h3 style="font-size:0.85rem;">> DECRYPTED_MESSAGE</h3>
-          <button class="btn" style="margin:5px 0; padding:5px;" onclick="closeMessage()">[ CLOSE ]</button>
-          <div class="info-box">
+          <h3 style="font-size:0.8rem;">> DECRYPTED_MESSAGE</h3>
+          <button class="btn" style="margin:4px 0; padding:4px;" onclick="closeMessage()">[ CLOSE ]</button>
+          <div class="info-box" style="display:block;">
             <strong>From:</strong> <span id="msgFrom"></span><br>
             <strong>Subject:</strong> <span id="msgSubject"></span>
           </div>
-          <div id="msgBody" style="margin-top:5px; white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.8rem;"></div>
+          <div id="msgBody" style="margin-top:4px; white-space: pre-wrap; word-wrap: break-word; color:#0f0; font-size:0.75rem;"></div>
         </div>
       </div>
 
@@ -245,7 +232,7 @@ let allAccounts = [];
 let currentPage = 1;
 const rowsPerPage = 25;
 let currentToken = "";
-let allMessages = [];
+let selectedCount = 25;
 
 window.addEventListener('DOMContentLoaded', () => {
   if(localStorage.getItem("saved_uid")) {
@@ -282,6 +269,17 @@ function copyText(text) {
   showToast("Copied: " + text);
 }
 
+function setBulkCount() {
+    let result = prompt("Enter number of mails to generate (1 to 100):", selectedCount);
+    if(result !== null) {
+        let val = parseInt(result);
+        if(isNaN(val) || val < 1) val = 1;
+        if(val > 100) val = 100;
+        selectedCount = val;
+        document.getElementById('rangeValDisplay').innerText = `COUNT: ${val} ▾`;
+    }
+}
+
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
 let audioCtx = null;
 
@@ -296,24 +294,6 @@ function playBeep() {
         gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); 
         osc.start(); osc.stop(audioCtx.currentTime + 0.04); 
-    } catch(e) {}
-}
-
-function playLightningThunderSound() {
-    if (!audioCtx) audioCtx = new AudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    try {
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.linearRampToValueAtTime(1200, now + 0.12);
-        osc.frequency.linearRampToValueAtTime(100, now + 0.5);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-        osc.start(now); osc.stop(now + 0.5);
     } catch(e) {}
 }
 
@@ -353,12 +333,6 @@ function speakMsg(text) {
     window.speechSynthesis.speak(speech);
   }
 }
-
-fetch('https://api.ipify.org?format=json')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('deviceIP').innerText = `[ IP: ${data.ip} ]`;
-  }).catch(e => {});
 
 setInterval(() => {
   const now = new Date(); 
@@ -445,18 +419,11 @@ function switchView(view) {
 }
 
 async function generateBulkMail() {
-    let count = parseInt(document.getElementById('bulkCountRange').value);
-    if(isNaN(count) || count < 1) count = 1;
-    if(count > 100) count = 100;
+    let count = selectedCount;
     
     document.getElementById('emailDisplay').innerText = `Generating ${count} mails...`;
     document.getElementById('passDisplay').innerText = "Processing...";
     
-    const lightningEl = document.getElementById('lightningContainer');
-    lightningEl.style.display = 'block';
-    playLightningThunderSound();
-    setTimeout(() => lightningEl.style.display = 'none', 1500);
-
     speakMsg("Please wait, mails are being generated.");
 
     allAccounts = [];
@@ -511,8 +478,7 @@ function renderTable() {
     paginatedItems.forEach((acc, index) => {
         const actualIndex = start + index + 1;
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${actualIndex}</td><td onclick="copyText('${acc.email}')">${acc.email} 📋</td><td onclick="copyText('${acc.password}')">${acc.password} 📋</td>`;
-        tr.title = "Click any email or password to copy instantly!";
+        tr.innerHTML = `<td>${actualIndex}</td><td onclick="copyText('${acc.email}')" title="Copy Email">${acc.email}</td><td onclick="copyText('${acc.password}')" title="Copy Password">${acc.password}</td>`;
         tbody.appendChild(tr);
     });
 
@@ -588,7 +554,7 @@ async function fetchMessages() {
         const data = await response.json();
         
         if(data.status && data.count > 0) {
-            allMessages = data.messages.reverse();
+            let allMessages = data.messages.reverse();
             inboxList.innerHTML = "";
             allMessages.forEach(msg => {
                 let li = document.createElement('li');
@@ -597,7 +563,7 @@ async function fetchMessages() {
                 inboxList.appendChild(li);
             });
         } else {
-            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.8rem;'>Inbox empty. Awaiting transmissions...</p>";
+            inboxList.innerHTML = "<p style='color:#0a0; font-size:0.75rem;'>Inbox empty. Awaiting transmissions...</p>";
         }
     } catch (err) {
         inboxList.innerHTML = "<p style='color:red;'>Error fetching data.</p>";
