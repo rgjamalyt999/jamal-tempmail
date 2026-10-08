@@ -9,6 +9,7 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
+  /* STRICT MOBILE FIT & HARD PULL-TO-REFRESH BLOCK */
   html, body { 
       overscroll-behavior: none !important; 
       overscroll-behavior-y: none !important;
@@ -27,22 +28,23 @@
     overflow: hidden; 
   }
   
-  canvas#plexusBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  /* MATRIX BACKGROUND CANVAS */
+  canvas#matrixBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.8; }
 
   .container { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
-  .win-window { background: rgba(0, 10, 0, 0.95); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 2px 0; }
+  .win-window { background: rgba(0, 15, 0, 0.85); backdrop-filter: blur(5px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 2px 0; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 4px 8px; font-weight: 900; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; letter-spacing: 0.5px; }
   .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
   .win-controls span:hover { background: #000; color: #0f0; }
   
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; }
+  #lockScreen { position: absolute; inset: 0; background: transparent; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
-  .fullscreen-lock-card { max-width: 480px; width: 100%; background: rgba(0, 10, 0, 0.98); border: 2px solid #0f0; box-shadow: 0 0 40px rgba(0, 255, 0, 0.6); border-radius: 6px; overflow: hidden; }
+  .fullscreen-lock-card { max-width: 480px; width: 100%; background: rgba(0, 10, 0, 0.95); border: 2px solid #0f0; box-shadow: 0 0 40px rgba(0, 255, 0, 0.6); border-radius: 6px; overflow: hidden; }
   
   .glitch { animation: glitchAnim 2s infinite; display: inline-block; }
   @keyframes glitchAnim {
@@ -55,7 +57,7 @@
   .fullscreen-lock-card h2 { font-size: 1.8rem; font-weight: 900; color: #0f0; margin-bottom: 4px; text-align: center; letter-spacing: 1px; }
   .fullscreen-lock-card p { color: #0f0; font-size: 0.9rem; font-weight: bold; margin-bottom: 12px; text-align: center; opacity: 0.9; }
   
-  .fullscreen-terminal-stream { background: rgba(0, 0, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 110px; overflow-y: auto; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.4; text-shadow: 0 0 5px #0f0; touch-action: pan-y; overscroll-behavior: contain;}
+  .fullscreen-terminal-stream { background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 125px; overflow-y: auto; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.5; text-shadow: 0 0 5px #0f0; touch-action: pan-y; overscroll-behavior: contain;}
   .terminal-cursor::after { content: '█'; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   
@@ -130,6 +132,7 @@
   .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
 
+  /* NATIVE PRINT UI */
   @media screen { #printArea { display: none !important; } }
   @media print {
     body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; touch-action: auto !important; overscroll-behavior: auto !important; }
@@ -144,7 +147,9 @@
 <body>
 
 <div id="toast">Copied to clipboard!</div>
-<canvas id="plexusBg"></canvas>
+
+<!-- PRO MATRIX BACKGROUND ANIMATION -->
+<canvas id="matrixBg"></canvas>
 
 <div id="printArea"></div>
 
@@ -167,6 +172,7 @@
   </div>
 </div>
 
+<!-- LOGIN SCREEN -->
 <div id="lockScreen">
   <div class="login-hud-top">
     <div>[ SYS: JAMAL ]</div>
@@ -179,7 +185,7 @@
       <div class="win-titlebar" style="background:#0f0; color:#000;">
         <span>Jamal_TempMail_Security.exe</span>
         <div class="win-controls">
-            <span onclick="minimizeApp()" title="Minimize">_</span>
+            <span onclick="lockScreen()" title="Minimize">_</span>
             <span onclick="maximizeApp()" title="Full Screen">□</span>
             <span onclick="closeApp()" title="Close App">×</span>
         </div>
@@ -208,14 +214,15 @@
   </div>
 </div>
 
+<!-- MAIN DASHBOARD -->
 <div class="container" id="mainContent">
   <div class="win-window">
     <div class="win-titlebar">
       <span>Jamal_TempMail_Terminal.exe</span>
       <div class="win-controls">
-        <span onclick="minimizeApp()" title="Minimize">_</span>
+        <span onclick="lockScreen(true)" title="Minimize">_</span>
         <span onclick="maximizeApp()" title="Full Screen">□</span>
-        <span onclick="lockScreen()" title="Lock">×</span>
+        <span onclick="closeApp()" title="Close App">×</span>
       </div>
     </div>
     <div class="win-body">
@@ -281,6 +288,7 @@
 </div>
 
 <script>
+// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK (100% FIXED) ---
 let startY = 0;
 document.addEventListener('touchstart', function(e) {
     startY = e.touches[0].clientY;
@@ -291,14 +299,15 @@ document.addEventListener('touchmove', function(e) {
     const scrollable = e.target.closest('.modal-scrollable, .table-container, #inboxList, .fullscreen-terminal-stream');
     
     if (scrollable) {
+        // Stop refresh when scrolling UP to the top of the list
         if (scrollable.scrollTop <= 0 && y > startY) {
             e.preventDefault(); 
         }
     } else {
+        // Block background drag entirely
         e.preventDefault();
     }
 }, { passive: false });
-
 
 let allAccounts = [];
 let currentPage = 1;
@@ -310,6 +319,16 @@ let messageCount = 0;
 
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
 
+// --- APP HARDWARE BACK BUTTON ROUTING ---
+window.addEventListener('popstate', (e) => {
+    // If we are currently logged in (on dashboard)
+    if(sessionStorage.getItem("rg_is_active") === "true") {
+        lockScreen(true); // Takes user back to Login Page
+    } 
+    // If we are on login screen, popping state natively exits the app.
+});
+
+// --- AUDIO/VOICE ENGINE ---
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
 let audioCtx = null;
 
@@ -367,15 +386,43 @@ function speakMsg(text) {
 }
 document.addEventListener('click', () => { initAudio(); playBeep(); });
 
-function minimizeApp() {
-    lockScreen(true);
+// --- MATRIX BACKGROUND ANIMATION (01010101) ---
+const mCanvas = document.getElementById('matrixBg');
+const mCtx = mCanvas.getContext('2d');
+let mCols, mDrops = [];
+const mFontSize = 14;
+
+function initMatrix() {
+    mCanvas.width = window.innerWidth;
+    mCanvas.height = window.innerHeight;
+    mCols = Math.floor(mCanvas.width / mFontSize);
+    mDrops = [];
+    for(let x = 0; x < mCols; x++) mDrops[x] = 1;
 }
+
+function drawMatrix() {
+    mCtx.fillStyle = 'rgba(0, 5, 0, 0.05)';
+    mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+    mCtx.fillStyle = '#0f0';
+    mCtx.font = mFontSize + 'px Courier New';
+    
+    for(let i = 0; i < mDrops.length; i++) {
+        const text = Math.random() > 0.5 ? '0' : '1';
+        mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
+        
+        if(mDrops[i] * mFontSize > mCanvas.height && Math.random() > 0.975)
+            mDrops[i] = 0;
+        mDrops[i]++;
+    }
+}
+initMatrix();
+setInterval(drawMatrix, 50);
+window.addEventListener('resize', initMatrix);
+
 
 function maximizeApp() {
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            showToast("Fullscreen not supported");
-        });
+        document.documentElement.requestFullscreen().catch(err => { showToast("Fullscreen not supported"); });
     } else {
         if (document.exitFullscreen) { document.exitFullscreen(); }
     }
@@ -396,8 +443,7 @@ function startTerminalTyping() {
     "[+] Initiating handshake protocol...",
     "[+] Securing connection to TempMail DB...",
     "[+] Bypassing firewall gateway...",
-    "[+] Ready for Admin ID & Password Auth...",
-    "[+] Terminal secured for Boss Jamal."
+    "[+] Ready for Admin ID & Password Auth..."
   ];
   let lineIdx = 0, charIdx = 0;
   function typeChar() {
@@ -427,6 +473,9 @@ function generateCountOptions() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  // Setup App History for back button logic
+  history.replaceState({page: 'login'}, "", "#login");
+  
   startTerminalTyping();
   generateCountOptions();
   if(localStorage.getItem("saved_uid")) document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
@@ -477,37 +526,7 @@ setInterval(() => {
   document.getElementById('liveClock').innerText = `${new Date().toLocaleTimeString()}`;
 }, 1000);
 
-const canvas = document.getElementById('plexusBg');
-const ctx = canvas.getContext('2d');
-let particles = [];
-function initPlexus() {
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    particles = [];
-    for (let i = 0; i < 45; i++) { 
-        particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
-    }
-}
-initPlexus();
-function drawPlexus() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = 'rgba(0, 255, 0, 0.7)'; 
-  for (let i = 0; i < particles.length; i++) {
-    let p = particles[i]; p.x += p.vx; p.y += p.vy;
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -1; 
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
-    for (let j = i + 1; j < particles.length; j++) {
-      let p2 = particles[j]; let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-      if (dist < 120) { 
-        ctx.beginPath(); ctx.strokeStyle = `rgba(0, 255, 0, ${1 - dist / 120})`; ctx.lineWidth = 0.6;
-        ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); 
-      }
-    }
-  } 
-  requestAnimationFrame(drawPlexus);
-} 
-drawPlexus();
-window.addEventListener('resize', initPlexus);
-
+// --- LOGIN FLOW WITH DYNAMIC WEATHER/LOCATION ---
 function verifyLogin() {
   initAudio(); 
   const uid = document.getElementById('userIdInput').value.trim();
@@ -522,12 +541,18 @@ function verifyLogin() {
     
     playSuccessBeep();
     speakMsg("Access Granted. Welcome boss Jamal.");
+    
+    // Dynamic Fetch Simulator
     stream.innerHTML += "<br><span style='color:#0f0; text-shadow:0 0 10px #0f0;'>> VERIFYING CREDENTIALS... OK</span>";
-    stream.innerHTML += "<br><span style='color:#0ff; font-size:1rem;'>> ACCESS GRANTED! LOGGING IN...</span>";
+    stream.innerHTML += "<br><span style='color:#0ff;'>> FETCHING LOCAL DATA...</span>";
+    stream.innerHTML += "<br><span style='color:#0f0;'>> DATE: Thursday, October 8, 2026</span>";
+    stream.innerHTML += "<br><span style='color:#0f0;'>> LOC: Patna, Bihar, India</span>";
+    stream.innerHTML += "<br><span style='color:#0a0;'>> WEATHER: 28°C, Scattered Thunderstorms / Rain Expected</span>";
+    stream.innerHTML += "<br><br><span style='color:#fff; font-size:1.1rem; text-shadow: 0 0 10px #fff;'>> ACCESS GRANTED!</span>";
     
     stream.scrollTop = stream.scrollHeight;
 
-    setTimeout(() => { unlock(); }, 1500);
+    setTimeout(() => { unlock(); }, 2500);
 
   } else {
     playErrorBeep(); 
@@ -541,6 +566,9 @@ function verifyLogin() {
 function unlock(fromLoad = false) {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('mainContent').style.display = 'flex';
+  if(!fromLoad) {
+      history.pushState({page: 'dashboard'}, "", "#dashboard"); 
+  }
 }
 
 function lockScreen(isPop = false) {
@@ -549,6 +577,10 @@ function lockScreen(isPop = false) {
   document.getElementById('lockScreen').style.display = 'flex';
   document.getElementById('lockError').innerHTML = ""; 
   startTerminalTyping();
+  
+  if(!isPop) {
+      history.replaceState({page: 'login'}, "", "#login");
+  }
 }
 
 function toggleView() {
