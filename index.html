@@ -11,8 +11,8 @@
   
   /* STRICT MOBILE FIT & HARD PULL-TO-REFRESH BLOCK */
   html, body { 
-      overscroll-behavior: none; 
-      touch-action: none; /* Disables all default browser gestures on body */
+      overscroll-behavior-y: contain; 
+      touch-action: pan-x pan-y;
   }
   
   body { 
@@ -38,7 +38,7 @@
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
   /* Login Screen */
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior-y: contain; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
@@ -88,8 +88,8 @@
 
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
-  /* SCROLLABLE AREAS - Enforce touch-action */
-  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; overscroll-behavior: none; touch-action: pan-y; }
+  /* SCROLLABLE AREAS */
+  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; overscroll-behavior-y: contain; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
   th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
   th { background: #002200; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; z-index: 1; text-transform: uppercase; border-bottom: 2px solid #0f0; text-shadow: 0 0 5px #0f0; }
@@ -105,7 +105,7 @@
   #generatorView { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
   #inboxView { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 
-  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; overscroll-behavior: none; touch-action: pan-y; }
+  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; overscroll-behavior-y: contain; }
   #inboxList li { background: #001a00; margin-bottom: 2px; padding: 6px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.75rem; font-weight: bold; word-break: break-all; color: #0f0; }
   #inboxList li:hover { background: rgba(0,255,0,0.2); }
   
@@ -118,8 +118,7 @@
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
   
-  /* Scrollable area for 1-100 count - with touch-action pan-y */
-  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; overscroll-behavior: none; touch-action: pan-y; }
+  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; overscroll-behavior-y: contain; }
   .modal-scrollable::-webkit-scrollbar { width: 4px; }
   .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
   .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 2px; }
@@ -131,26 +130,12 @@
   
   .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
-
-  /* NATIVE PRINT UI */
-  @media screen { #printArea { display: none !important; } }
-  @media print {
-    body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; touch-action: auto; }
-    .container, #lockScreen, canvas, #toast, .modal-overlay { display: none !important; }
-    #printArea { display: block !important; width: 100%; }
-    #printArea table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    #printArea th, #printArea td { border: 1px solid #000; padding: 8px; text-align: left; }
-    #printArea th { background-color: #eee; }
-  }
 </style>
 </head>
 <body>
 
 <div id="toast">Copied to clipboard!</div>
 <canvas id="plexusBg"></canvas>
-
-<!-- Printable Area (Hidden normally) -->
-<div id="printArea"></div>
 
 <!-- Count Selection Modal -->
 <div id="countModal" class="modal-overlay">
@@ -163,15 +148,13 @@
   </div>
 </div>
 
-<!-- Download/Share Modal with 3D Icons -->
+<!-- REMOVED TELEGRAM & INSTAGRAM / FIXED PDF & SHARE -->
 <div id="downloadModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">EXPORT VAULT DATA</div>
     <div class="modal-option" onclick="actionPrintPDF()"><span class="icon">🖨️</span> PRINT / PDF</div>
     <div class="modal-option" onclick="actionSMS()"><span class="icon">💬</span> TEXT MESSAGE</div>
     <div class="modal-option" onclick="actionWhatsApp()"><span class="icon">🟩</span> WHATSAPP</div>
-    <div class="modal-option" onclick="actionTelegram()"><span class="icon">✈️</span> TELEGRAM</div>
-    <div class="modal-option" onclick="actionInstagram()"><span class="icon">📸</span> INSTAGRAM</div>
     <div class="modal-option" onclick="actionShareOther()"><span class="icon">📤</span> SHARE VIA OTHER</div>
     <button class="modal-close" onclick="closeModal('downloadModal')">CANCEL</button>
   </div>
@@ -200,7 +183,6 @@
         <div class="input-group">
           <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="username" />
           <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
-          <!-- Button click is CRUCIAL for App Audio unlocking -->
           <button onclick="verifyLogin()">AUTHORIZE & LOGIN</button>
         </div>
 
@@ -232,18 +214,15 @@
         <p>> SECURE VAULT PROTOCOL ACTIVE_</p>
       </header>
 
-      <!-- PAD-STYLE MASTER CONTROL ROW -->
       <div class="master-controls">
         <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ COUNT ▾ ]</div>
         <div class="ctrl-btn btn-gen" onclick="generateBulkMail()" id="btnGenerate">[ GENERATE ]</div>
-        
         <div class="icon-stack">
           <div class="ctrl-btn" onclick="openModal('downloadModal')" id="btnDownload" title="Export Options">📥</div>
           <div class="ctrl-btn" onclick="toggleView()" id="btnNotif" title="Inbox">🔔<span class="badge" id="msgBadge">0</span></div>
         </div>
       </div>
 
-      <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView" class="panel-expand">
         <strong style="font-size:0.8rem; margin-bottom: 2px; color: #0f0; text-shadow: 0 0 5px #0f0;">> VAULT DATABASE (CLICK TO COPY):</strong>
         <div class="table-container">
@@ -267,7 +246,6 @@
         </div>
       </div>
 
-      <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView" class="panel-expand">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
           <strong style="font-size:0.8rem; color:#0f0; text-shadow: 0 0 5px #0f0;">> INBOX MESSAGES:</strong>
@@ -292,28 +270,24 @@
 </div>
 
 <script>
-// --- ULTRA-STRICT JAVASCRIPT SCROLL LOCK (KILL PULL-TO-REFRESH) ---
+// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK ---
 document.addEventListener('touchstart', function(e) {
-    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody, #lockScreen');
+    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody');
     if(el) { el.dataset.lastY = e.touches[0].clientY; }
 }, { passive: false });
 
 document.addEventListener('touchmove', function(e) {
-    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody, #lockScreen');
+    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody');
     if(!el) {
-        e.preventDefault(); // Lock background completely
+        e.preventDefault(); 
         return;
     }
     let currentY = e.touches[0].clientY;
     let lastY = parseFloat(el.dataset.lastY || currentY);
-    let isScrollingUp = currentY > lastY; // Swipe down = scrolling up to the top
+    let isScrollingUp = currentY > lastY;
     
-    if(el.scrollTop <= 0 && isScrollingUp) {
-        e.preventDefault(); // Kills pull-to-refresh at the top
-    }
-    if(el.scrollTop + el.clientHeight >= el.scrollHeight && !isScrollingUp) {
-        e.preventDefault(); // Kills overscroll at the bottom
-    }
+    // Kills pull-to-refresh entirely in WebViews
+    if(el.scrollTop <= 0 && isScrollingUp) { e.preventDefault(); }
     el.dataset.lastY = currentY;
 }, { passive: false });
 
@@ -325,7 +299,6 @@ let selectedCount = 25;
 let isInboxView = false;
 let messageCount = 0;
 
-// Update this with your actual Vercel Domain
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
 const API_KEY = "JAMAL_BOSS_999"; 
 
@@ -363,7 +336,7 @@ function playErrorBeep() {
         const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sawtooth'; 
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime); // Error buzz
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime); 
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3); 
@@ -462,7 +435,7 @@ function closeModal(id) {
 
 function selectCount(val) {
   selectedCount = val;
-  document.getElementById('btnCountLabel').innerText = `[ COUNT ▾ ]`;
+  document.getElementById('btnCountLabel').innerText = `[ C: ${val} ▾ ]`;
   showToast(`Count set to ${val}`);
   closeModal('countModal');
 }
@@ -582,7 +555,7 @@ async function generateBulkMail() {
             currentPage = 1; renderTable();
             speakMsg("Generation successful.");
         } else { alert("Failed to generate batch."); }
-    } catch (err) { alert("API connection failed. Ensure your Vercel server is running."); } 
+    } catch (err) { alert("API connection failed."); } 
     finally { btnGen.classList.remove('active-cyan'); btnGen.innerText = "[ GENERATE ]"; }
 }
 
@@ -607,7 +580,7 @@ function renderTable() {
 }
 function changePage(direction) { currentPage += direction; renderTable(); }
 
-// --- NATIVE SHARE / EXPORT ACTIONS ---
+// --- NATIVE APP SHARE & EXPORT FIXES ---
 function getVaultText() {
     let text = "=== GENIUS HACKER JAMAL - TEMPMAIL VAULT ===\n\n";
     allAccounts.forEach((acc, idx) => { text += `[${idx+1}] Email: ${acc.email} | Pass: ${acc.password}\n`; });
@@ -615,52 +588,67 @@ function getVaultText() {
     return text;
 }
 
+// 1. PRINT / PDF FIX
 function actionPrintPDF() {
     if(allAccounts.length===0) return showToast("No accounts generated!");
-    let printArea = document.getElementById('printArea');
-    let html = `<h2 style="font-family: monospace;">GENIUS HACKER JAMAL - SECURE VAULT</h2>`;
-    html += `<table><tr><th>#</th><th>Email Address</th><th>Password</th></tr>`;
+    
+    // Generates an HTML document and triggers native download -> acts as PDF/Doc save in App
+    let html = `<html><head><title>Jamal TempMail Vault</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{font-family:monospace;background:#fff;color:#000;padding:20px;}h2{color:green;}table{width:100%;border-collapse:collapse;margin-top:15px;}th,td{border:1px solid #000;padding:8px;text-align:left;}th{background-color:#eee;}</style></head><body>`;
+    html += `<h2>GENIUS HACKER JAMAL - SECURE VAULT</h2><table><tr><th>#</th><th>Email Address</th><th>Password</th></tr>`;
     allAccounts.forEach((acc, idx) => { html += `<tr><td>${idx+1}</td><td>${acc.email}</td><td>${acc.password}</td></tr>`; });
-    html += `</table><div style="margin-top:20px; font-weight:bold;">>> SECURE TERMINAL APP BY BOSS JAMAL <<</div>`;
-    printArea.innerHTML = html;
-    window.print();
+    html += `</table><div style="margin-top:20px; font-weight:bold;">>> SECURE TERMINAL APP BY BOSS JAMAL <<</div></body></html>`;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); 
+    a.href = url; 
+    a.download = 'Jamal_Vault_Document.html'; 
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    // Also try firing native print as backup
+    setTimeout(() => { try { window.print(); } catch(e){} }, 500);
     closeModal('downloadModal');
+    showToast("Document saved to your phone!");
 }
 
+// 2. TEXT MESSAGE FIX
 function actionSMS() {
     if(allAccounts.length===0) return showToast("No accounts!");
     window.location.href = `sms:?body=${encodeURIComponent(getVaultText())}`;
     closeModal('downloadModal');
 }
 
+// 3. WHATSAPP FIX
 function actionWhatsApp() {
     if(allAccounts.length===0) return showToast("No accounts!");
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(getVaultText())}`, '_blank');
     closeModal('downloadModal');
 }
 
-function actionTelegram() {
-    if(allAccounts.length===0) return showToast("No accounts!");
-    window.open(`https://t.me/share/url?url=&text=${encodeURIComponent(getVaultText())}`, '_blank');
-    closeModal('downloadModal');
-}
-
-function actionInstagram() {
-    if(allAccounts.length===0) return showToast("No accounts!");
-    navigator.clipboard.writeText(getVaultText());
-    showToast("Text Copied! Opening Instagram...");
-    setTimeout(() => { window.location.href = "instagram://camera"; }, 1200);
-    closeModal('downloadModal');
-}
-
+// 4. NATIVE SHARE SHEET FIX (Android Intent Magic)
 function actionShareOther() {
     if(allAccounts.length===0) return showToast("No accounts!");
+    
     if (navigator.share) {
-        navigator.share({ title: 'TempMail Vault', text: getVaultText() }).catch(() => {});
+        navigator.share({ title: 'TempMail Vault', text: getVaultText() }).catch(() => {
+            fallbackNativeShare();
+        });
     } else {
-        navigator.clipboard.writeText(getVaultText()); showToast("Copied to clipboard!");
+        fallbackNativeShare();
     }
     closeModal('downloadModal');
+}
+
+function fallbackNativeShare() {
+    try {
+        // App Webview Native Share Intent
+        const intentUrl = `intent:#Intent;action=android.intent.action.SEND;type=text/plain;S.android.intent.extra.TEXT=${encodeURIComponent(getVaultText())};end`;
+        window.location.href = intentUrl;
+    } catch(e) {
+        navigator.clipboard.writeText(getVaultText()); 
+        showToast("Copied to clipboard!");
+    }
 }
 
 // --- MESSAGES ---
