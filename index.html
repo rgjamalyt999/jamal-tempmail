@@ -9,7 +9,8 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* STRICT MOBILE FIT */
+  /* STRICT MOBILE FIT & ANTI-PULL-TO-REFRESH */
+  html, body { overscroll-behavior: none; }
   body { 
     font-family: 'Courier New', Courier, monospace; 
     background: #000500; 
@@ -33,7 +34,7 @@
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
   /* Login Screen */
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none;}
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
@@ -53,31 +54,34 @@
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
-  /* BRIGHTER BOLD HEADER */
+  /* BOLDER HEADER */
   header { text-align: center; padding: 4px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
-  header h1 { font-size: 1.4rem; font-weight: 900; color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; letter-spacing: 1px; }
+  header h1 { font-size: 1.5rem; font-weight: 900; color: #0f0; text-shadow: 0 0 12px #0f0, 0 0 25px #0f0; letter-spacing: 1.5px; }
   header p { font-size: 0.8rem; font-weight: 900; color: #0f0; text-shadow: 0 0 5px #0f0; margin-top: 2px;}
   
-  /* SINGLE CONTROL ROW (Compact & Stacked Icons) */
-  .master-controls { display: flex; gap: 4px; align-items: stretch; margin-top: 6px; flex-shrink: 0; height: 38px; }
+  /* PAD-STYLE CONTROL ROW */
+  .master-controls { 
+    display: flex; gap: 4px; align-items: stretch; margin-top: 6px; flex-shrink: 0; height: 42px;
+    background: rgba(0, 30, 0, 0.8); padding: 4px; border: 1px solid #0f0; border-radius: 6px; box-shadow: inset 0 0 10px rgba(0,255,0,0.2);
+  }
   
-  .ctrl-btn { display: flex; justify-content: center; align-items: center; background: #001a00; color: #0f0; border: 1px solid #0f0; text-align: center; font-family: 'Courier New'; font-weight: 900; cursor: pointer; border-radius: 3px; box-shadow: 0 0 5px rgba(0,255,0,0.3); transition: 0.2s; white-space: nowrap; user-select: none; }
-  .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
+  .ctrl-btn { display: flex; justify-content: center; align-items: center; background: #000; color: #0f0; border: 1px solid rgba(0,255,0,0.5); text-align: center; font-family: 'Courier New'; font-weight: 900; cursor: pointer; border-radius: 4px; box-shadow: 0 0 5px rgba(0,255,0,0.2); transition: 0.2s; white-space: nowrap; user-select: none; }
+  .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; border: 1px solid #0f0; }
   
-  /* Buttons Sizing */
-  #btnCountLabel { flex: 0.8; font-size: 0.8rem; }
-  .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 0.95rem; text-shadow: none; }
+  /* Buttons Sizing - Count is smaller now */
+  #btnCountLabel { flex: 0.7; font-size: 0.75rem; padding: 0 4px; }
+  .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 1rem; text-shadow: none; border: 1px solid #0f0; }
   .btn-gen:hover { background: #000; color: #0f0; border: 1px solid #0f0; }
   
   /* Stacked Right Icons */
-  .icon-stack { display: flex; flex-direction: column; gap: 2px; flex: 0.4; }
-  .icon-stack .ctrl-btn { flex: 1; font-size: 0.75rem; padding: 0; position: relative; }
+  .icon-stack { display: flex; flex-direction: row; gap: 4px; flex: 1.2; }
+  .icon-stack .ctrl-btn { flex: 1; font-size: 1.1rem; padding: 0; position: relative; }
 
-  /* CYAN ACTIVE STATE SETTINGS */
+  /* CYAN ACTIVE STATE */
   .active-cyan { background: var(--cyan-color) !important; color: #000 !important; border-color: var(--cyan-color) !important; box-shadow: 0 0 15px var(--cyan-color) !important; text-shadow: none !important; }
   
   /* Notification Badge */
-  .badge { position: absolute; top: -3px; right: -3px; background: red; color: white; border-radius: 50%; padding: 1px 4px; font-size: 0.55rem; font-weight: bold; box-shadow: 0 0 5px red; }
+  .badge { position: absolute; top: -4px; right: -4px; background: red; color: white; border-radius: 50%; padding: 1px 5px; font-size: 0.6rem; font-weight: bold; box-shadow: 0 0 5px red; border: 1px solid #000;}
   .bell-shake { animation: shake 0.5s ease-in-out infinite; color: #fff; text-shadow: 0 0 10px #fff; }
   @keyframes shake { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(-15deg);} 75% {transform: rotate(15deg);} }
 
@@ -85,11 +89,11 @@
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
   /* Table Container */
-  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; }
+  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; overscroll-behavior-y: contain; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
   th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
   th { background: #002200; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; z-index: 1; text-transform: uppercase; border-bottom: 2px solid #0f0; text-shadow: 0 0 5px #0f0; }
-  td { color: #0f0; } /* Brighter table text */
+  td { color: #0f0; } 
   tr:nth-child(even) { background: rgba(0, 20, 0, 0.4); }
   tr:hover { background: rgba(0,255,0,0.2); cursor: pointer; }
 
@@ -103,7 +107,7 @@
   #inboxView { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 
   /* Inbox List */
-  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; }
+  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; overscroll-behavior-y: contain; }
   #inboxList li { background: #001a00; margin-bottom: 2px; padding: 6px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.75rem; font-weight: bold; word-break: break-all; color: #0f0; }
   #inboxList li:hover { background: rgba(0,255,0,0.2); }
   
@@ -117,7 +121,7 @@
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 80vh; }
   
   /* Scrollable area for 1-100 count */
-  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; }
+  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; overscroll-behavior-y: contain; }
   .modal-scrollable::-webkit-scrollbar { width: 4px; }
   .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
   .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 2px; }
@@ -127,12 +131,26 @@
   .modal-option:hover { background: #0f0; color: #000; box-shadow: 0 0 20px #0f0; }
   .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
+
+  /* NATIVE PRINT UI */
+  @media screen { #printArea { display: none !important; } }
+  @media print {
+    body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; }
+    .container, #lockScreen, canvas, #toast, .modal-overlay { display: none !important; }
+    #printArea { display: block !important; width: 100%; }
+    #printArea table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    #printArea th, #printArea td { border: 1px solid #000; padding: 8px; text-align: left; }
+    #printArea th { background-color: #eee; }
+  }
 </style>
 </head>
 <body>
 
 <div id="toast">Copied to clipboard!</div>
 <canvas id="plexusBg"></canvas>
+
+<!-- Printable Area (Hidden normally) -->
+<div id="printArea"></div>
 
 <!-- Count Selection Modal -->
 <div id="countModal" class="modal-overlay">
@@ -151,9 +169,10 @@
     <div class="modal-title">EXPORT VAULT DATA</div>
     <div class="modal-option" onclick="downloadVaultTXT()">📄 DOWNLOAD TXT</div>
     <div class="modal-option" onclick="printVaultPDF()">🖨️ PRINT / PDF</div>
-    <div class="modal-option" onclick="shareTelegram()">✈️ TELEGRAM</div>
-    <div class="modal-option" onclick="shareMail()">✉️ MAIL</div>
-    <div class="modal-option" onclick="shareVaultText()">📤 SHARE VIA OTHER</div>
+    <!-- Updated Icons: Proper Chat & Mail Emojis -->
+    <div class="modal-option" onclick="shareTelegram()">💬 TELEGRAM</div>
+    <div class="modal-option" onclick="shareSMS()">✉️ TEXT MESSAGE</div>
+    <div class="modal-option" onclick="shareVaultNative()">📤 SHARE VIA OTHER</div>
     <button class="modal-close" onclick="closeModal('downloadModal')">CANCEL</button>
   </div>
 </div>
@@ -176,12 +195,12 @@
         <h2>Genius Hacker Jamal</h2>
         <p>Secure TempMail Admin Gateway</p>
         
-        <!-- Terminal with Typing Effect -->
         <div class="fullscreen-terminal-stream terminal-cursor" id="terminalStream"></div>
 
         <div class="input-group">
           <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="username" />
           <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
+          <!-- Button interaction unlocks the Audio Context for App -->
           <button onclick="verifyLogin()">AUTHORIZE & LOGIN</button>
         </div>
 
@@ -213,12 +232,11 @@
         <p>> SECURE VAULT PROTOCOL ACTIVE_</p>
       </header>
 
-      <!-- MASTER SINGLE CONTROL ROW -->
+      <!-- PAD-STYLE MASTER CONTROL ROW -->
       <div class="master-controls">
-        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ C: 25 ▾ ]</div>
+        <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ COUNT ▾ ]</div>
         <div class="ctrl-btn btn-gen" onclick="generateBulkMail()" id="btnGenerate">[ GENERATE ]</div>
         
-        <!-- Stacked Icons for DL and Notif -->
         <div class="icon-stack">
           <div class="ctrl-btn" onclick="openModal('downloadModal')" id="btnDownload" title="Export Options">📥</div>
           <div class="ctrl-btn" onclick="toggleView()" id="btnNotif" title="Inbox">🔔<span class="badge" id="msgBadge">0</span></div>
@@ -284,9 +302,42 @@ let selectedCount = 25;
 let isInboxView = false;
 let messageCount = 0;
 
-// Update this with your actual Vercel Domain
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
+const API_KEY = "JAMAL_BOSS_999"; 
 
+// --- AUDIO CONTEXT INITIALIZATION FOR APP FIX ---
+const AudioContext = window.AudioContext || window.webkitAudioContext; 
+let audioCtx = null;
+
+function initAudio() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playBeep() {
+    if (!audioCtx) return;
+    try {
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'square'; osc.frequency.setValueAtTime(500 + Math.random()*200, audioCtx.currentTime); 
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); 
+        osc.start(); osc.stop(audioCtx.currentTime + 0.04); 
+    } catch(e) {}
+}
+
+document.addEventListener('click', playBeep);
+
+function speakMsg(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); 
+    const speech = new SpeechSynthesisUtterance(text); 
+    speech.rate = 0.95; speech.pitch = 1.0; speech.lang = 'en-US'; 
+    window.speechSynthesis.speak(speech);
+  }
+}
+
+// --- TERMINAL & UI LOGIC ---
 function startTerminalTyping() {
   const stream = document.getElementById('terminalStream');
   if(!stream) return;
@@ -298,20 +349,15 @@ function startTerminalTyping() {
     "[+] Ready for Admin ID & Password Auth...",
     "[+] Terminal secured for Boss Jamal."
   ];
-  let lineIdx = 0;
-  let charIdx = 0;
+  let lineIdx = 0, charIdx = 0;
   function typeChar() {
     if(lineIdx < lines.length) {
       if(charIdx === 0) stream.innerHTML += "<div>";
       if(charIdx < lines[lineIdx].length) {
         stream.lastChild.innerHTML += lines[lineIdx].charAt(charIdx);
-        charIdx++;
-        setTimeout(typeChar, 25);
+        charIdx++; setTimeout(typeChar, 25);
       } else {
-        stream.innerHTML += "</div>";
-        lineIdx++;
-        charIdx = 0;
-        setTimeout(typeChar, 300);
+        stream.innerHTML += "</div>"; lineIdx++; charIdx = 0; setTimeout(typeChar, 300);
       }
     }
   }
@@ -333,21 +379,13 @@ function generateCountOptions() {
 window.addEventListener('DOMContentLoaded', () => {
   startTerminalTyping();
   generateCountOptions();
-  
-  if(localStorage.getItem("saved_uid")) {
-    document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
-  }
-  if(localStorage.getItem("saved_pwd")) {
-    document.getElementById('passwordInput').value = localStorage.getItem("saved_pwd");
-  }
-
+  if(localStorage.getItem("saved_uid")) document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
+  if(localStorage.getItem("saved_pwd")) document.getElementById('passwordInput').value = localStorage.getItem("saved_pwd");
   if (sessionStorage.getItem("rg_is_active") === "true") {
     unlock();
     if(localStorage.getItem("saved_batch")) {
       allAccounts = JSON.parse(localStorage.getItem("saved_batch"));
-      if(allAccounts.length > 0){
-        currentToken = allAccounts[0].token;
-      }
+      if(allAccounts.length > 0) currentToken = allAccounts[0].token;
       renderTable();
       fetchMessages(true);
     }
@@ -356,8 +394,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.innerText = msg;
-  t.style.display = 'block';
+  t.innerText = msg; t.style.display = 'block';
   setTimeout(() => t.style.display = 'none', 1500);
 }
 
@@ -381,44 +418,13 @@ function closeModal(id) {
 
 function selectCount(val) {
   selectedCount = val;
-  document.getElementById('btnCountLabel').innerText = `[ C: ${val} ▾ ]`;
+  document.getElementById('btnCountLabel').innerText = `[ COUNT ▾ ]`; // Kept small
+  showToast(`Count set to ${val}`);
   closeModal('countModal');
 }
 
-const AudioContext = window.AudioContext || window.webkitAudioContext; 
-let audioCtx = null;
-
-function playBeep() {
-    if (!audioCtx) audioCtx = new AudioContext(); 
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    try {
-        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = 'square'; 
-        osc.frequency.setValueAtTime(500 + Math.random()*200, audioCtx.currentTime); 
-        gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); 
-        osc.start(); osc.stop(audioCtx.currentTime + 0.04); 
-    } catch(e) {}
-}
-
-document.addEventListener('keydown', playBeep);
-document.addEventListener('click', playBeep);
-
-function speakMsg(text) {
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel(); 
-    const speech = new SpeechSynthesisUtterance(text); 
-    speech.rate = 0.95; 
-    speech.pitch = 1.0;
-    speech.lang = 'en-US'; 
-    window.speechSynthesis.speak(speech);
-  }
-}
-
 setInterval(() => {
-  const now = new Date(); 
-  document.getElementById('liveClock').innerText = `${now.toLocaleTimeString()}`;
+  document.getElementById('liveClock').innerText = `${new Date().toLocaleTimeString()}`;
 }, 1000);
 
 const canvas = document.getElementById('plexusBg');
@@ -426,8 +432,7 @@ const ctx = canvas.getContext('2d');
 let particles = [];
 
 function initPlexus() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     particles = [];
     for (let i = 0; i < 45; i++) { 
         particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8, radius: 1.2 }); 
@@ -439,8 +444,7 @@ function drawPlexus() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); 
   ctx.fillStyle = 'rgba(0, 255, 0, 0.7)'; 
   for (let i = 0; i < particles.length; i++) {
-    let p = particles[i]; 
-    p.x += p.vx; p.y += p.vy;
+    let p = particles[i]; p.x += p.vx; p.y += p.vy;
     if (p.x < 0 || p.x > canvas.width) p.vx *= -1; 
     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
     ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
@@ -455,18 +459,17 @@ function drawPlexus() {
   requestAnimationFrame(drawPlexus);
 } 
 drawPlexus();
-
 window.addEventListener('resize', initPlexus);
 
 function verifyLogin() {
+  initAudio(); // Unlocks audio context for App
   const uid = document.getElementById('userIdInput').value.trim();
   const pwd = document.getElementById('passwordInput').value.trim();
   const err = document.getElementById('lockError');
 
   if (uid === "Jamal" && pwd === "j999") {
     err.textContent = "";
-    localStorage.setItem("saved_uid", uid);
-    localStorage.setItem("saved_pwd", pwd);
+    localStorage.setItem("saved_uid", uid); localStorage.setItem("saved_pwd", pwd);
     sessionStorage.setItem("rg_is_active", "true");
     speakMsg(`Access Granted. Welcome boss Jamal. Terminal active.`);
     unlock();
@@ -494,8 +497,7 @@ function toggleView() {
   if(isInboxView) {
     document.getElementById('generatorView').style.display = 'none';
     document.getElementById('inboxView').style.display = 'flex';
-    btnNotif.classList.add('active-cyan');
-    btnNotif.classList.remove('bell-shake');
+    btnNotif.classList.add('active-cyan'); btnNotif.classList.remove('bell-shake');
     fetchMessages();
   } else {
     document.getElementById('generatorView').style.display = 'flex';
@@ -507,61 +509,48 @@ function toggleView() {
 async function generateBulkMail() {
     let count = selectedCount;
     const btnGen = document.getElementById('btnGenerate');
-    
-    btnGen.classList.add('active-cyan');
-    btnGen.innerText = "[ PROCESSING... ]";
-    
+    btnGen.classList.add('active-cyan'); btnGen.innerText = "[ PROCESSING... ]";
     document.getElementById('bulkTableBody').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0ff; padding:15px;">Generating ${count} mails. Please wait...</td></tr>`;
     speakMsg("Generating mails.");
 
     allAccounts = [];
-    
     try {
-        for(let i = 0; i < count; i++) {
-            const response = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
-            const data = await response.json();
-            if(data.status) {
-                allAccounts.push({ email: data.email, password: data.password, token: data.token });
+        const response = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
+        const data = await response.json();
+        
+        if(data.status) {
+            allAccounts.push({ email: data.data.email, password: data.data.password, token: data.data.email });
+            for(let i=1; i<count; i++){
+                 const res = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
+                 const d = await res.json();
+                 if(d.status) allAccounts.push({ email: d.data.email, password: d.data.password, token: d.data.email });
             }
         }
 
         if(allAccounts.length > 0) {
             currentToken = allAccounts[0].token;
             localStorage.setItem("saved_batch", JSON.stringify(allAccounts));
-            currentPage = 1;
-            renderTable();
+            currentPage = 1; renderTable();
             speakMsg("Generation successful, boss!");
-        } else {
-            alert("Failed to generate batch.");
-        }
-    } catch (err) {
-        alert("API connection failed.");
-    } finally {
-        btnGen.classList.remove('active-cyan');
-        btnGen.innerText = "[ GENERATE ]";
-    }
+        } else { alert("Failed to generate batch."); }
+    } catch (err) { alert("API connection failed."); } 
+    finally { btnGen.classList.remove('active-cyan'); btnGen.innerText = "[ GENERATE ]"; }
 }
 
 function renderTable() {
     const tbody = document.getElementById('bulkTableBody');
     tbody.innerHTML = "";
-    
     if(allAccounts.length === 0) {
         tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#0a0; padding:15px;">No batch generated yet. Click generate.</td></tr>`;
         return;
     }
-
     const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedItems = allAccounts.slice(start, end);
-
+    const paginatedItems = allAccounts.slice(start, start + rowsPerPage);
     paginatedItems.forEach((acc, index) => {
-        const actualIndex = start + index + 1;
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${actualIndex}</td><td onclick="copyText('${acc.email}')" title="Copy Email">${acc.email}</td><td onclick="copyText('${acc.password}')" title="Copy Password">${acc.password}</td>`;
+        tr.innerHTML = `<td>${start + index + 1}</td><td onclick="copyText('${acc.email}')">${acc.email}</td><td onclick="copyText('${acc.password}')">${acc.password}</td>`;
         tbody.appendChild(tr);
     });
-
     const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
     document.getElementById('pageIndicator').innerText = `Page ${currentPage} of ${totalPages}`;
     document.getElementById('prevBtn').disabled = currentPage === 1;
@@ -569,71 +558,70 @@ function renderTable() {
 }
 
 function changePage(direction) {
-    const totalPages = Math.ceil(allAccounts.length / rowsPerPage);
-    currentPage += direction;
-    if(currentPage < 1) currentPage = 1;
-    if(currentPage > totalPages) currentPage = totalPages;
-    renderTable();
+    currentPage += direction; renderTable();
 }
 
 function getVaultText() {
-    let text = "=== GENIUS HACKER JAMAL - TEMPMAIL VAULT ===\n\n";
+    let text = "=== GENIUS HACKER JAMAL - TEMPMAIL VAULT ===\n";
+    text += ">> WATERMARK: SECURE TERMINAL APP BY BOSS JAMAL <<\n\n";
     allAccounts.forEach((acc, idx) => { text += `[${idx+1}] Email: ${acc.email} | Password: ${acc.password}\n`; });
     return text;
 }
+
+// ---- APP NATIVE SHARE & WATERMARK ACTIONS ----
 
 function downloadVaultTXT() {
     if(allAccounts.length===0) return showToast("No accounts!");
     const blob = new Blob([getVaultText()], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'Jamal_TempMail_Vault.txt'; a.click();
-    URL.revokeObjectURL(url);
-    closeModal('downloadModal');
+    const a = document.createElement('a'); a.href = url; a.download = 'Jamal_TempMail_Vault.txt'; a.click();
+    URL.revokeObjectURL(url); closeModal('downloadModal');
 }
 
 function printVaultPDF() {
     if(allAccounts.length===0) return showToast("No accounts!");
-    let printWindow = window.open('', '_blank');
-    let html = `<html><head><title>Jamal TempMail Vault</title><style>body{font-family:monospace;padding:20px;background:#000;color:#0f0;}h2{color:#0f0;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{border:1px solid #0f0;padding:8px;text-align:left;}</style></head><body>`;
-    html += `<h2>GENIUS HACKER JAMAL - SECURE VAULT</h2><table><tr><th>#</th><th>Email</th><th>Password</th></tr>`;
+    
+    // NATIVE APP PRINTING FIX
+    let printArea = document.getElementById('printArea');
+    let html = `<h2 style="font-family: monospace;">GENIUS HACKER JAMAL - SECURE VAULT</h2>`;
+    html += `<table><tr><th>#</th><th>Email Address</th><th>Password</th></tr>`;
     allAccounts.forEach((acc, idx) => { html += `<tr><td>${idx+1}</td><td>${acc.email}</td><td>${acc.password}</td></tr>`; });
-    html += `</table></body></html>`;
-    printWindow.document.write(html); printWindow.document.close(); printWindow.print();
+    html += `</table>`;
+    html += `<div style="margin-top:30px; text-align:center; font-size:12px; color:#555;">>> WATERMARK: SECURE TERMINAL APP BY BOSS JAMAL <<</div>`;
+    printArea.innerHTML = html;
+    
+    window.print();
     closeModal('downloadModal');
 }
 
 function shareTelegram() {
     if(allAccounts.length===0) return showToast("No accounts!");
-    const text = encodeURIComponent(getVaultText());
-    window.open(`https://t.me/share/url?url=&text=${text}`, '_blank');
+    // Directly redirects to Telegram App
+    window.location.href = `https://t.me/share/url?url=&text=${encodeURIComponent(getVaultText())}`;
     closeModal('downloadModal');
 }
 
-function shareMail() {
+function shareSMS() {
     if(allAccounts.length===0) return showToast("No accounts!");
-    const text = encodeURIComponent(getVaultText());
-    window.open(`mailto:?subject=Genius Hacker Jamal - TempMail Vault&body=${text}`, '_blank');
+    // Directly opens default SMS App
+    window.location.href = `sms:?body=${encodeURIComponent(getVaultText())}`;
     closeModal('downloadModal');
 }
 
-function shareVaultText() {
+function shareVaultNative() {
     if(allAccounts.length===0) return showToast("No accounts!");
+    // Native OS Share Sheet
     if (navigator.share) {
         navigator.share({ title: 'TempMail Vault', text: getVaultText() }).catch(() => {});
     } else {
-        navigator.clipboard.writeText(getVaultText());
-        showToast("Copied for sharing!");
+        navigator.clipboard.writeText(getVaultText()); showToast("Copied to clipboard!");
     }
     closeModal('downloadModal');
 }
 
 async function fetchMessages(silent = false, isManualBtnClick = false) {
     const refreshBtn = document.getElementById('btnRefreshInbox');
-    if(isManualBtnClick && refreshBtn) {
-        refreshBtn.classList.add('active-cyan');
-        refreshBtn.innerText = "[ CHECKING... ]";
-    }
+    if(isManualBtnClick && refreshBtn) { refreshBtn.classList.add('active-cyan'); refreshBtn.innerText = "[ CHECKING... ]"; }
 
     if(allAccounts.length > 0) currentToken = allAccounts[0].token;
     if(!currentToken) {
@@ -646,59 +634,41 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
     if(!silent) inboxList.innerHTML = "<p style='color:#0a0; padding:10px; text-align:center;'>Checking server...</p>";
     
     try {
-        const response = await fetch(`${API_BASE_URL}/api/messages?token=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/master?action=inbox&apikey=${API_KEY}&email=${currentToken}`);
         const data = await response.json();
         
         if(data.status) {
             document.getElementById('msgBadge').innerText = data.count;
-            if(data.count > messageCount && !isInboxView) {
-                document.getElementById('btnNotif').classList.add('bell-shake');
-            }
+            if(data.count > messageCount && !isInboxView) document.getElementById('btnNotif').classList.add('bell-shake');
             messageCount = data.count;
 
             if(data.count > 0) {
-                let allMessages = data.messages.reverse();
-                inboxList.innerHTML = "";
+                let allMessages = data.messages.reverse(); inboxList.innerHTML = "";
                 allMessages.forEach(msg => {
                     let li = document.createElement('li');
-                    li.innerHTML = `<strong>FROM: ${msg.from.address}</strong><br>SUB: ${msg.subject}`;
-                    li.onclick = () => readMessage(msg.id);
-                    inboxList.appendChild(li);
+                    li.innerHTML = `<strong>FROM: ${msg.from}</strong><br>SUB: ${msg.subject}`;
+                    li.onclick = () => readMessage(msg.id); inboxList.appendChild(li);
                 });
-            } else {
-                inboxList.innerHTML = "<p style='color:#0a0; font-size:0.75rem; padding:10px; text-align:center;'>Inbox empty. Awaiting transmissions...</p>";
-            }
+            } else { inboxList.innerHTML = "<p style='color:#0a0; font-size:0.75rem; padding:10px; text-align:center;'>Inbox empty. Awaiting transmissions...</p>"; }
         }
-    } catch (err) {
-        if(!silent) inboxList.innerHTML = "<p style='color:red; padding:10px; text-align:center;'>Error fetching data.</p>";
-    } finally {
-        if(isManualBtnClick && refreshBtn) {
-            refreshBtn.classList.remove('active-cyan');
-            refreshBtn.innerText = "[ REFRESH INBOX ]";
-        }
-    }
+    } catch (err) { if(!silent) inboxList.innerHTML = "<p style='color:red; padding:10px; text-align:center;'>Error fetching data.</p>"; } 
+    finally { if(isManualBtnClick && refreshBtn) { refreshBtn.classList.remove('active-cyan'); refreshBtn.innerText = "[ REFRESH INBOX ]"; } }
 }
 
 async function readMessage(id) {
-    document.getElementById('messageView').style.display = 'block';
-    document.getElementById('msgBody').innerText = "Decrypting...";
+    document.getElementById('messageView').style.display = 'block'; document.getElementById('msgBody').innerText = "Decrypting...";
     try {
-        const response = await fetch(`${API_BASE_URL}/api/message?id=${id}&token=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/master?action=read&apikey=${API_KEY}&email=${currentToken}&id=${id}`);
         const data = await response.json();
         if(data.status) {
-            document.getElementById('msgFrom').innerText = data.from.address;
-            document.getElementById('msgSubject').innerText = data.subject;
-            document.getElementById('msgBody').innerText = data.text || "No text body.";
+            document.getElementById('msgFrom').innerText = data.message_details.from;
+            document.getElementById('msgSubject').innerText = data.message_details.subject;
+            document.getElementById('msgBody').innerText = data.message_details.body || "No text body.";
         }
-    } catch (err) {
-        document.getElementById('msgBody').innerText = "Decryption failed.";
-    }
+    } catch (err) { document.getElementById('msgBody').innerText = "Decryption failed."; }
 }
 
-function closeMessage() {
-    document.getElementById('messageView').style.display = 'none';
-}
-
+function closeMessage() { document.getElementById('messageView').style.display = 'none'; }
 setInterval(() => fetchMessages(true), 15000);
 </script>
 </body>
