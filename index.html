@@ -9,10 +9,11 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* STRICT MOBILE FIT & HARD PULL-TO-REFRESH BLOCK */
+  /* ULTRA STRICT ANTI-PULL-TO-REFRESH */
   html, body { 
-      overscroll-behavior-y: contain; 
-      touch-action: pan-x pan-y;
+      overscroll-behavior: none !important; 
+      overscroll-behavior-y: none !important;
+      touch-action: none; /* Disables native pull-to-refresh gestures */
   }
   
   body { 
@@ -35,18 +36,30 @@
   .win-window { background: rgba(0, 10, 0, 0.95); backdrop-filter: blur(8px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 2px 0; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 4px 8px; font-weight: 900; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; letter-spacing: 0.5px; }
   .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
+  .win-controls span:hover { background: #000; color: #0f0; }
+  
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
   /* Login Screen */
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior-y: contain; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
   .fullscreen-lock-card { max-width: 480px; width: 100%; background: rgba(0, 10, 0, 0.98); border: 2px solid #0f0; box-shadow: 0 0 40px rgba(0, 255, 0, 0.6); border-radius: 6px; overflow: hidden; }
-  .fullscreen-lock-card h2 { font-size: 1.8rem; font-weight: 900; color: #0f0; text-shadow: 0 0 15px rgba(0,255,0,1); margin-bottom: 4px; text-align: center; letter-spacing: 1px; }
+  
+  /* Glitch Text Animation for Main Titles */
+  .glitch { animation: glitchAnim 2s infinite; display: inline-block; }
+  @keyframes glitchAnim {
+    0%, 100% { text-shadow: 0 0 15px rgba(0,255,0,1); transform: translate(0); }
+    20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-1px, 1px); }
+    40% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(1px, -1px); }
+    60% { text-shadow: 0 0 15px rgba(0,255,0,1); transform: translate(0); }
+  }
+
+  .fullscreen-lock-card h2 { font-size: 1.8rem; font-weight: 900; color: #0f0; margin-bottom: 4px; text-align: center; letter-spacing: 1px; }
   .fullscreen-lock-card p { color: #0f0; font-size: 0.9rem; font-weight: bold; margin-bottom: 12px; text-align: center; opacity: 0.9; }
   
-  .fullscreen-terminal-stream { background: rgba(0, 0, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 90px; overflow: hidden; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.4; text-shadow: 0 0 5px #0f0; }
+  .fullscreen-terminal-stream { background: rgba(0, 0, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 110px; overflow-y: auto; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.4; text-shadow: 0 0 5px #0f0; touch-action: pan-y; overscroll-behavior: contain;}
   .terminal-cursor::after { content: '█'; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   
@@ -59,27 +72,19 @@
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
-  /* BRIGHTER BOLD HEADER */
   header { text-align: center; padding: 4px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
-  header h1 { font-size: 1.4rem; font-weight: 900; color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; letter-spacing: 1px; }
+  header h1 { font-size: 1.4rem; font-weight: 900; color: #0f0; letter-spacing: 1px; }
   header p { font-size: 0.8rem; font-weight: 900; color: #0f0; text-shadow: 0 0 5px #0f0; margin-top: 2px;}
   
-  /* PAD-STYLE CONTROL ROW */
-  .master-controls { 
-    display: flex; gap: 4px; align-items: stretch; margin-top: 6px; flex-shrink: 0; height: 42px;
-    background: rgba(0, 30, 0, 0.8); padding: 4px; border: 1px solid #0f0; border-radius: 6px; box-shadow: inset 0 0 10px rgba(0,255,0,0.2);
-  }
-  
+  .master-controls { display: flex; gap: 4px; align-items: stretch; margin-top: 6px; flex-shrink: 0; height: 42px; background: rgba(0, 30, 0, 0.8); padding: 4px; border: 1px solid #0f0; border-radius: 6px; box-shadow: inset 0 0 10px rgba(0,255,0,0.2); }
   .ctrl-btn { display: flex; justify-content: center; align-items: center; background: #000; color: #0f0; border: 1px solid rgba(0,255,0,0.5); text-align: center; font-family: 'Courier New'; font-weight: 900; cursor: pointer; border-radius: 4px; box-shadow: 0 0 5px rgba(0,255,0,0.2); transition: 0.2s; white-space: nowrap; user-select: none; }
   .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; border: 1px solid #0f0; }
-  
   #btnCountLabel { flex: 0.7; font-size: 0.75rem; padding: 0 4px; }
   .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 0.95rem; text-shadow: none; border: 1px solid #0f0; }
   .btn-gen:hover { background: #000; color: #0f0; border: 1px solid #0f0; }
   
   .icon-stack { display: flex; flex-direction: row; gap: 4px; flex: 1.2; }
   .icon-stack .ctrl-btn { flex: 1; font-size: 1.1rem; padding: 0; position: relative; }
-
   .active-cyan { background: var(--cyan-color) !important; color: #000 !important; border-color: var(--cyan-color) !important; box-shadow: 0 0 15px var(--cyan-color) !important; text-shadow: none !important; }
   
   .badge { position: absolute; top: -4px; right: -4px; background: red; color: white; border-radius: 50%; padding: 1px 5px; font-size: 0.6rem; font-weight: bold; box-shadow: 0 0 5px red; border: 1px solid #000;}
@@ -88,8 +93,8 @@
 
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
-  /* SCROLLABLE AREAS */
-  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; touch-action: pan-y; }
+  /* SCROLLABLE AREAS - Enforce touch-action */
+  .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; touch-action: pan-y; overscroll-behavior-y: contain; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
   th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
   th { background: #002200; color: #0f0; position: sticky; top: 0; font-size: 0.75rem; z-index: 1; text-transform: uppercase; border-bottom: 2px solid #0f0; text-shadow: 0 0 5px #0f0; }
@@ -105,7 +110,7 @@
   #generatorView { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
   #inboxView { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 
-  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; touch-action: pan-y; }
+  #inboxList { list-style: none; padding: 0; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #0f0; background: #000; margin-top: 4px; touch-action: pan-y; overscroll-behavior-y: contain; }
   #inboxList li { background: #001a00; margin-bottom: 2px; padding: 6px; border-bottom: 1px solid #030; cursor: pointer; font-size: 0.75rem; font-weight: bold; word-break: break-all; color: #0f0; }
   #inboxList li:hover { background: rgba(0,255,0,0.2); }
   
@@ -114,12 +119,11 @@
 
   #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f0; color: #000; padding: 6px 12px; font-weight: 900; border-radius: 4px; z-index: 99999; display: none; box-shadow: 0 0 15px #0f0; font-size: 0.85rem; letter-spacing: 0.5px; }
 
-  /* Premium Glass Effect Modals */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
   
-  /* Modal Scrollable area with touch-action */
-  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; touch-action: pan-y; }
+  /* Scrollable lists inside modal */
+  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; touch-action: pan-y; overscroll-behavior-y: contain; }
   .modal-scrollable::-webkit-scrollbar { width: 4px; }
   .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
   .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 2px; }
@@ -132,12 +136,15 @@
   .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
 
-  /* NATIVE PRINT UI - Hidden until print triggered */
+  /* NATIVE PRINT UI */
   @media screen { #printArea { display: none !important; } }
   @media print {
-    body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; touch-action: auto; }
+    body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; touch-action: auto !important; overscroll-behavior: auto !important; }
     .container, #lockScreen, canvas, #toast, .modal-overlay { display: none !important; }
-    #printArea { display: block !important; width: 100%; }
+    #printArea { display: block !important; width: 100%; font-family: monospace; }
+    #printArea table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    #printArea th, #printArea td { border: 1px solid #000; padding: 8px; text-align: left; }
+    #printArea th { background-color: #eee; }
   }
 </style>
 </head>
@@ -153,14 +160,12 @@
 <div id="countModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">SELECT GENERATION COUNT</div>
-    <div class="modal-scrollable" id="countOptionsContainer">
-        <!-- Generated by JS 1 to 100 -->
-    </div>
+    <div class="modal-scrollable" id="countOptionsContainer"></div>
     <button class="modal-close" onclick="closeModal('countModal')">CANCEL</button>
   </div>
 </div>
 
-<!-- Download/Share Modal with ONLY required 3D Icons -->
+<!-- Download/Share Modal -->
 <div id="downloadModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">EXPORT VAULT DATA</div>
@@ -184,10 +189,15 @@
     <div class="win-window fullscreen-lock-card" style="margin:0; flex:none;">
       <div class="win-titlebar" style="background:#0f0; color:#000;">
         <span>Jamal_TempMail_Security.exe</span>
-        <div class="win-controls"><span>_</span><span>□</span><span>×</span></div>
+        <!-- WORKING WINDOW CONTROLS -->
+        <div class="win-controls">
+            <span onclick="minimizeApp()" title="Minimize">_</span>
+            <span onclick="maximizeApp()" title="Full Screen">□</span>
+            <span onclick="closeApp()" title="Close App">×</span>
+        </div>
       </div>
       <div class="win-body">
-        <h2>Genius Hacker Jamal</h2>
+        <h2 class="glitch">Genius Hacker Jamal</h2>
         <p>Secure TempMail Admin Gateway</p>
         
         <div class="fullscreen-terminal-stream terminal-cursor" id="terminalStream"></div>
@@ -195,7 +205,6 @@
         <div class="input-group">
           <input id="userIdInput" type="text" placeholder="ENTER USER ID" autocomplete="username" />
           <input id="passwordInput" type="password" placeholder="ENTER PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')verifyLogin()" />
-          <!-- Button click unlocks Audio Context -->
           <button onclick="verifyLogin()">AUTHORIZE & LOGIN</button>
         </div>
 
@@ -217,17 +226,17 @@
     <div class="win-titlebar">
       <span>Jamal_TempMail_Terminal.exe</span>
       <div class="win-controls">
-        <span onclick="lockScreen()" title="Lock">_</span>
-        <span onclick="sessionStorage.clear(); location.reload();" title="Logout">×</span>
+        <span onclick="minimizeApp()" title="Minimize">_</span>
+        <span onclick="maximizeApp()" title="Full Screen">□</span>
+        <span onclick="closeApp()" title="Close App">×</span>
       </div>
     </div>
     <div class="win-body">
       <header>
-        <h1>[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
+        <h1 class="glitch">[ SYSTEM: GENIUS HACKER JAMAL ]</h1>
         <p>> SECURE VAULT PROTOCOL ACTIVE_</p>
       </header>
 
-      <!-- PAD-STYLE MASTER CONTROL ROW -->
       <div class="master-controls">
         <div class="ctrl-btn" onclick="openModal('countModal')" id="btnCountLabel">[ COUNT ▾ ]</div>
         <div class="ctrl-btn btn-gen" onclick="generateBulkMail()" id="btnGenerate">[ GENERATE ]</div>
@@ -238,7 +247,6 @@
         </div>
       </div>
 
-      <!-- VIEW 1: GENERATOR & VAULT -->
       <div id="generatorView" class="panel-expand">
         <strong style="font-size:0.8rem; margin-bottom: 2px; color: #0f0; text-shadow: 0 0 5px #0f0;">> VAULT DATABASE (CLICK TO COPY):</strong>
         <div class="table-container">
@@ -262,7 +270,6 @@
         </div>
       </div>
 
-      <!-- VIEW 2: DEDICATED INBOX PAGE -->
       <div id="inboxView" class="panel-expand">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
           <strong style="font-size:0.8rem; color:#0f0; text-shadow: 0 0 5px #0f0;">> INBOX MESSAGES:</strong>
@@ -287,26 +294,27 @@
 </div>
 
 <script>
-// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK ---
-let tsY = 0;
+// --- BULLETPROOF ANTI PULL-TO-REFRESH JS L0CK ---
+let startY = 0;
 document.addEventListener('touchstart', function(e) {
-    tsY = e.touches[0].clientY;
+    startY = e.touches[0].clientY;
 }, { passive: false });
 
 document.addEventListener('touchmove', function(e) {
-    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody');
-    if (!el) {
-        e.preventDefault(); 
-        return;
-    }
+    const y = e.touches[0].clientY;
+    const scrollable = e.target.closest('.modal-scrollable, .table-container, #inboxList, .fullscreen-terminal-stream');
     
-    let teY = e.touches[0].clientY;
-    let isDraggingDown = teY > tsY;
-    
-    if (el.scrollTop <= 0 && isDraggingDown) { 
-        e.preventDefault(); 
+    if (scrollable) {
+        // If scrolling UP (pulling down) and at the very top of container
+        if (scrollable.scrollTop <= 0 && y > startY) {
+            e.preventDefault(); 
+        }
+    } else {
+        // Block dragging on non-scrollable areas completely
+        e.preventDefault();
     }
 }, { passive: false });
+
 
 let allAccounts = [];
 let currentPage = 1;
@@ -316,15 +324,7 @@ let selectedCount = 25;
 let isInboxView = false;
 let messageCount = 0;
 
-// YAHAN API URL CHANGE KIYA HAI (PURANA WALA LAGA DIYA HAI BINA KEY KE)
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
-
-// --- APP HARDWARE BACK BUTTON LOGIC ---
-window.addEventListener('popstate', (e) => {
-    if(sessionStorage.getItem("rg_is_active") === "true") {
-        lockScreen(true);
-    } 
-});
 
 // --- AUDIO/VOICE ENGINE ---
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
@@ -344,6 +344,19 @@ function playBeep() {
         gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); 
         osc.start(); osc.stop(audioCtx.currentTime + 0.04); 
+    } catch(e) {}
+}
+
+function playSuccessBeep() {
+    if (!audioCtx) return;
+    try {
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+        osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime); 
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5); 
+        osc.start(); osc.stop(audioCtx.currentTime + 0.5); 
     } catch(e) {}
 }
 
@@ -370,6 +383,28 @@ function speakMsg(text) {
   }
 }
 document.addEventListener('click', () => { initAudio(); playBeep(); });
+
+// --- WINDOW CONTROLS (Min, Max, Close) ---
+function minimizeApp() {
+    lockScreen(true); // Fallback minimize
+}
+
+function maximizeApp() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            showToast("Fullscreen not supported");
+        });
+    } else {
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+    }
+}
+
+function closeApp() {
+    if (confirm("Exit Secure Terminal?")) {
+        window.close();
+        if(navigator.app && navigator.app.exitApp) { navigator.app.exitApp(); }
+    }
+}
 
 // --- TERMINAL UI ---
 function startTerminalTyping() {
@@ -492,32 +527,42 @@ function drawPlexus() {
 drawPlexus();
 window.addEventListener('resize', initPlexus);
 
-// --- LOGIN & MAIN FLOW ---
+// --- LOGIN FLOW WITH VISUALS ---
 function verifyLogin() {
   initAudio(); 
   const uid = document.getElementById('userIdInput').value.trim();
   const pwd = document.getElementById('passwordInput').value.trim();
   const err = document.getElementById('lockError');
+  const stream = document.getElementById('terminalStream');
 
   if (uid === "Jamal" && pwd === "j999") {
     err.textContent = "";
     localStorage.setItem("saved_uid", uid); localStorage.setItem("saved_pwd", pwd);
     sessionStorage.setItem("rg_is_active", "true");
-    speakMsg(`Access Granted. Welcome boss Jamal.`);
-    unlock();
+    
+    // Success feedback
+    playSuccessBeep();
+    speakMsg("Access Granted. Welcome boss Jamal.");
+    stream.innerHTML += "<br><span style='color:#0f0; text-shadow:0 0 10px #0f0;'>> VERIFYING CREDENTIALS... OK</span>";
+    stream.innerHTML += "<br><span style='color:#0ff; font-size:1rem;'>> ACCESS GRANTED! LOGGING IN...</span>";
+    
+    // Auto scroll to bottom of terminal
+    stream.scrollTop = stream.scrollHeight;
+
+    setTimeout(() => { unlock(); }, 1500);
+
   } else {
     playErrorBeep(); 
     err.innerHTML = "❌ ACCESS DENIED: Invalid User ID or Password!";
     speakMsg("Access Denied. Incorrect ID or Password.");
+    stream.innerHTML += "<br><span style='color:red;'>> AUTHENTICATION FAILED!</span>";
+    stream.scrollTop = stream.scrollHeight;
   }
 }
 
 function unlock(fromLoad = false) {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('mainContent').style.display = 'flex';
-  if(!fromLoad) {
-      history.pushState({page: 'dashboard'}, "", "#dashboard"); 
-  }
 }
 
 function lockScreen(isPop = false) {
@@ -525,9 +570,6 @@ function lockScreen(isPop = false) {
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
   document.getElementById('lockError').innerHTML = ""; 
-  if(!isPop) {
-      history.replaceState({page: 'login'}, "", "");
-  }
   startTerminalTyping();
 }
 
@@ -546,7 +588,6 @@ function toggleView() {
   }
 }
 
-// --- PURANE API ENDPOINTS WAPAS ADD KIYE HAIN ---
 async function generateBulkMail() {
     let count = selectedCount;
     const btnGen = document.getElementById('btnGenerate');
@@ -572,6 +613,7 @@ async function generateBulkMail() {
             localStorage.setItem("saved_batch", JSON.stringify(allAccounts));
             currentPage = 1; renderTable();
             speakMsg("Generation successful.");
+            playSuccessBeep();
         } else { alert("Failed to generate batch."); }
     } catch (err) { alert("API connection failed. Ensure your Vercel server is running."); } 
     finally { btnGen.classList.remove('active-cyan'); btnGen.innerText = "[ GENERATE ]"; }
@@ -598,7 +640,7 @@ function renderTable() {
 }
 function changePage(direction) { currentPage += direction; renderTable(); }
 
-// --- NATIVE APP SHARE & EXPORT FIXES ---
+// --- EXPORT ACTIONS ---
 function getVaultText() {
     let text = "=== GENIUS HACKER JAMAL - TEMPMAIL VAULT ===\n\n";
     allAccounts.forEach((acc, idx) => { text += `[${idx+1}] Email: ${acc.email} | Pass: ${acc.password}\n`; });
@@ -606,41 +648,42 @@ function getVaultText() {
     return text;
 }
 
-// 1. PRINT / PDF (DIRECT DIALOG FIX)
+// PERFECT APP PRINT FUNCTION
 function actionPrintPDF() {
     if(allAccounts.length===0) return showToast("No accounts generated!");
     
     let printArea = document.getElementById('printArea');
-    let html = `<h2 style="font-family: monospace; color:#000; text-align:center;">GENIUS HACKER JAMAL - SECURE VAULT</h2>`;
-    html += `<table style="width:100%; border-collapse:collapse; margin-top:15px; color:#000;"><tr><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">#</th><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">Email Address</th><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">Password</th></tr>`;
+    let html = `<h2 style="font-family: monospace; text-align:center; color:#000;">GENIUS HACKER JAMAL - SECURE VAULT</h2>`;
+    html += `<table style="width:100%; border-collapse:collapse; margin-top:15px; font-family:monospace; color:#000;"><tr><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">#</th><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">Email Address</th><th style="border:1px solid #000; padding:8px; background-color:#eee; text-align:left;">Password</th></tr>`;
     allAccounts.forEach((acc, idx) => { 
         html += `<tr><td style="border:1px solid #000; padding:8px;">${idx+1}</td><td style="border:1px solid #000; padding:8px;">${acc.email}</td><td style="border:1px solid #000; padding:8px;">${acc.password}</td></tr>`; 
     });
-    html += `</table><div style="margin-top:20px; font-weight:bold; color:#000; text-align:center;">>> SECURE TERMINAL APP BY BOSS JAMAL <<</div>`;
+    html += `</table><div style="margin-top:20px; font-weight:bold; text-align:center; color:#000; font-family:monospace;">>> SECURE TERMINAL APP BY BOSS JAMAL <<</div>`;
     printArea.innerHTML = html;
     
     closeModal('downloadModal');
     
     setTimeout(() => {
-        try { window.print(); } catch(e){ alert("Printing is not supported on this device."); }
-    }, 300);
+        try { 
+            window.print(); 
+        } catch(e) { 
+            showToast("Print not supported."); 
+        }
+    }, 500);
 }
 
-// 2. TEXT MESSAGE
 function actionSMS() {
     if(allAccounts.length===0) return showToast("No accounts!");
     window.location.href = `sms:?body=${encodeURIComponent(getVaultText())}`;
     closeModal('downloadModal');
 }
 
-// 3. WHATSAPP
 function actionWhatsApp() {
     if(allAccounts.length===0) return showToast("No accounts!");
     window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(getVaultText())}`;
     closeModal('downloadModal');
 }
 
-// 4. NATIVE SHARE SHEET
 function actionShareOther() {
     if(allAccounts.length===0) return showToast("No accounts!");
     
@@ -664,7 +707,7 @@ function fallbackNativeShare() {
     }
 }
 
-// --- MESSAGES (PURANE ENDPOINTS PAR) ---
+// --- MESSAGES ---
 async function fetchMessages(silent = false, isManualBtnClick = false) {
     const refreshBtn = document.getElementById('btnRefreshInbox');
     if(isManualBtnClick && refreshBtn) { refreshBtn.classList.add('active-cyan'); refreshBtn.innerText = "[ CHECKING... ]"; }
@@ -685,7 +728,10 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
         
         if(data.status) {
             document.getElementById('msgBadge').innerText = data.count;
-            if(data.count > messageCount && !isInboxView) document.getElementById('btnNotif').classList.add('bell-shake');
+            if(data.count > messageCount && !isInboxView) {
+                document.getElementById('btnNotif').classList.add('bell-shake');
+                playBeep();
+            }
             messageCount = data.count;
 
             if(data.count > 0) {
