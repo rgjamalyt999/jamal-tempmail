@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<!-- ANTI PULL-TO-REFRESH VIEWPORT -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Genius Hacker Jamal - Secure TempMail</title>
 
@@ -10,10 +9,9 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* STRICT MOBILE FIT & KILL PULL-TO-REFRESH */
+  /* STRICT MOBILE FIT & HARD PULL-TO-REFRESH BLOCK */
   html, body { 
-      overscroll-behavior: none; /* This kills the refresh spinner */
-      overscroll-behavior-y: none;
+      overscroll-behavior-y: contain; /* Prevents pull-to-refresh natively */
       touch-action: pan-x pan-y;
   }
   
@@ -40,7 +38,7 @@
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
   /* Login Screen */
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior-y: contain; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
@@ -52,11 +50,12 @@
   .terminal-cursor::after { content: '█'; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   
-  .input-group input { width: 100%; padding: 10px; background: #000; border: 1px solid #0f0; color: #0f0; font-weight: bold; font-size: 1rem; outline: none; margin-bottom: 8px; text-align: center; font-family: 'Courier New', Courier, monospace; border-radius: 4px; box-shadow: inset 0 0 5px rgba(0,255,0,0.5); }
+  .input-group input { width: 100%; padding: 10px; background: #000; border: 1px solid #0f0; color: #0f0; font-weight: bold; font-size: 1rem; outline: none; margin-bottom: 8px; text-align: center; font-family: 'Courier New', Courier, monospace; border-radius: 4px; box-shadow: inset 0 0 5px rgba(0,255,0,0.5); transition: 0.3s; }
+  .input-group input:focus { border-color: #fff; box-shadow: inset 0 0 10px rgba(255,255,255,0.5); }
   .fullscreen-lock-card button, .btn { width: 100%; padding: 10px; background: #0f0; color: #000; font-weight: 900; border: none; font-size: 1rem; cursor: pointer; font-family: 'Courier New', Courier, monospace; border-radius: 4px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0,255,0,0.5); letter-spacing: 1px; }
   .fullscreen-lock-card button:hover, .btn:hover { background: #000; color: #0f0; border: 1px solid #0f0; box-shadow: 0 0 25px rgba(0,255,0,1); }
   
-  #lockError { color: #ff3333; font-size: 0.85rem; font-weight: 900; margin-top: 5px; text-align: center; min-height: 15px; text-shadow: 0 0 5px red; }
+  #lockError { color: #ff3333; font-size: 0.85rem; font-weight: 900; margin-top: 5px; text-align: center; min-height: 15px; text-shadow: 0 0 10px rgba(255,0,0,0.8); }
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
@@ -75,7 +74,7 @@
   .ctrl-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; border: 1px solid #0f0; }
   
   #btnCountLabel { flex: 0.7; font-size: 0.75rem; padding: 0 4px; }
-  .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 1rem; text-shadow: none; border: 1px solid #0f0; }
+  .btn-gen { flex: 2.5; background: #0f0; color: #000; font-size: 0.95rem; text-shadow: none; border: 1px solid #0f0; }
   .btn-gen:hover { background: #000; color: #0f0; border: 1px solid #0f0; }
   
   .icon-stack { display: flex; flex-direction: row; gap: 4px; flex: 1.2; }
@@ -119,7 +118,7 @@
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
   
   /* Scrollable area with anti-pull-to-refresh */
-  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; overscroll-behavior-y: contain; /* CRUCIAL FOR FIXING MOBILE PULL-TO-REFRESH */ }
+  .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; overscroll-behavior-y: contain; }
   .modal-scrollable::-webkit-scrollbar { width: 4px; }
   .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
   .modal-scrollable::-webkit-scrollbar-thumb { background: #0f0; border-radius: 2px; }
@@ -149,7 +148,6 @@
 <div id="toast">Copied to clipboard!</div>
 <canvas id="plexusBg"></canvas>
 
-<!-- Printable Area (Hidden normally) -->
 <div id="printArea"></div>
 
 <!-- Count Selection Modal -->
@@ -292,10 +290,23 @@
 </div>
 
 <script>
-// --- ANTI PULL-TO-REFRESH JS FALLBACK ---
+// --- ULTRA-STRICT ANTI PULL-TO-REFRESH ---
+document.body.addEventListener('touchstart', function(e) {
+    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody, #lockScreen');
+    if(el) el.lastY = e.touches[0].clientY;
+}, { passive: false });
+
 document.body.addEventListener('touchmove', function(e) {
-    if (!e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody, #lockScreen')) {
+    let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody, #lockScreen');
+    if (!el) {
         e.preventDefault();
+    } else {
+        let currentY = e.touches[0].clientY;
+        let upSwipe = currentY > (el.lastY || currentY);
+        if (el.scrollTop <= 0 && upSwipe) {
+            e.preventDefault(); // Kill pull-to-refresh at the top of scrollable elements
+        }
+        el.lastY = currentY;
     }
 }, { passive: false });
 
@@ -309,6 +320,17 @@ let messageCount = 0;
 
 // Update this with your actual Vercel Domain
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
+const API_KEY = "JAMAL_BOSS_999"; 
+
+// --- APP HARDWARE BACK BUTTON LOGIC ---
+window.addEventListener('popstate', (e) => {
+    if(sessionStorage.getItem("rg_is_active") === "true") {
+        // If back button pressed while in dashboard, logout and show login screen
+        lockScreen(true);
+    } else {
+        // If back button pressed while on login screen, let the app close natively
+    }
+});
 
 // --- AUDIO/VOICE ENGINE ---
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
@@ -328,6 +350,20 @@ function playBeep() {
         gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); 
         osc.start(); osc.stop(audioCtx.currentTime + 0.04); 
+    } catch(e) {}
+}
+
+function playErrorBeep() {
+    if (!audioCtx) return;
+    try {
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'sawtooth'; 
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime); // Error buzz
+        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime); 
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3); 
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3); 
     } catch(e) {}
 }
 
@@ -386,7 +422,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if(localStorage.getItem("saved_uid")) document.getElementById('userIdInput').value = localStorage.getItem("saved_uid");
   if(localStorage.getItem("saved_pwd")) document.getElementById('passwordInput').value = localStorage.getItem("saved_pwd");
   if (sessionStorage.getItem("rg_is_active") === "true") {
-    unlock();
+    unlock(true);
     if(localStorage.getItem("saved_batch")) {
       allAccounts = JSON.parse(localStorage.getItem("saved_batch"));
       if(allAccounts.length > 0) currentToken = allAccounts[0].token;
@@ -464,7 +500,7 @@ window.addEventListener('resize', initPlexus);
 
 // --- LOGIN & MAIN FLOW ---
 function verifyLogin() {
-  initAudio(); // Force Audio unlock on login click[span_4](start_span)[span_4](end_span)
+  initAudio(); 
   const uid = document.getElementById('userIdInput').value.trim();
   const pwd = document.getElementById('passwordInput').value.trim();
   const err = document.getElementById('lockError');
@@ -476,20 +512,28 @@ function verifyLogin() {
     speakMsg(`Access Granted. Welcome boss Jamal. Terminal active.`);
     unlock();
   } else {
-    err.textContent = "❌ ACCESS DENIED: Invalid User ID or Password!";
+    playErrorBeep(); // Red Error Sound
+    err.innerHTML = "❌ ACCESS DENIED: Invalid User ID or Password!";
     speakMsg("Access Denied. Incorrect ID or Password.");
   }
 }
 
-function unlock() {
+function unlock(fromLoad = false) {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('mainContent').style.display = 'flex';
+  if(!fromLoad) {
+      history.pushState({page: 'dashboard'}, "", "#dashboard"); // App hardware back tracking
+  }
 }
 
-function lockScreen() {
+function lockScreen(isPop = false) {
   sessionStorage.removeItem("rg_is_active");
   document.getElementById('mainContent').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
+  document.getElementById('lockError').innerHTML = ""; // Clear errors
+  if(!isPop) {
+      history.replaceState({page: 'login'}, "", "");
+  }
   startTerminalTyping();
 }
 
@@ -517,14 +561,14 @@ async function generateBulkMail() {
 
     allAccounts = [];
     try {
-        const response = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
+        const response = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
         const data = await response.json();
         if(data.status) {
-            allAccounts.push({ email: data.email, password: data.password, token: data.token });
+            allAccounts.push({ email: data.data.email, password: data.data.password, token: data.data.email });
             for(let i=1; i<count; i++){
-                 const res = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
+                 const res = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
                  const d = await res.json();
-                 if(d.status) allAccounts.push({ email: d.email, password: d.password, token: d.token });
+                 if(d.status) allAccounts.push({ email: d.data.email, password: d.data.password, token: d.data.email });
             }
         }
 
@@ -631,8 +675,9 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
     if(!silent) inboxList.innerHTML = "<p style='color:#0a0; padding:10px; text-align:center;'>Checking server...</p>";
     
     try {
-        const response = await fetch(`${API_BASE_URL}/api/messages?token=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/master?action=inbox&apikey=${API_KEY}&email=${currentToken}`);
         const data = await response.json();
+        
         if(data.status) {
             document.getElementById('msgBadge').innerText = data.count;
             if(data.count > messageCount && !isInboxView) document.getElementById('btnNotif').classList.add('bell-shake');
@@ -654,7 +699,7 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
 async function readMessage(id) {
     document.getElementById('messageView').style.display = 'block'; document.getElementById('msgBody').innerText = "Decrypting...";
     try {
-        const response = await fetch(`${API_BASE_URL}/api/message?id=${id}&token=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/master?action=read&apikey=${API_KEY}&email=${currentToken}&id=${id}`);
         const data = await response.json();
         if(data.status) {
             document.getElementById('msgFrom').innerText = data.from.address || data.message_details?.from;
