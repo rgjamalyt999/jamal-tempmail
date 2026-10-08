@@ -9,11 +9,10 @@
   :root { --theme-color: #0f0; --theme-shadow: rgba(0, 255, 0, 0.6); --cyan-color: #0ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* STRICT MOBILE FIT & KILL PULL-TO-REFRESH */
+  /* STRICT MOBILE FIT & HARD PULL-TO-REFRESH BLOCK */
   html, body { 
-      overscroll-behavior: none; 
-      overscroll-behavior-y: none;
-      touch-action: none; /* Block default background gestures */
+      overscroll-behavior-y: contain; 
+      touch-action: pan-x pan-y;
   }
   
   body { 
@@ -39,7 +38,7 @@
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
   /* Login Screen */
-  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; }
+  #lockScreen { position: absolute; inset: 0; background: #000500; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior-y: contain; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
 
@@ -60,7 +59,7 @@
   
   #mainContent { display: none; flex: 1; flex-direction: column; width: 100%; overflow: hidden; }
 
-  /* HEADER */
+  /* BRIGHTER BOLD HEADER */
   header { text-align: center; padding: 4px 0; border-bottom: 2px dashed var(--theme-color); flex-shrink: 0; }
   header h1 { font-size: 1.4rem; font-weight: 900; color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; letter-spacing: 1px; }
   header p { font-size: 0.8rem; font-weight: 900; color: #0f0; text-shadow: 0 0 5px #0f0; margin-top: 2px;}
@@ -89,7 +88,7 @@
 
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
-  /* SCROLLABLE AREAS - Set explicitly to allow scrolling inside */
+  /* SCROLLABLE AREAS */
   .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; touch-action: pan-y; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
   th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -288,7 +287,7 @@
 </div>
 
 <script>
-// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK (100% BULLETPROOF) ---
+// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK ---
 let tsY = 0;
 document.addEventListener('touchstart', function(e) {
     tsY = e.touches[0].clientY;
@@ -297,7 +296,6 @@ document.addEventListener('touchstart', function(e) {
 document.addEventListener('touchmove', function(e) {
     let el = e.target.closest('.modal-scrollable, .table-container, #inboxList, #msgBody');
     if (!el) {
-        // Block all scrolling outside specific areas
         e.preventDefault(); 
         return;
     }
@@ -305,7 +303,6 @@ document.addEventListener('touchmove', function(e) {
     let teY = e.touches[0].clientY;
     let isDraggingDown = teY > tsY;
     
-    // Kills pull-to-refresh entirely in WebViews if at top
     if (el.scrollTop <= 0 && isDraggingDown) { 
         e.preventDefault(); 
     }
@@ -319,9 +316,8 @@ let selectedCount = 25;
 let isInboxView = false;
 let messageCount = 0;
 
-// API Config
+// YAHAN API URL CHANGE KIYA HAI (PURANA WALA LAGA DIYA HAI BINA KEY KE)
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
-const API_KEY = "JAMAL_BOSS_999"; 
 
 // --- APP HARDWARE BACK BUTTON LOGIC ---
 window.addEventListener('popstate', (e) => {
@@ -550,6 +546,7 @@ function toggleView() {
   }
 }
 
+// --- PURANE API ENDPOINTS WAPAS ADD KIYE HAIN ---
 async function generateBulkMail() {
     let count = selectedCount;
     const btnGen = document.getElementById('btnGenerate');
@@ -559,14 +556,14 @@ async function generateBulkMail() {
 
     allAccounts = [];
     try {
-        const response = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
+        const response = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
         const data = await response.json();
         if(data.status) {
-            allAccounts.push({ email: data.data.email, password: data.data.password, token: data.data.email });
+            allAccounts.push({ email: data.email, password: data.password, token: data.token });
             for(let i=1; i<count; i++){
-                 const res = await fetch(`${API_BASE_URL}/api/master?action=generate&apikey=${API_KEY}`, { method: 'POST' });
+                 const res = await fetch(`${API_BASE_URL}/api/create`, { method: 'POST' });
                  const d = await res.json();
-                 if(d.status) allAccounts.push({ email: d.data.email, password: d.data.password, token: d.data.email });
+                 if(d.status) allAccounts.push({ email: d.email, password: d.password, token: d.token });
             }
         }
 
@@ -624,7 +621,6 @@ function actionPrintPDF() {
     
     closeModal('downloadModal');
     
-    // Direct native print call (No redirects)
     setTimeout(() => {
         try { window.print(); } catch(e){ alert("Printing is not supported on this device."); }
     }, 300);
@@ -668,7 +664,7 @@ function fallbackNativeShare() {
     }
 }
 
-// --- MESSAGES ---
+// --- MESSAGES (PURANE ENDPOINTS PAR) ---
 async function fetchMessages(silent = false, isManualBtnClick = false) {
     const refreshBtn = document.getElementById('btnRefreshInbox');
     if(isManualBtnClick && refreshBtn) { refreshBtn.classList.add('active-cyan'); refreshBtn.innerText = "[ CHECKING... ]"; }
@@ -684,7 +680,7 @@ async function fetchMessages(silent = false, isManualBtnClick = false) {
     if(!silent) inboxList.innerHTML = "<p style='color:#0a0; padding:10px; text-align:center;'>Checking server...</p>";
     
     try {
-        const response = await fetch(`${API_BASE_URL}/api/master?action=inbox&apikey=${API_KEY}&email=${currentToken}`);
+        const response = await fetch(`${API_BASE_URL}/api/messages?token=${currentToken}`);
         const data = await response.json();
         
         if(data.status) {
@@ -711,9 +707,9 @@ async function readMessage(id) {
         const response = await fetch(`${API_BASE_URL}/api/message?id=${id}&token=${currentToken}`);
         const data = await response.json();
         if(data.status) {
-            document.getElementById('msgFrom').innerText = data.from.address || data.message_details?.from;
-            document.getElementById('msgSubject').innerText = data.subject || data.message_details?.subject;
-            document.getElementById('msgBody').innerText = data.text || data.message_details?.body || "No text body.";
+            document.getElementById('msgFrom').innerText = data.from.address || data.from;
+            document.getElementById('msgSubject').innerText = data.subject;
+            document.getElementById('msgBody').innerText = data.text || "No text body.";
         }
     } catch (err) { document.getElementById('msgBody').innerText = "Decryption failed."; }
 }
