@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<!-- ANTI PULL-TO-REFRESH VIEWPORT -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Genius Hacker Jamal - Secure TempMail</title>
 
@@ -13,12 +14,12 @@
   html, body { 
       overscroll-behavior: none !important; 
       overscroll-behavior-y: none !important;
-      touch-action: none; 
+      touch-action: none; /* Block all default browser gestures on background */
   }
   
   body { 
     font-family: 'Courier New', Courier, monospace; 
-    background: #000500; 
+    background: #000; 
     color: var(--theme-color); 
     position: fixed; 
     top: 0; bottom: 0; left: 0; right: 0; 
@@ -28,18 +29,19 @@
     overflow: hidden; 
   }
   
-  /* MATRIX BACKGROUND CANVAS */
-  canvas#matrixBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.8; }
+  /* PRO 0101 MATRIX BACKGROUND */
+  canvas#matrixBg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.65; }
 
   .container { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
-  .win-window { background: rgba(0, 15, 0, 0.85); backdrop-filter: blur(5px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 2px 0; }
+  /* Window Frame */
+  .win-window { background: rgba(0, 10, 0, 0.85); backdrop-filter: blur(4px); border: 2px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-shadow); border-radius: 4px; width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; margin: 2px 0; position: relative; z-index: 2; }
   .win-titlebar { background: var(--theme-color); color: #000; padding: 4px 8px; font-weight: 900; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; letter-spacing: 0.5px; }
   .win-controls span { margin-left: 6px; cursor: pointer; font-weight: 900; padding: 0 5px; background: rgba(0,0,0,0.2); border-radius: 2px; }
   .win-controls span:hover { background: #000; color: #0f0; }
-  
   .win-body { padding: 6px 8px; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 
+  /* Login Screen */
   #lockScreen { position: absolute; inset: 0; background: transparent; display: flex; flex-direction: column; justify-content: space-between; z-index: 9999; padding: 8px; overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; }
   .login-hud-top, .login-hud-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; font-size: 0.75rem; font-weight: 900; border-radius: 3px; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0,255,0,0.3); flex-shrink: 0; }
   .login-hud-center { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; flex: 1; padding: 5px 0; }
@@ -57,7 +59,7 @@
   .fullscreen-lock-card h2 { font-size: 1.8rem; font-weight: 900; color: #0f0; margin-bottom: 4px; text-align: center; letter-spacing: 1px; }
   .fullscreen-lock-card p { color: #0f0; font-size: 0.9rem; font-weight: bold; margin-bottom: 12px; text-align: center; opacity: 0.9; }
   
-  .fullscreen-terminal-stream { background: rgba(0, 20, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 125px; overflow-y: auto; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.5; text-shadow: 0 0 5px #0f0; touch-action: pan-y; overscroll-behavior: contain;}
+  .fullscreen-terminal-stream { background: rgba(0, 15, 0, 0.9); border: 1px solid #0f0; padding: 10px; font-size: 0.8rem; font-weight: bold; height: 130px; overflow-y: auto; text-align: left; margin-bottom: 10px; color: #0f0; border-radius: 4px; line-height: 1.5; text-shadow: 0 0 5px #0f0; touch-action: pan-y; overscroll-behavior: contain;}
   .terminal-cursor::after { content: '█'; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   
@@ -91,6 +93,7 @@
 
   .panel-expand { flex: 1; display: flex; flex-direction: column; overflow: hidden; border: 1px dashed #0f0; padding: 4px; background: rgba(0,15,0,0.6); border-radius: 4px; margin-top: 6px; }
 
+  /* SCROLLABLE AREAS - Enforce touch-action */
   .table-container { flex: 1; min-height: 0; overflow-y: auto; margin-top: 4px; border: 1px solid #0f0; background: #000; touch-action: pan-y; overscroll-behavior-y: contain; }
   table { width: 100%; border-collapse: collapse; font-size: 0.7rem; font-weight: bold; text-align: left; }
   th, td { padding: 4px 6px; border-bottom: 1px solid #030; border-right: 1px solid #030; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -119,6 +122,7 @@
   .modal-overlay { position: fixed; inset: 0; background: rgba(0, 5, 0, 0.9); backdrop-filter: blur(8px); z-index: 100000; display: none; justify-content: center; align-items: center; }
   .modal-content { background: #000; border: 2px solid #0f0; box-shadow: 0 0 40px #0f0; border-radius: 8px; width: 85%; max-width: 320px; padding: 16px; display: flex; flex-direction: column; gap: 10px; max-height: 85vh; }
   
+  /* Scrollable areas - touch pan-y */
   .modal-scrollable { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; touch-action: pan-y; overscroll-behavior-y: contain; }
   .modal-scrollable::-webkit-scrollbar { width: 4px; }
   .modal-scrollable::-webkit-scrollbar-track { background: #001100; border-radius: 2px; }
@@ -132,7 +136,7 @@
   .modal-close { margin-top: 5px; background: transparent; border: 1px solid #ff3333; color: #ff3333; padding: 8px; text-align: center; cursor: pointer; font-weight: 900; border-radius: 4px; font-family: 'Courier New', Courier, monospace; transition: 0.2s; flex-shrink: 0; }
   .modal-close:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px red; }
 
-  /* NATIVE PRINT UI */
+  /* NATIVE PRINT UI - Hidden normally */
   @media screen { #printArea { display: none !important; } }
   @media print {
     body { height: auto !important; overflow: visible !important; position: static !important; background: #fff !important; color: #000 !important; touch-action: auto !important; overscroll-behavior: auto !important; }
@@ -148,11 +152,13 @@
 
 <div id="toast">Copied to clipboard!</div>
 
-<!-- PRO MATRIX BACKGROUND ANIMATION -->
+<!-- PRO 0101 MATRIX BACKGROUND -->
 <canvas id="matrixBg"></canvas>
 
+<!-- Printable Area -->
 <div id="printArea"></div>
 
+<!-- Count Selection Modal -->
 <div id="countModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">SELECT GENERATION COUNT</div>
@@ -161,6 +167,7 @@
   </div>
 </div>
 
+<!-- Download/Share Modal -->
 <div id="downloadModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-title">EXPORT VAULT DATA</div>
@@ -185,7 +192,7 @@
       <div class="win-titlebar" style="background:#0f0; color:#000;">
         <span>Jamal_TempMail_Security.exe</span>
         <div class="win-controls">
-            <span onclick="lockScreen()" title="Minimize">_</span>
+            <span onclick="lockScreen(true)" title="Minimize">_</span>
             <span onclick="maximizeApp()" title="Full Screen">□</span>
             <span onclick="closeApp()" title="Close App">×</span>
         </div>
@@ -288,7 +295,7 @@
 </div>
 
 <script>
-// --- ANTI PULL-TO-REFRESH JAVASCRIPT LOCK (100% FIXED) ---
+// --- ANTI PULL-TO-REFRESH JS L0CK FOR APP WEBVIEW ---
 let startY = 0;
 document.addEventListener('touchstart', function(e) {
     startY = e.touches[0].clientY;
@@ -299,16 +306,46 @@ document.addEventListener('touchmove', function(e) {
     const scrollable = e.target.closest('.modal-scrollable, .table-container, #inboxList, .fullscreen-terminal-stream');
     
     if (scrollable) {
-        // Stop refresh when scrolling UP to the top of the list
+        // If scrolling UP (pulling down) and at the very top of container
         if (scrollable.scrollTop <= 0 && y > startY) {
             e.preventDefault(); 
         }
     } else {
-        // Block background drag entirely
+        // Block dragging on non-scrollable areas completely
         e.preventDefault();
     }
 }, { passive: false });
 
+// --- MATRIX BACKGROUND ANIMATION (0101) ---
+const canvas = document.getElementById('matrixBg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const chars = '01'.split('');
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = [];
+for (let x = 0; x < columns; x++) drops[x] = 1;
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 5, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 35);
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// VARIABLES
 let allAccounts = [];
 let currentPage = 1;
 const rowsPerPage = 25;
@@ -318,15 +355,6 @@ let isInboxView = false;
 let messageCount = 0;
 
 const API_BASE_URL = "https://jamal-tempmail.vercel.app";
-
-// --- APP HARDWARE BACK BUTTON ROUTING ---
-window.addEventListener('popstate', (e) => {
-    // If we are currently logged in (on dashboard)
-    if(sessionStorage.getItem("rg_is_active") === "true") {
-        lockScreen(true); // Takes user back to Login Page
-    } 
-    // If we are on login screen, popping state natively exits the app.
-});
 
 // --- AUDIO/VOICE ENGINE ---
 const AudioContext = window.AudioContext || window.webkitAudioContext; 
@@ -386,43 +414,12 @@ function speakMsg(text) {
 }
 document.addEventListener('click', () => { initAudio(); playBeep(); });
 
-// --- MATRIX BACKGROUND ANIMATION (01010101) ---
-const mCanvas = document.getElementById('matrixBg');
-const mCtx = mCanvas.getContext('2d');
-let mCols, mDrops = [];
-const mFontSize = 14;
-
-function initMatrix() {
-    mCanvas.width = window.innerWidth;
-    mCanvas.height = window.innerHeight;
-    mCols = Math.floor(mCanvas.width / mFontSize);
-    mDrops = [];
-    for(let x = 0; x < mCols; x++) mDrops[x] = 1;
-}
-
-function drawMatrix() {
-    mCtx.fillStyle = 'rgba(0, 5, 0, 0.05)';
-    mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
-    mCtx.fillStyle = '#0f0';
-    mCtx.font = mFontSize + 'px Courier New';
-    
-    for(let i = 0; i < mDrops.length; i++) {
-        const text = Math.random() > 0.5 ? '0' : '1';
-        mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
-        
-        if(mDrops[i] * mFontSize > mCanvas.height && Math.random() > 0.975)
-            mDrops[i] = 0;
-        mDrops[i]++;
-    }
-}
-initMatrix();
-setInterval(drawMatrix, 50);
-window.addEventListener('resize', initMatrix);
-
-
+// --- WINDOW CONTROLS (Min, Max, Close) ---
 function maximizeApp() {
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => { showToast("Fullscreen not supported"); });
+        document.documentElement.requestFullscreen().catch(err => {
+            showToast("Fullscreen not supported");
+        });
     } else {
         if (document.exitFullscreen) { document.exitFullscreen(); }
     }
@@ -435,6 +432,7 @@ function closeApp() {
     }
 }
 
+// --- TERMINAL UI ---
 function startTerminalTyping() {
   const stream = document.getElementById('terminalStream');
   if(!stream) return;
@@ -473,7 +471,7 @@ function generateCountOptions() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  // Setup App History for back button logic
+  // App hardware back tracking
   history.replaceState({page: 'login'}, "", "#login");
   
   startTerminalTyping();
@@ -489,6 +487,13 @@ window.addEventListener('DOMContentLoaded', () => {
       fetchMessages(true);
     }
   }
+});
+
+// --- APP HARDWARE BACK BUTTON LOGIC ---
+window.addEventListener('popstate', (e) => {
+    if(sessionStorage.getItem("rg_is_active") === "true") {
+        lockScreen(true); // Back to login
+    } 
 });
 
 function showToast(msg) {
@@ -526,7 +531,7 @@ setInterval(() => {
   document.getElementById('liveClock').innerText = `${new Date().toLocaleTimeString()}`;
 }, 1000);
 
-// --- LOGIN FLOW WITH DYNAMIC WEATHER/LOCATION ---
+// --- PRO LOGIN FLOW & WEATHER/LOC INFO ---
 function verifyLogin() {
   initAudio(); 
   const uid = document.getElementById('userIdInput').value.trim();
@@ -542,17 +547,23 @@ function verifyLogin() {
     playSuccessBeep();
     speakMsg("Access Granted. Welcome boss Jamal.");
     
-    // Dynamic Fetch Simulator
     stream.innerHTML += "<br><span style='color:#0f0; text-shadow:0 0 10px #0f0;'>> VERIFYING CREDENTIALS... OK</span>";
     stream.innerHTML += "<br><span style='color:#0ff;'>> FETCHING LOCAL DATA...</span>";
-    stream.innerHTML += "<br><span style='color:#0f0;'>> DATE: Thursday, October 8, 2026</span>";
-    stream.innerHTML += "<br><span style='color:#0f0;'>> LOC: Patna, Bihar, India</span>";
-    stream.innerHTML += "<br><span style='color:#0a0;'>> WEATHER: 28°C, Scattered Thunderstorms / Rain Expected</span>";
-    stream.innerHTML += "<br><br><span style='color:#fff; font-size:1.1rem; text-shadow: 0 0 10px #fff;'>> ACCESS GRANTED!</span>";
     
-    stream.scrollTop = stream.scrollHeight;
+    // Auto-typing Date & Location
+    setTimeout(() => {
+        stream.innerHTML += "<br><span style='color:#0f0;'>> DATE: Thursday, October 8, 2026</span>";
+        stream.innerHTML += "<br><span style='color:#0f0;'>> LOC: Patna, Bihar, India</span>";
+        stream.innerHTML += "<br><span style='color:#0a0;'>> WEATHER: 28°C, Scattered Thunderstorms Expected</span>";
+        stream.scrollTop = stream.scrollHeight;
+    }, 600);
+    
+    setTimeout(() => {
+        stream.innerHTML += "<br><br><span style='color:#fff; font-size:1.1rem; text-shadow: 0 0 10px #fff;'>> ACCESS GRANTED!</span>";
+        stream.scrollTop = stream.scrollHeight;
+    }, 1200);
 
-    setTimeout(() => { unlock(); }, 2500);
+    setTimeout(() => { unlock(); }, 2200);
 
   } else {
     playErrorBeep(); 
@@ -657,6 +668,7 @@ function getVaultText() {
     return text;
 }
 
+// --- PRINT & PDF (FIXED FOR APP) ---
 function actionPrintPDF() {
     if(allAccounts.length===0) return showToast("No accounts generated!");
     
